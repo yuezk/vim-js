@@ -68,7 +68,7 @@ syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell ex
 " syntax region  jsEnvComment start=/\%^#!/ end=/$/ display
 
 " Declaration
-syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObject
+syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
 syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorRelational,jsOperatorAssignment,jsAssignmentEqual,jsArrow display
 
 " Strings, Literals, Numbers
@@ -85,14 +85,26 @@ syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+
 syntax region  jsBlock matchgroup=jsBlockBrace start=+{+ end=+}+ contains=TOP extend fold
 syntax region  jsParen matchgroup=jsParenBrace start=+(+ end=+)+ contains=@jsExpression,@jsOperators,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsArrow,jsParen,jsAssignmentEqual
 
-" Array and Array Destructuring
+" Array
 syntax region  jsArray matchgroup=jsArrayBrace start=+\[+ end=+]+ contains=@jsExpression,@jsOperators,jsComma,jsSpread
 
-" Object and Object Destructuring
-syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained transparent contains=jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsGetter,jsSetter,jsComma,jsSpread,@jsOperators
-syntax match   jsObjectKey +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsColon,jsAssignmentEqual display
+" Object
+syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained contains=jsVariable,jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsGetter,jsSetter,jsComma,jsSpread,@jsOperators
+syntax match   jsObjectKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsColon display
 syntax match   jsObjectKey +\d\++ contained skipwhite skipempty nextgroup=jsColon display
 syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
+
+" Array Destructuring
+" Cases like [a, b] = [1, 2] and arguments of the arrow function cannot be highlighted
+" as destructuring, but they will highlighted as Array, but it doesn't break the syntax
+syntax region  jsArrayDestructuring matchgroup=jsDestructuringBrace start=+\[+ end=+]+ contained contains=jsVariable,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual
+
+" Object Destructuring
+" Cases like ({a, b}) = {a: 1, b: 2} and arguments of the arrow function cannot be highlighted
+" as object destructuring, they are highlighted as Object, but it doesn't break the syntax
+syntax region  jsObjectDestructuring matchgroup=jsDestructuringBrace start=+{+ end=+}+ contained contains=jsObjectDestructuringKey,jsVariable,jsComma,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual
+syntax match   jsObjectDestructuringKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsAssignmentEqual,jsObjectDestructuringColon display
+syntax match   jsObjectDestructuringColon +:+ contained skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring display
 
 " Class
 syntax keyword jsClass class skipwhite skipempty nextgroup=jsClassName,jsClassBody
@@ -111,13 +123,11 @@ syntax keyword jsThis this
 syntax keyword jsReturn return skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsFunction function skipwhite skipempty nextgroup=jsGeneratorAsterisk,jsFunctionName,jsFunctionArgs
 syntax match   jsFunctionName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFunctionArgs display
-syntax region  jsFunctionArgs matchgroup=jsFunctionArgsBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread skipwhite skipempty nextgroup=jsArrow,jsFunctionBody extend fold
+syntax region  jsFunctionArgs matchgroup=jsFunctionArgsBrace start=+(+ end=+)+ contained contains=jsVariable,jsComma,jsSpread,jsObjectDestructuring,jsArrayDestructuring skipwhite skipempty nextgroup=jsArrow,jsFunctionBody extend fold
+syntax region  jsFunctionBody matchgroup=jsFunctionBodyBrace start=+{+ end=+}+ contained contains=TOP extend fold
 
-" Match the start of the arrow function
-" syntax region  jsArrowFunction matchgroup=jsFunctionArgsBrace start=+(\(\_s*(\)\@!+ end=+)\(\_s*=>\)\@=+ contains=@jsExpression,jsVariableDeclare,jsComma skipwhite skipempty nextgroup=jsArrow extend fold
 " Arrow Function
 syntax match   jsArrow +=>+ contained skipwhite skipempty nextgroup=@jsExpression,jsFunctionBody display
-syntax region  jsFunctionBody matchgroup=jsFunctionBodyBrace start=+{+ end=+}+ contained contains=TOP extend fold
 
 " Object method
 syntax match   jsMethod +\<\K\k*\>\(\_s*(\)\@=+ contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs display
@@ -163,6 +173,7 @@ highlight default link jsSemicolon Operator
 highlight default link jsComma Operator
 highlight default link jsColon Operator
 highlight default link jsSpread Operator
+highlight default link jsParensError Error
 
 highlight default link jsString String
 highlight default link jsTemplateString String
@@ -202,6 +213,7 @@ highlight default link jsClassProp Identifier
 " Object
 highlight default link jsObjectKey Identifier
 highlight default link jsObjectKeyString String
+highlight default link jsObjectDestructuringColon Operator
 
 " Modules
 highlight default link jsImport PreProc
