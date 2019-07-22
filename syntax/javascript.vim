@@ -31,23 +31,20 @@ syntax match jsSpread +\.\.\.+ display skipwhite skipempty nextgroup=@jsExpressi
 syntax match jsParensError +[)}\]]+
 
 " Operators
-syntax keyword jsUnaryKeyword delete void typeof new skipwhite skipempty nextgroup=@jsExpression
+" REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
+syntax keyword jsUnaryOperator delete void typeof new skipwhite skipempty nextgroup=@jsExpression
+syntax keyword jsRelationalOperator in instanceof skipwhite skipempty nextgroup=@jsExpression
 
-syntax keyword jsInstanceof instanceof skipwhite skipempty nextgroup=@jsExpression
-syntax keyword jsIn in skipwhite skipempty nextgroup=@jsExpression
-
-syntax match   jsOperatorMath +[+*/%-]+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorRelational +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|[/%]\)+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorBit +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorNot +!+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorExpo +\*\*+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorLogical +\(||\|&&\)+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorConditional +[?:]+ skipwhite skipempty nextgroup=@jsExpression display
 
 " " *=/=%=+=-=<<=>>=>>>=&=^=|=**=
 syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhite skipempty nextgroup=@jsExpression display
 
-syntax cluster jsOperators contains=jsInstanceof,jsIn,jsOperator.*
+syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
 
 " Keywords
 
@@ -69,7 +66,7 @@ syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell ex
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorRelational,jsOperatorAssignment,jsAssignmentEqual,jsArrow display
+syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow display
 
 " Strings, Literals, Numbers
 syntax region jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
@@ -147,7 +144,7 @@ syntax region  jsFunctionCall start=+\(\<\K\k*\>\(\.\K\k*\)\{}\_s*(\)\@=+ end=+)
 syntax match   jsFunctionCallName +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen display
 syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread extend
 
-syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryKeyword
+syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 " syntax cluster jsStatement contains=jsVariableType,jsReturn
 
 
@@ -155,18 +152,15 @@ syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValue
 " syntax keyword jsClassDeclare class
 
 " Operators
-highlight default link jsUnaryKeyword Keyword
-highlight default link jsOperatorMath Operator
-highlight default link jsOperatorRelational Operator
+highlight default link jsUnaryOperator Keyword
+highlight default link jsOperatorArithmetic Operator
+highlight default link jsOperatorComparison Operator
 highlight default link jsOperatorBit Operator
-highlight default link jsOperatorNot Operator
-highlight default link jsOperatorExpo Operator
 highlight default link jsOperatorLogical Operator
 highlight default link jsOperatorConditional Operator
 highlight default link jsOperatorAssignment Operator
 
-highlight default link jsInstanceof Keyword
-highlight default link jsIn Keyword
+highlight default link jsRelationalOperator Keyword
 
 " highlight default link jsVariable Ignore
 highlight default link jsSemicolon Operator
