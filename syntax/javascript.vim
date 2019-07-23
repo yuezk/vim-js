@@ -27,8 +27,8 @@ syntax match jsComma +,+ display
 syntax match jsColon +:+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match jsAssignmentEqual +=+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match jsDot +\.+ display
-syntax match jsSpread +\.\.\.+ display skipwhite skipempty nextgroup=@jsExpression
-syntax match jsParensError +[)}\]]+
+syntax match jsSpread +\.\.\.+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match jsParensError +[)}\]]+ display
 
 " Operators
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
@@ -36,17 +36,15 @@ syntax keyword jsUnaryOperator delete void typeof new skipwhite skipempty nextgr
 syntax keyword jsRelationalOperator in instanceof skipwhite skipempty nextgroup=@jsExpression
 
 syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|[/%]\)+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorBit +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorConditional +[?:]+ skipwhite skipempty nextgroup=@jsExpression display
 
 " " *=/=%=+=-=<<=>>=>>>=&=^=|=**=
 syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhite skipempty nextgroup=@jsExpression display
 
 syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
-
-" Keywords
 
 " Modules
 syntax keyword jsImport import skipwhite skipempty nextgroup=jsModuleName,jsModuleAsterisk,jsModuleBlock,jsString
@@ -66,24 +64,23 @@ syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell ex
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow display
+syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
 
 " Strings, Literals, Numbers
-syntax region jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
-syntax region jsTemplateString start=+`+ skip=+\\`+ end=+`+ contains=jsTemplateExpression,@Spell extend skipwhite skipempty nextgroup=jsColon
-syntax region jsTemplateExpression matchgroup=jsTemplateBrace start=+${+ end=+}+ contained contains=@jsExpression
-
-syntax keyword jsValueKeyword undefined null NaN true false
-
-syntax match   jsNumber +\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>+ display
+syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon,jsAccessor
+syntax region  jsTemplateString start=+`+ skip=+\\`+ end=+`+ contains=jsTemplateExpression,@Spell extend skipwhite skipempty nextgroup=jsColon,jsAccessor
+syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+${+ end=+}+ contained contains=@jsExpression
+syntax keyword jsValueKeyword undefined null NaN true false skipwhite skipempty nextgroup=jsAccessor
+syntax match   jsNumber +\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>+ skipwhite skipempty nextgroup=jsAccessor display
 syntax keyword jsNumber Infinity
-syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+ display
+syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+ skipwhite skipempty nextgroup=jsAccessor display
 
+" Code block
 syntax region  jsBlock matchgroup=jsBlockBrace start=+{+ end=+}+ contains=TOP extend fold
-syntax region  jsParen matchgroup=jsParenBrace start=+(+ end=+)+ contains=@jsExpression,@jsOperators,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsArrow,jsParen,jsAssignmentEqual
+syntax region  jsParen matchgroup=jsParenBrace start=+(+ end=+)+ contains=@jsExpression,@jsOperators,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsArrow,jsParen,jsAssignmentEqual,jsAccessor
 
 " Array
-syntax region  jsArray matchgroup=jsArrayBrace start=+\[+ end=+]+ contains=@jsExpression,@jsOperators,jsComma,jsSpread
+syntax region  jsArray matchgroup=jsArrayBrace start=+\[+ end=+]+ contains=@jsExpression,@jsOperators,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor
 
 " Object
 syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained contains=jsVariable,jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsGetter,jsSetter,jsComma,jsSpread,@jsOperators
@@ -91,13 +88,16 @@ syntax match   jsObjectKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty next
 syntax match   jsObjectKey +\d\++ contained skipwhite skipempty nextgroup=jsColon display
 syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
 
+" Cases like obj["prop"]
+syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen
+
 " Array Destructuring
-" Cases like [a, b] = [1, 2] and arguments of the arrow function cannot be highlighted
-" as destructuring, but they will highlighted as Array, but it doesn't break the syntax
+" Cases like [a, b] = [1, 2] and the array destructuring in the arrow function arguments cannot be highlighted
+" as array destructuring, they are highlighted as Array, but it doesn't break the syntax
 syntax region  jsArrayDestructuring matchgroup=jsDestructuringBrace start=+\[+ end=+]+ contained contains=jsVariable,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual
 
 " Object Destructuring
-" Cases like ({a, b}) = {a: 1, b: 2} and arguments of the arrow function cannot be highlighted
+" Cases like ({a, b} = {a: 1, b: 2}) and the object destructuring in the arrow function arguments cannot be highlighted
 " as object destructuring, they are highlighted as Object, but it doesn't break the syntax
 syntax region  jsObjectDestructuring matchgroup=jsDestructuringBrace start=+{+ end=+}+ contained contains=jsObjectDestructuringKey,jsVariable,jsComma,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual
 syntax match   jsObjectDestructuringKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsAssignmentEqual,jsObjectDestructuringColon display
@@ -107,7 +107,7 @@ syntax match   jsObjectDestructuringColon +:+ contained skipwhite skipempty next
 syntax keyword jsClass class skipwhite skipempty nextgroup=jsClassName,jsClassBody
 syntax keyword jsExtends extends contained skipwhite skipempty nextgroup=jsClassName
 syntax keyword jsConstructor constructor contained
-syntax keyword jsSuper super contained
+syntax keyword jsSuper super contained skipwhite skipempty nextgroup=jsAccessor
 syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassProp,jsMethod
 syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody display
 syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsAsync,jsStatic,jsSetter,jsGetter,jsClassProp,jsMethod,jsComment,jsGeneratorAsterisk,jsComputed extend fold
@@ -116,7 +116,7 @@ syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=j
 " Function
 syntax keyword jsAsync async skipwhite skipempty nextgroup=jsFunction,jsFunctionArgs,jsGeneratorAsterisk,jsComputed
 syntax keyword jsAwait await skipwhite skipempty nextgroup=@jsExpression
-syntax keyword jsThis this
+syntax keyword jsThis this skipwhite skipempty nextgroup=jsAccessor
 syntax keyword jsReturn return skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsFunction function skipwhite skipempty nextgroup=jsGeneratorAsterisk,jsFunctionName,jsFunctionArgs
 syntax match   jsFunctionName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFunctionArgs display
@@ -140,9 +140,9 @@ syntax match   jsYieldAsterisk +\*+ contained skipwhite skipempty nextgroup=@jsE
 syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYieldAsterisk
 
 " Function Call
-syntax region  jsFunctionCall start=+\(\<\K\k*\>\(\.\K\k*\)\{}\_s*(\)\@=+ end=+)\@1<=+ contains=jsFunctionCallName
+syntax region  jsFunctionCall start=+\<\K\k*\(\.\K\k*\)*\>\(\_s*(\)\@=+ end=+)\@1<=+ contains=jsFunctionCallName skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen
 syntax match   jsFunctionCallName +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen display
-syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread extend
+syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor
 
 syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 " syntax cluster jsStatement contains=jsVariableType,jsReturn

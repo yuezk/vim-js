@@ -60,7 +60,7 @@ function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
 	];
 	const [a,b,...rest] = [1, 2]
 	const {hello: [a = 3, b, { d }], world: {hello: world}} = {foo: foo, bar: 'ddd', test}
-	( {hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
+	({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
 
 }
 
@@ -153,6 +153,8 @@ async function test () {
     [foo + bar]() {
 	    return "computed";
     },
+    void: new Date(),
+    delete: 'hello',
     *generator() {},
     *[Symbol.iterator]() {
     },
@@ -169,6 +171,14 @@ async function test () {
     ...b,
   };
 }
+
+a[0];
+(1)[0]
+a()[0];
+a()()[0];
+a()()()[1]();
+
+this["hll"];
 
 ({
   a = 3,
