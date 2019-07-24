@@ -48,11 +48,13 @@ syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
 
 " Modules
 syntax keyword jsImport import skipwhite skipempty nextgroup=jsModuleName,jsModuleAsterisk,jsModuleBlock,jsString
+syntax keyword jsExport export skipwhite skipempty nextgroup=jsVariableType,jsFunction,jsClass,jsModuleBlock,jsModuleDefault,jsModuleAsterisk
 syntax keyword jsFrom from contained skipwhite skipempty nextgroup=jsString
-syntax match   jsModuleAsterisk +\*+ contained skipwhite skipempty nextgroup=jsModuleAs display
+syntax keyword jsModuleDefault default contained skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsModuleAsterisk +\*+ contained skipwhite skipempty nextgroup=jsModuleAs,jsFrom display
 syntax keyword jsModuleAs as contained skipwhite skipempty nextgroup=jsModuleName
 syntax region  jsModuleBlock matchgroup=jsModuleBrace start=+{+ end=+}+ contained contains=jsModuleName,jsModuleComma skipwhite skipempty nextgroup=jsFrom
-syntax match   jsModuleName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFrom,jsModuleComma,jsModuleAs display
+syntax match   jsModuleName +\<\K\k*\>+ contained contains=jsModuleDefault skipwhite skipempty nextgroup=jsFrom,jsModuleComma,jsModuleAs display
 syntax match   jsModuleComma +,+ contained skipwhite skipempty nextgroup=jsModuleBlock,jsModuleName,jsModuleAsterisk display
 
 " Comments
@@ -211,7 +213,9 @@ highlight default link jsObjectDestructuringColon Operator
 
 " Modules
 highlight default link jsImport PreProc
+highlight default link jsExport jsImport
 highlight default link jsFrom jsImport
+highlight default link jsModuleDefault Keyword
 highlight default link jsModuleAsterisk Operator
 highlight default link jsModuleAs jsImport
 highlight default link jsModuleName jsVariable

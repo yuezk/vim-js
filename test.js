@@ -237,13 +237,20 @@ const checkHightlighting = funcCall(({
 },
 [myVariable]);
 
-export default class Test {
-  test = '<test>Test</test>'
-}
+let name5;
 
-const test =
-  myFunction('<test>Test</test>');
+export var name1, name2;
+export var name3 = () => {}, name4 = function () {};
+export function hello() {}
+export class ClassName {}
+export { name5, name2 as name6 };
+// Exporting destructured assignments with renaming
+export const { name7, name2: bar } = o;
+export default function () {}
+export { name as default };
+export default name11 = 1;
+export { default } from "other-module";
 
-type Test = {
-  test: 'http://',
-}
+export * from "other-module";
+export { name8, name9 } from "other-module";
+export { import1 as name10, import2 as name12, nameN } from "other-module";
