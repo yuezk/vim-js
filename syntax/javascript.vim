@@ -66,7 +66,7 @@ syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell ex
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
+syntax match   jsVariable +\<\K\k*\>+ contains=jsRelationalOperator skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
 
 " Strings, Literals, Numbers
 syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon,jsAccessor
@@ -146,8 +146,21 @@ syntax region  jsFunctionCall start=+\<\K\k*\(\.\K\k*\)*\>\(\_s*(\)\@=+ end=+)\@
 syntax match   jsFunctionCallName +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen display
 syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor
 
+" Control flow
+" If statements
+syntax keyword jsIf if skipwhite skipempty nextgroup=jsCondition,jsConditionalBlock
+syntax keyword jsElse else skipwhite skipempty nextgroup=jsIf,jsConditionalBlock
+syntax region  jsCondition matchgroup=jsConditionBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsConditionalBlock
+syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}+ contained contains=TOP
+
+" Switch statements
+syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
+syntax keyword jsCase case skipwhite skipempty
+syntax keyword jsDefault default skipwhite skipempty nextgroup=jsColon
+syntax keyword jsBreak break
+syntax keyword jsContinue continue
+
 syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
-" syntax cluster jsStatement contains=jsVariableType,jsReturn
 
 
 " syntax keyword jsConditional if else switch case default
@@ -228,6 +241,11 @@ highlight default link jsCommentTodo Todo
 highlight default link jsVariableType Type
 highlight default link jsVariableDeclare Identifier
 highlight default link jsAssignmentEqual Operator
+
+" Conditional Statements
+highlight default link jsIf Keyword
+highlight default link jsElse Keyword
+
 
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'

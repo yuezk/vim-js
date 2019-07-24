@@ -221,6 +221,20 @@ const func = funcCall(({
 	return fun();
 }, 1);
 
+if (a > 0 && b < 0 && a[0] > 0
+	|| (a() > 0) && [0, 1].length > 0
+	&& a in 'string'
+	&& a instanceof Date
+	// ddd
+	&& typeof a === 'undefined'
+) {
+	console.log('else');
+} else if {
+	console.log('else if');
+} else {
+	console.log('else');
+}
+
 const myVariable = "hello world";
 const checkHightlighting = funcCall(({
   firstVariable,
