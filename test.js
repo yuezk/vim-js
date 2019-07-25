@@ -228,8 +228,10 @@ if (a > 0 && b < 0 && a[0] > 0
 	// ddd
 	&& typeof a === 'undefined'
 ) {
+	const a = 0;
 	console.log('else');
 } else if {
+	const a = 0;
 	console.log('else if');
 } else {
 	console.log('else');

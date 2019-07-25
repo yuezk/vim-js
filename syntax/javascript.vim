@@ -36,9 +36,9 @@ syntax keyword jsUnaryOperator delete void typeof new skipwhite skipempty nextgr
 syntax keyword jsRelationalOperator in instanceof skipwhite skipempty nextgroup=@jsExpression
 
 syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|[/%]\)+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorBit +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorConditional +[?:]+ skipwhite skipempty nextgroup=@jsExpression display
 
 " " *=/=%=+=-=<<=>>=>>>=&=^=|=**=
@@ -69,7 +69,7 @@ syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVari
 syntax match   jsVariable +\<\K\k*\>+ contains=jsRelationalOperator skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
 
 " Strings, Literals, Numbers
-syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon,jsAccessor
+syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor
 syntax region  jsTemplateString start=+`+ skip=+\\`+ end=+`+ contains=jsTemplateExpression,@Spell extend skipwhite skipempty nextgroup=jsColon,jsAccessor
 syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+${+ end=+}+ contained contains=@jsExpression
 syntax keyword jsValueKeyword undefined null NaN true false skipwhite skipempty nextgroup=jsAccessor
@@ -154,17 +154,14 @@ syntax region  jsCondition matchgroup=jsConditionBrace start=+(+ end=+)+ contain
 syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}+ contained contains=TOP
 
 " Switch statements
-syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsSwitchExpression
-syntax region  jsSwitchExpression matchgroup=jsSwitchExpressionBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsSwitchBlock
-syntax region  jsSwitchBlock matchgroup=jsSwitchBlockBrace start=+{+ end=+}+ contained contains=jsCaseStatement,jsDefaultStatement
+syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
 
 syntax keyword jsBreak break
 syntax keyword jsContinue continue
 syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsDefault default contained
-syntax match   jsSwitchColon +:+ contained skipwhite skipempty nextgroup=js.*
-syntax region  jsCaseStatement start=+\<case\>+ end=+:+ contained contains=jsCase,jsSwitchColon
-syntax region  jsCaseStatement start=+\<default\>+ end=+:+ contained contains=jsDefault
+syntax match   jsSwitchColon +:+ contained
+syntax region  jsCaseStatement start=+\<\(case\|default\)\>+ end=+:+ contains=jsCase,jsDefault,jsSwitchColon keepend
 
 syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 
@@ -254,6 +251,7 @@ highlight default link jsElse Keyword
 highlight default link jsSwitch Keyword
 highlight default link jsCase Keyword
 highlight default link jsDefault Keyword
+highlight default link jsSwitchColon jsColon
 
 highlight default link jsBreak Keyword
 highlight default link jsContinue Keyword
