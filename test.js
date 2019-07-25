@@ -1,7 +1,7 @@
 // Module test cases
 import defaultExport from "module-name";
 import * as name from "module-name";
-import { export1 } from "module-name";
+import { export1 /* comment*/ } from "module-name";
 import { export1 as alias } from "module-name";
 import { export1 , export2 } from "module-name";
 import { foo , bar } from "module-name/path/to/specific/un-exported/file";
@@ -137,8 +137,10 @@ async function test () {
   const b = {};
   a instanceof 3
   const a = {
-    prop1: 1,
-    "prop2": 2,
+    // Comment
+    /* comment */
+    prop1: 1, // Comment
+    "prop2": 2, /* comment */
     33: 3,
     shorthand,
     [foo + bar]: "computed",
