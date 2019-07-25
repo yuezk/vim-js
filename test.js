@@ -235,6 +235,21 @@ if (a > 0 && b < 0 && a[0] > 0
 	console.log('else');
 }
 
+switch (expression) {
+	case 1:
+		console.log('hello');
+		break;
+	case "hello":
+		console.log('hello');
+		break;
+	case "world":
+	case foo:
+	case bar:
+		break;	
+	default:
+		break;
+}
+
 const myVariable = "hello world";
 const checkHightlighting = funcCall(({
   firstVariable,

@@ -154,11 +154,17 @@ syntax region  jsCondition matchgroup=jsConditionBrace start=+(+ end=+)+ contain
 syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}+ contained contains=TOP
 
 " Switch statements
-syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
-syntax keyword jsCase case skipwhite skipempty
-syntax keyword jsDefault default skipwhite skipempty nextgroup=jsColon
+syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsSwitchExpression
+syntax region  jsSwitchExpression matchgroup=jsSwitchExpressionBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsSwitchBlock
+syntax region  jsSwitchBlock matchgroup=jsSwitchBlockBrace start=+{+ end=+}+ contained contains=jsCaseStatement,jsDefaultStatement
+
 syntax keyword jsBreak break
 syntax keyword jsContinue continue
+syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
+syntax keyword jsDefault default contained
+syntax match   jsSwitchColon +:+ contained skipwhite skipempty nextgroup=js.*
+syntax region  jsCaseStatement start=+\<case\>+ end=+:+ contained contains=jsCase,jsSwitchColon
+syntax region  jsCaseStatement start=+\<default\>+ end=+:+ contained contains=jsDefault
 
 syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 
@@ -245,6 +251,12 @@ highlight default link jsAssignmentEqual Operator
 " Conditional Statements
 highlight default link jsIf Keyword
 highlight default link jsElse Keyword
+highlight default link jsSwitch Keyword
+highlight default link jsCase Keyword
+highlight default link jsDefault Keyword
+
+highlight default link jsBreak Keyword
+highlight default link jsContinue Keyword
 
 
 let b:current_syntax = "javascript"
