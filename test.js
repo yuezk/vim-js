@@ -19,6 +19,7 @@ var a1 = 1, a3;
 var a = { a: 1 }, c;
 
 const a = (1 + 2) / 3;
+const a = a > 0 ? a : b;
 
 var arr = [];
 var arr = [a1, 1, false, null];
@@ -300,6 +301,49 @@ do {
 while (theMark == true) {
    doSomething();
 }
+
+label:
+	const a = b;
+
+label: {
+	const hello = world;
+}
+
+var x = 0;
+var z = 0;
+labelCancelLoops: while (true) {
+  console.log('Outer loops: ' + x);
+  x += 1;
+  z = 1;
+  while (true) {
+    console.log('Inner loops: ' + z);
+    z += 1;
+    if (z === 10 && x === 10) {
+      break labelCancelLoops;
+    } else if (z === 10) {
+      continue labelCancelLoops;
+    }
+  }
+}
+
+var i = 0;
+var j = 10;
+checkiandj:
+  while (i < 4) {
+    console.log(i);
+    i += 1;
+    checkj:
+      while (j > 4) {
+        console.log(j);
+        j -= 1;
+        if ((j % 2) == 0) {
+          continue checkj;
+        }
+        console.log(j + ' is odd.');
+      }
+      console.log('i = ' + i);
+      console.log('j = ' + j);
+  }
 
 const myVariable = "hello world";
 const checkHightlighting = funcCall(({

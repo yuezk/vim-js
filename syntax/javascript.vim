@@ -19,7 +19,6 @@ syntax sync fromstart
 " syntax case ignore
 syntax case match
 
-
 " Tokens
 " IdenfierName
 syntax match jsSemicolon +;+ display
@@ -79,7 +78,7 @@ syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+
 
 " Code block
 syntax region  jsBlock matchgroup=jsBlockBrace start=+{+ end=+}+ contains=TOP extend fold
-syntax region  jsParen matchgroup=jsParenBrace start=+(+ end=+)+ contains=@jsExpression,@jsOperators,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsArrow,jsParen,jsAssignmentEqual,jsAccessor
+syntax region  jsParen matchgroup=jsParenBrace start=+(+ end=+)+ contains=@jsExpression,@jsOperators,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsArrow,jsParen,jsAccessor
 
 " Array
 syntax region  jsArray matchgroup=jsArrayBrace start=+\[+ end=+]+ contains=@jsExpression,@jsOperators,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor
@@ -155,6 +154,10 @@ syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}
 
 " Switch statements
 syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
+syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
+syntax keyword jsDefault default contained
+syntax match   jsSwitchColon +:+ contained
+syntax region  jsCaseStatement start=+\<\(case\|default\)\>+ end=+:+ contains=jsComment,jsCase,jsDefault,jsSwitchColon keepend
 
 " Loops
 syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
@@ -165,12 +168,11 @@ syntax region  jsLoopBlock matchgroup=jsLoopBrace start=+{+ end=+}+ contained co
 syntax keyword jsDo do skipwhite skipempty nextgroup=jsLoopBlock
 syntax keyword jsWhile while skipwhite skipempty nextgroup=jsLoopCondition
 
-syntax keyword jsBreak break
-syntax keyword jsContinue continue
-syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
-syntax keyword jsDefault default contained
-syntax match   jsSwitchColon +:+ contained
-syntax region  jsCaseStatement start=+\<\(case\|default\)\>+ end=+:+ contains=jsComment,jsCase,jsDefault,jsSwitchColon keepend
+syntax keyword jsBreak break skipwhite skipempty nextgroup=jsLabelText
+syntax keyword jsContinue continue skipwhite skipempty nextgroup=jsLabelText
+
+syntax match   jsLabel +\<\K\k*\>\_s*:+ contains=jsColon,jsLabelText skipwhite skipempty nextgroup=jsBlock,jsFor,jsDo,jsWhile display
+syntax match   jsLabelText +\<\K\k*\>+ contained
 
 syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 
@@ -270,6 +272,7 @@ highlight default link jsFor Keyword
 highlight default link jsOf Keyword
 highlight default link jsDo Keyword
 highlight default link jsWhile Keyword
+highlight default link jsLabelText Identifier
 
 
 let b:current_syntax = "javascript"
