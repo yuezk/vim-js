@@ -156,6 +156,15 @@ syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}
 " Switch statements
 syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
 
+" Loops
+syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
+syntax keyword jsOf of skipwhite skipempty nextgroup=@jsExpression
+syntax region  jsLoopCondition matchgroup=jsLoopConditionBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsOf,jsVariableType,jsSemicolon skipwhite skipempty nextgroup=jsLoopBlock
+syntax region  jsLoopBlock matchgroup=jsLoopBrace start=+{+ end=+}+ contained contains=TOP skipwhite skipempty nextgroup=jsWhile
+
+syntax keyword jsDo do skipwhite skipempty nextgroup=jsLoopBlock
+syntax keyword jsWhile while skipwhite skipempty nextgroup=jsLoopCondition
+
 syntax keyword jsBreak break
 syntax keyword jsContinue continue
 syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
@@ -255,6 +264,12 @@ highlight default link jsSwitchColon jsColon
 
 highlight default link jsBreak Keyword
 highlight default link jsContinue Keyword
+
+" Loops
+highlight default link jsFor Keyword
+highlight default link jsOf Keyword
+highlight default link jsDo Keyword
+highlight default link jsWhile Keyword
 
 
 let b:current_syntax = "javascript"

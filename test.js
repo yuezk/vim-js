@@ -60,7 +60,7 @@ function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
 	];
 	const [a,b,...rest] = [1, 2]
 	const {hello: [a = 3, b, { d }], world: {hello: world}} = {foo: foo, bar: 'ddd', test}
-	({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
+	// ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
 
 }
 
@@ -129,7 +129,7 @@ class Square extends Polygon {
 
   set area(value) {
     this.area = value;
-  } 
+  }
 }
 
 async function test () {
@@ -223,6 +223,8 @@ const func = funcCall(({
 	return fun();
 }, 1);
 
+if (a > 0) return null;
+
 if (a > 0 && b < 0 && a[0] > 0
 	|| (a() > 0) && [0, 1].length > 0
 	&& a in 'string'
@@ -249,9 +251,54 @@ switch (expression) {
 	case "world":
 	case foo:
 	case bar:
-		break;	
+		break;
 	default:
 		break;
+}
+
+for (;;) console.log('hello');
+
+for (var i = 0; i < 100; i++) {
+	// Comment
+	switch (expression) {
+		case 1:
+			console.log('hello');
+			break;
+		case "hello":
+			console.log('hello');
+			break;
+		case "world":
+		case foo:
+		case bar:
+			break;
+		default:
+			break;
+	}
+}
+
+var arr = [3, 5, 7];
+arr.foo = 'hello';
+
+for (var i in arr) {
+   console.log(i); // logs "0", "1", "2", "foo"
+}
+
+for (var i of arr) {
+   console.log(i); // logs 3, 5, 7
+}
+
+var a = 0;
+do
+  console.log(a++)
+while (a < 0);
+
+do {
+  const b = 0;
+  console.log(a++)
+} while (a < 0);
+
+while (theMark == true) {
+   doSomething();
 }
 
 const myVariable = "hello world";
