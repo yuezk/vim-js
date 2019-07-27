@@ -140,40 +140,43 @@ async function test () {
   const b = {};
   a instanceof 3
   const a = {
-    // Comment
-    /* comment */
-    prop1: 1, // Comment
-    "prop2": 2, /* comment */
-    33: 3,
-    shorthand,
-    [foo + bar]: "computed",
-    func: function () {
-    },
-    funcArrow: () => {
-    },
-    funcShort() {
-    },
-    async funcShort() {
-    },
-    [foo + bar]() {
-	    return "computed";
-    },
-    void: new Date(),
-    delete: 'hello',
-    *generator() {},
-    *[Symbol.iterator]() {
-    },
-    get name() {
-    },
-    get [computed]() {
-    },
-    set name(a) {
-    },
-    set [computed]() {
-    },
-    type: typeof 3,
-    prop: await 3,
-    ...b,
+    key: {
+	    // Comment
+	    /* comment */
+	    prop1: 1, // Comment
+	    "prop2": 2, /* comment */
+	    33: 3,
+	    shorthand,
+	    [foo + bar]: `computed${hello + world}b`,
+	    func: function () {
+	    },
+	    funcArrow: () => {
+	    },
+	    funcShort() {
+	    },
+	    async funcShort() {
+	    },
+	    [foo + bar]() {
+		    return "computed";
+	    },
+	    void: new Date(),
+	    delete: 'hello',
+	    *generator() {},
+	    *[Symbol.iterator]() {
+	    },
+	    get name() {
+	    },
+	    get [computed]() {
+	    },
+	    set name(a) {
+	    },
+	    set [computed]() {
+		    // 0000
+	    },
+	    type: typeof 3,
+	    prop: await 3,
+	    ...b,
+	  }
   };
 }
 
