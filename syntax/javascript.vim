@@ -180,8 +180,9 @@ syntax keyword jsCatch catch skipwhite skipempty nextgroup=jsBlock,jsParen
 syntax keyword jsFinally finally skipwhite skipempty nextgroup=jsBlock
 syntax keyword jsThrow throw skipwhite skipempty nextgroup=@jsExpression
 
-" syntax keyword jsConditional if else switch case default
-" syntax keyword jsClassDeclare class
+" with
+syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithParen
+syntax region  jsWithParen matchgroup=jsWithBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsBlock
 
 " Operators
 highlight default link jsUnaryOperator Keyword
