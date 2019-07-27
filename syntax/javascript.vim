@@ -61,7 +61,7 @@ syntax match   jsModuleComma +,+ contained skipwhite skipempty nextgroup=jsModul
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
 syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell extend keepend
 syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell extend fold
-" syntax region  jsEnvComment start=/\%^#!/ end=/$/ display
+syntax region  jsHashbangComment start=+\%^#!+ end=+$+ display
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
@@ -249,6 +249,7 @@ highlight default link jsModuleName jsVariable
 
 " Comments
 highlight default link jsComment Comment
+highlight default link jsHashbangComment PreProc
 highlight default link jsCommentTodo Todo
 
 " Declaration

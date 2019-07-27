@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Module test cases
 import defaultExport from "module-name";
 import * as name from "module-name";
