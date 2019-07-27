@@ -110,7 +110,7 @@ syntax keyword jsExtends extends contained skipwhite skipempty nextgroup=jsClass
 syntax keyword jsConstructor constructor contained
 syntax keyword jsSuper super contained skipwhite skipempty nextgroup=jsAccessor
 syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassProp,jsMethod
-syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody display
+syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody
 syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsAsync,jsStatic,jsSetter,jsGetter,jsClassProp,jsMethod,jsComment,jsGeneratorAsterisk,jsComputed extend fold
 syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsAssignmentEqual display
 
