@@ -128,7 +128,7 @@ syntax region  jsFunctionBody matchgroup=jsFunctionBodyBrace start=+{+ end=+}+ c
 syntax match   jsArrow +=>+ contained skipwhite skipempty nextgroup=@jsExpression,jsFunctionBody display
 
 " Object method
-syntax match   jsMethod +\<\K\k*\>\(\_s*(\)\@=+ contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs display
+syntax match   jsMethod +\<\K\k*\>\ze\s*(+ contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs display
 syntax keyword jsGetter get contained skipwhite skipempty nextgroup=jsMethod
 syntax keyword jsSetter set contained skipwhite skipempty nextgroup=jsMethod
 
@@ -141,8 +141,8 @@ syntax match   jsYieldAsterisk +\*+ contained skipwhite skipempty nextgroup=@jsE
 syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYieldAsterisk
 
 " Function Call
-syntax region  jsFunctionCall start=+\<\K\k*\(\.\K\k*\)*\>\(\_s*(\)\@=+ end=+)\@1<=+ contains=jsFunctionCallName skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen
-syntax match   jsFunctionCallName +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen display
+syntax region  jsFunctionCall start=+\<\K\k*\(\.\K\k*\)*\>\ze\s*(+ end=+)\@1<=+ contains=jsFunctionCallName skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen
+syntax match   jsFunctionCallName +\<\K\k*\>\ze\s*(+ contained contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen display
 syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor
 
 " Loops
