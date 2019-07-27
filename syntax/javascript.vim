@@ -65,7 +65,7 @@ syntax region  jsHashbangComment start=+\%^#!+ end=+$+ display
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsVariable +\<\K\k*\>+ contains=jsRelationalOperator skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
+syntax match   jsVariable +\<\K\k*\>+ skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
 
 " Strings, Literals, Numbers
 syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor
@@ -145,20 +145,6 @@ syntax region  jsFunctionCall start=+\<\K\k*\(\.\K\k*\)*\>\(\_s*(\)\@=+ end=+)\@
 syntax match   jsFunctionCallName +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen display
 syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor
 
-" Control flow
-" If statements
-syntax keyword jsIf if skipwhite skipempty nextgroup=jsCondition,jsConditionalBlock
-syntax keyword jsElse else skipwhite skipempty nextgroup=jsIf,jsConditionalBlock
-syntax region  jsCondition matchgroup=jsConditionBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsConditionalBlock
-syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}+ contained contains=TOP
-
-" Switch statements
-syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
-syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
-syntax keyword jsDefault default contained
-syntax match   jsSwitchColon +:+ contained
-syntax region  jsCaseStatement start=+\<\(case\|default\)\>+ end=+:+ contains=jsComment,jsCase,jsDefault,jsSwitchColon keepend
-
 " Loops
 syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
 syntax keyword jsOf of skipwhite skipempty nextgroup=@jsExpression
@@ -175,7 +161,24 @@ syntax match   jsLabel +\<\K\k*\>\_s*:+ contains=jsColon,jsLabelText skipwhite s
 syntax match   jsLabelText +\<\K\k*\>+ contained
 
 syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
+" If statements
+syntax keyword jsIf if skipwhite skipempty nextgroup=jsCondition,jsConditionalBlock
+syntax keyword jsElse else skipwhite skipempty nextgroup=jsIf,jsConditionalBlock
+syntax region  jsCondition matchgroup=jsConditionBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsConditionalBlock
+syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}+ contained contains=TOP
 
+" Switch statements
+syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
+syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
+syntax keyword jsDefault default contained
+syntax match   jsSwitchColon +:+ contained
+syntax region  jsCaseStatement start=+\<\(case\|default\)\>+ end=+:+ contains=jsComment,jsCase,jsDefault,jsSwitchColon keepend
+
+" Exceptions
+syntax keyword jsTry try skipwhite skipempty nextgroup=jsBlock
+syntax keyword jsCatch catch skipwhite skipempty nextgroup=jsBlock,jsParen
+syntax keyword jsFinally finally skipwhite skipempty nextgroup=jsBlock
+syntax keyword jsThrow throw skipwhite skipempty nextgroup=@jsExpression
 
 " syntax keyword jsConditional if else switch case default
 " syntax keyword jsClassDeclare class
@@ -232,7 +235,6 @@ highlight default link jsStatic Keyword
 highlight default link jsClassName Identifier
 highlight default link jsClassProp Identifier
 
-
 " Object
 highlight default link jsObjectKey Identifier
 highlight default link jsObjectKeyString String
@@ -275,6 +277,11 @@ highlight default link jsDo Keyword
 highlight default link jsWhile Keyword
 highlight default link jsLabelText Identifier
 
+" Exceptions
+highlight default link jsTry Keyword
+highlight default link jsCatch Keyword
+highlight default link jsFinally Keyword
+highlight default link jsThrow Keyword
 
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'

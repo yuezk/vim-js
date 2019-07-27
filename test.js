@@ -363,6 +363,19 @@ const checkHightlighting = funcCall(({
 },
 [myVariable]);
 
+try {
+  myroutine(); // may throw three types of exceptions
+} catch (e if e instanceof TypeError) {
+  // statements to handle TypeError exceptions
+} catch (e if e instanceof RangeError) {
+  // statements to handle RangeError exceptions
+} catch (e if e instanceof EvalError) {
+  // statements to handle EvalError exceptions
+} catch (e) {
+  // statements to handle any unspecified exceptions
+  throw new Error();
+}
+
 let name5;
 
 export var name1, name2;
