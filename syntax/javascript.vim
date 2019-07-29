@@ -70,8 +70,10 @@ syntax match   jsVariable +\<\K\k*\>+ contains=@jsReservedWords skipwhite skipem
 
 " Strings, Literals, Numbers
 syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor
+syntax match   jsTemplateStringTag +\<\K\k*\>\(\_s*`\)\@=+ skipwhite skipempty nextgroup=jsTemplateString
 syntax region  jsTemplateString start=+`+ skip=+\\`+ end=+`+ contains=jsTemplateExpression,@Spell skipwhite skipempty nextgroup=jsAccessor
 syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\\\@1<!${+ end=+}+ contained contains=@jsExpression,@jsOperators
+
 syntax keyword jsValueKeyword undefined null NaN true false Infinity skipwhite skipempty nextgroup=jsAccessor
 syntax match   jsNumber +\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>+ skipwhite skipempty nextgroup=jsAccessor display
 syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+ skipwhite skipempty nextgroup=jsAccessor display
@@ -189,7 +191,7 @@ syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithParen
 syntax region  jsWithParen matchgroup=jsWithBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsBlock
 
 syntax cluster jsReservedWords contains=jsAwait,jsBreak,jsCase,jsCatch,jsClass,jsVariableType,jsContinue,jsDebugger,jsDefault,jsUnaryOperator,jsDo,jsElse,jsExport,jsExtends,jsFinally,jsFor,jsFunction,jsIf,jsImport,jsRelationalOperator,jsReturn,jsStatic,jsSuper,jsSwitch,jsThis,jsThrow,jsTry,jsWhile,jsWith,jsYield
-syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
+syntax cluster jsExpression contains=jsComment,jsString,jsTemplateStringTag,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 
 " Operators
 highlight default link jsUnaryOperator Keyword
@@ -210,6 +212,7 @@ highlight default link jsSpread Operator
 highlight default link jsParensError Error
 
 highlight default link jsString String
+highlight default link jsTemplateStringTag Identifier
 highlight default link jsTemplateString String
 highlight default link jsTemplateBrace Keyword
 highlight default link jsValueKeyword Constant

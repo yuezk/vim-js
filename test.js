@@ -38,6 +38,11 @@ var arr = [
 
 var a1 = arr[1];
 
+const str = tag`<div></div>`;
+const str2 = String.raw`hello, ${world}`;
+const str2 = String().raw`hello, ${world}`;
+const str2 = String['hello'].raw`hello, ${world}`;
+
 // Functions
 function test() {
 	const str = "}";
