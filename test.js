@@ -39,6 +39,7 @@ var arr = [
 var a1 = arr[1];
 
 const str = tag`<div></div>`;
+const str = tag()`<div></div>`;
 const str2 = String.raw`hello, ${world}`;
 const str2 = String().raw`hello, ${world}`;
 const str2 = String['hello'].raw`hello, ${world}`;
@@ -46,7 +47,7 @@ const str2 = String['hello'].raw`hello, ${world}`;
 // Functions
 function test() {
 	const str = "}";
-	return func();
+	return Math.min([1, 2]);
 }
 
 function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
@@ -69,7 +70,60 @@ function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
 	const [a,b,...rest] = [1, 2]
 	const {hello: [a = 3, b, { d }], world: {hello: world}} = {foo: foo, bar: 'ddd', test}
 	// ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
+	// 0000000000
 }
 
 function* gen() {
@@ -106,7 +160,8 @@ class Square extends Polygon {
   /* Comments */
   static className = 'Square';
   length = 0;
-  name;
+  name
+  foo = bar;
   ['foo' + 'bar'] = 1
 
   constructor(length) {
@@ -138,6 +193,13 @@ class Square extends Polygon {
   set area(value) {
     this.area = value;
   }
+
+  foo = () => get();
+  bar = a => a[0]
+
+  getAccountIds = () => this.props.filter.get('accountsIds')
+	  ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
+	  : this.props.accountsFilter;
 }
 
 async function test () {
@@ -181,6 +243,9 @@ async function test () {
 	    type: typeof 3,
 	    prop: await 3,
 	    ...b,
+	    getAccountIds: () => this.props.filter.get('accountsIds')
+	    ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
+	    : this.props.accountsFilter;
 	  }
   };
 }
@@ -410,3 +475,4 @@ export { default } from "other-module";
 export * from "other-module";
 export { name8, name9 } from "other-module";
 export { import1 as name10, import2 as name12, nameN } from "other-module";
+
