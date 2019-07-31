@@ -80,7 +80,7 @@ syntax keyword jsValueKeyword undefined null NaN true false Infinity skipwhite s
 syntax match   jsNumber +\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>+ skipwhite skipempty nextgroup=jsAccessor display
 syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+ skipwhite skipempty nextgroup=jsAccessor display
 
-" Code block
+" Code blocks
 syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
 syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpression,@jsOperators,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsArrow,jsParen,jsAccessor
 
@@ -104,7 +104,7 @@ syntax region  jsArrayDestructuring matchgroup=jsDestructuringBrace start=+\[+ e
 " Object Destructuring
 " Cases like ({a, b} = {a: 1, b: 2}) and the object destructuring in the arrow function arguments cannot be highlighted
 " as object destructuring, they are highlighted as Object, but it doesn't break the syntax
-syntax region  jsObjectDestructuring matchgroup=jsDestructuringBrace start=+{+ end=+}+ contained contains=jsComment,jsObjectDestructuringKey,jsVariable,jsComma,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual
+syntax region  jsObjectDestructuring matchgroup=jsDestructuringBrace start=+{+ end=+}+ contained contains=jsComment,jsObjectDestructuringKey,jsVariable,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual
 syntax match   jsObjectDestructuringKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsAssignmentEqual,jsObjectDestructuringColon display
 syntax match   jsObjectDestructuringColon +:+ contained skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring display
 

@@ -68,7 +68,7 @@ function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
 		[,,,],
 	];
 	const [a,b,...rest] = [1, 2]
-	const {hello: [a = 3, b, { d }], world: {hello: world}} = {foo: foo, bar: 'ddd', test}
+	const {hello: [a = 3, b, { d }], world: {hello: world}, foo = [{key: 1}], bar = { hello: 'world' }} = {foo: foo, bar: 'ddd', test}
 	// ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
 	//
 	//
