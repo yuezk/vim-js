@@ -45,13 +45,13 @@ syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
 " REFERENCE:
 "   - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
 "   - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export
-syntax keyword jsImport import skipwhite skipempty nextgroup=jsModuleName,jsModuleAsterisk,jsModuleBlock,jsString
-syntax keyword jsExport export skipwhite skipempty nextgroup=jsVariableType,jsFunction,jsClass,jsModuleBlock,jsModuleDefault,jsModuleAsterisk
+syntax keyword jsImport import skipwhite skipempty nextgroup=jsModuleName,jsModuleAsterisk,jsModuleBlock,jsString,jsDecoratorName
+syntax keyword jsExport export skipwhite skipempty nextgroup=jsVariableType,jsFunction,jsClass,jsDecorator,jsModuleBlock,jsModuleDefault,jsModuleAsterisk
 syntax keyword jsFrom from contained skipwhite skipempty nextgroup=jsString
 syntax keyword jsModuleDefault default contained skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsModuleAsterisk +\*+ contained skipwhite skipempty nextgroup=jsModuleAs,jsFrom display
 syntax keyword jsModuleAs as contained skipwhite skipempty nextgroup=jsModuleName
-syntax region  jsModuleBlock matchgroup=jsModuleBrace start=+{+ end=+}+ contained contains=jsModuleName,jsModuleComma,jsComment skipwhite skipempty nextgroup=jsFrom
+syntax region  jsModuleBlock matchgroup=jsModuleBrace start=+{+ end=+}+ contained contains=jsModuleName,jsModuleComma,jsComment,jsDecoratorName skipwhite skipempty nextgroup=jsFrom
 syntax match   jsModuleName +\<\K\k*\>+ contained contains=jsModuleDefault skipwhite skipempty nextgroup=jsFrom,jsModuleComma,jsModuleAs display
 syntax match   jsModuleComma +,+ contained skipwhite skipempty nextgroup=jsModuleBlock,jsModuleName,jsModuleAsterisk display
 
@@ -115,8 +115,15 @@ syntax keyword jsConstructor constructor contained
 syntax keyword jsSuper super contained skipwhite skipempty nextgroup=jsAccessor
 syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassProp,jsMethod
 syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody
-syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,@jsOperators extend fold
+syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,@jsOperators,jsDecoratorName,jsDecoratorParams extend fold
 syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsAssignmentEqual display
+
+" Decorator
+" REFERENCE: https://github.com/tc39/proposal-decorators
+syntax keyword jsDecorator decorator skipwhite skipempty nextgroup=jsDecoratorName
+syntax match   jsDecoratorName +@\K\k*+ skipwhite skipempty nextgroup=jsDecoratorBlock,jsDecoratorParams
+syntax region  jsDecoratorParams matchgroup=jsDecoratorParens start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread nextgroup=jsDecoratorBlock
+syntax region  jsDecoratorBlock matchgroup=jsDecoratorBraces start=+{+ end=+}+ contained contains=jsDecoratorName,jsDecoratorParams
 
 " Function
 syntax keyword jsAsync async skipwhite skipempty nextgroup=jsFunction,jsFunctionArgs,jsGeneratorAsterisk,jsComputed
@@ -240,6 +247,10 @@ highlight default link jsSuper Keyword
 highlight default link jsStatic Keyword
 highlight default link jsClassName Identifier
 highlight default link jsClassProp Identifier
+
+" Decorator
+highlight default link jsDecorator Keyword
+highlight default link jsDecoratorName Type
 
 " Object
 highlight default link jsObjectKey Identifier

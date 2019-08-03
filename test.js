@@ -11,6 +11,8 @@ import { export1 , export2 as alias2 } from "module-name";
 import defaultExport, { export1, export2 } from "module-name";
 import defaultExport, * as name from "module-name";
 import "module-name";
+import { @logged } from './logged';
+import @logged2 from './logged2';
 
 var promise = import("module-name");
 
@@ -151,18 +153,31 @@ const e = async (a, b) => {
 ((a, b) => {
 })();
 
-const cls = class {
+const cls = @logged class {
 };
 
+decorator @localMeta { @metadata("key", "value") }
+
+@localMeta class C {
+  @localMeta method() { }
+}
+
 // Classes
+@defineElement('my-class')
 class Square extends Polygon {
   // Comments
   /* Comments */
   static className = 'Square';
+  @metadata
   length = 0;
   name
   foo = bar;
   ['foo' + 'bar'] = 1
+  
+  @logged(1)
+  @logged(2)
+  set x(value) {
+  }
 
   constructor(length) {
     // Here, it calls the parent class' constructor with lengths
@@ -476,3 +491,19 @@ export * from "other-module";
 export { name8, name9 } from "other-module";
 export { import1 as name10, import2 as name12, nameN } from "other-module";
 
+export decorator @logged {
+  @wrap(f => {
+    const name = f.name;
+    function wrapped(...args) {
+      console.log(`starting ${name} with arguments ${args.join(", ")}`);
+      f.call(this, ...args);
+      console.log(`ending ${name}`);
+    }
+    wrapped.name = name;
+    return wrapped;
+  })
+}
+
+export decorator @defineElement(name, options) {
+  @register(klass => customElements.define(name, klass, options))
+}
