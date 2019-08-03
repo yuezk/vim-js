@@ -212,7 +212,7 @@ class Square extends Polygon {
   foo = () => get();
   bar = a => a[0]
 
-  getAccountIds = () => this.props.filter.get('accountsIds')
+  getAccountIds = () => this?.props.filter.get('accountsIds')
 	  ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
 	  : this.props.accountsFilter;
 }
@@ -258,8 +258,8 @@ async function test () {
 	    type: typeof 3,
 	    prop: await 3,
 	    ...b,
-	    getAccountIds: () => this.props.filter.get('accountsIds')
-	    ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
+	    getAccountIds: () => this?.props?.filter.get('accountsIds')
+	    ? this.props?.filter?.get('accountIds')?.concat(this.props.accountFilter)?.toJS()
 	    : this.props.accountsFilter;
 	  }
   };
@@ -398,6 +398,12 @@ label:
 label: {
 	const hello = world;
 }
+
+func()?.prop
+obj?.prop       // optional static property access
+obj?.[expr]     // optional dynamic property access
+obj?.b()
+Math.func?.(...args) // optional function or method call
 
 var x = 0;
 var z = 0;

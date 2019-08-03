@@ -41,6 +41,8 @@ syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhit
 
 syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
 
+syntax match   jsOptionalOperator +?\.+ skipwhite skipempty nextgroup=jsVariable,jsAccessor,jsFunctionCall,jsFunctionCallParen display
+
 " Modules
 " REFERENCE:
 "   - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
@@ -65,7 +67,7 @@ syntax region  jsHashbangComment start=+\%^#!+ end=+$+ display
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsVariable,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsVariable +\<\K\k*\>+ contains=@jsReservedWords,jsTemplateStringTag skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor display
+syntax match   jsVariable +\<\K\k*\>+ contains=@jsReservedWords,jsTemplateStringTag skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor,jsOptionalOperator display
 
 " Strings
 syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor
@@ -88,7 +90,7 @@ syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpress
 syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpression,@jsOperators,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor
 
 " Object
-syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained contains=jsComment,jsVariable,jsObjectKey,jsObjectKeyString,jsTemplateString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread,jsDot,@jsOperators,jsObject
+syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained contains=jsComment,jsVariable,jsObjectKey,jsObjectKeyString,jsTemplateString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread,jsDot,jsOptionalOperator,@jsOperators,jsObject
 syntax match   jsObjectKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsColon display
 syntax match   jsObjectKey +\d\++ contained skipwhite skipempty nextgroup=jsColon display
 syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
@@ -115,7 +117,7 @@ syntax keyword jsConstructor constructor contained
 syntax keyword jsSuper super contained skipwhite skipempty nextgroup=jsAccessor
 syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassProp,jsMethod
 syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody
-syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,@jsOperators,jsDecoratorName,jsDecoratorParams extend fold
+syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,jsOptionalOperator,@jsOperators,jsDecoratorName,jsDecoratorParams extend fold
 syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsAssignmentEqual display
 
 " Decorator
@@ -151,7 +153,7 @@ syntax match   jsYieldAsterisk +\*+ contained skipwhite skipempty nextgroup=@jsE
 syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYieldAsterisk
 
 " Function Call
-syntax match   jsFunctionCall +\<\K\k*\>\(\_s*(\)\@=+ contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsFunctionCallParen
+syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallParen
 syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor
 
 " Loops
@@ -206,6 +208,7 @@ highlight default link jsOperatorConditional Operator
 highlight default link jsOperatorAssignment Operator
 
 highlight default link jsRelationalOperator Keyword
+highlight default link jsOptionalOperator Operator
 
 " highlight default link jsVariable Ignore
 highlight default link jsSemicolon Operator
