@@ -80,8 +80,8 @@ syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\\\@1<!${+
 syntax keyword jsValueKeyword undefined null NaN true false Infinity skipwhite skipempty nextgroup=jsAccessor
 
 " Numbers
-syntax match   jsNumber +\c\<\%(\d\+\%(e[+-]\=\d\+\)\=\|0b[01]\+\|0o\o\+\|0x\x\+\)\>+ skipwhite skipempty nextgroup=jsAccessor display
-syntax match   jsFloat +\c\<\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%(e[+-]\=\d\+\)\=\>+ skipwhite skipempty nextgroup=jsAccessor display
+" REFERENCE: http://www.ecma-international.org/ecma-262/10.0/index.html#prod-NumericLiteral
+syntax match   jsNumber +\c[+-]\?\%(0b[01]\+\|0o\o\+\|0x\x\+\|\%(\%(\%(0\|[1-9]\d*\)\.\d*\|\.\d\+\|\%(0\|[1-9]\d*\)\)\%(e[+-]\?\d\+\)\?\)\)+ skipwhite skipempty nextgroup=jsAccessor display
 
 " Code blocks
 syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
@@ -197,7 +197,7 @@ syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithParen
 syntax region  jsWithParen matchgroup=jsWithBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsBlock
 
 syntax cluster jsReservedWords contains=jsAwait,jsBreak,jsCase,jsCatch,jsClass,jsVariableType,jsContinue,jsDebugger,jsDefault,jsUnaryOperator,jsDo,jsElse,jsExport,jsExtends,jsFinally,jsFor,jsFunction,jsIf,jsImport,jsRelationalOperator,jsReturn,jsStatic,jsSuper,jsSwitch,jsThis,jsThrow,jsTry,jsWhile,jsWith,jsYield
-syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsFloat,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
+syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsValueKeyword,jsNumber,jsArray,jsObject,jsVariable,jsAsync,jsAwait,jsYield,jsThis,jsSuper,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 
 " Operators
 highlight default link jsUnaryOperator Keyword
@@ -225,7 +225,6 @@ highlight default link jsTemplateString String
 highlight default link jsTemplateBrace Keyword
 highlight default link jsValueKeyword Constant
 highlight default link jsNumber Number
-highlight default link jsFloat Number
 
 " Functions
 highlight default link jsAsync Keyword
