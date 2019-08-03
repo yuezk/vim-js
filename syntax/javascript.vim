@@ -42,6 +42,7 @@ syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhit
 syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
 
 syntax match   jsOptionalOperator +?\.+ skipwhite skipempty nextgroup=jsVariable,jsAccessor,jsFunctionCall,jsFunctionCallParen display
+syntax match   jsNullishOperator +??+ skipwhite skipwhite nextgroup=@jsExpression display
 
 " Modules
 " REFERENCE:
@@ -209,6 +210,7 @@ highlight default link jsOperatorAssignment Operator
 
 highlight default link jsRelationalOperator Keyword
 highlight default link jsOptionalOperator Operator
+highlight default link jsNullishOperator Operator
 
 " highlight default link jsVariable Ignore
 highlight default link jsSemicolon Operator

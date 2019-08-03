@@ -405,6 +405,8 @@ obj?.[expr]     // optional dynamic property access
 obj?.b()
 Math.func?.(...args) // optional function or method call
 
+const a = b ?? 'hello';
+
 var x = 0;
 var z = 0;
 labelCancelLoops: while (true) {
