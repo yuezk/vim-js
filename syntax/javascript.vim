@@ -31,7 +31,7 @@ syntax match   jsParensError +[)}\]]+ display
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
 syntax keyword jsUnaryOperator delete void typeof new skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsRelationalOperator in instanceof skipwhite skipempty nextgroup=@jsExpression
-syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ contained skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorBit +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display

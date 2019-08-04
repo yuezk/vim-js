@@ -68,6 +68,9 @@ const str2 = String.raw`hello, ${world}`;
 const str2 = String().raw`hello, ${world}`;
 const str2 = String['hello'].raw`hello, ${world}`;
 
+++i;
+i++;
+
 // Functions
 function test() {
 	const str = "}";
