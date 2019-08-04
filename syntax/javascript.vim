@@ -97,7 +97,7 @@ syntax match   jsObjectKey +\d\++ contained skipwhite skipempty nextgroup=jsColo
 syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
 
 " Property accessor, e.g., arr[1] or obj["prop"]
-syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen,@jsOperators
+syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen,jsOptionalOperator,@jsOperators
 
 " Array Destructuring
 " Cases like [a, b] = [1, 2] and the array destructuring in the arrow function arguments cannot be highlighted
@@ -155,7 +155,7 @@ syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYield
 
 " Function Call
 syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallParen
-syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,@jsOperators
+syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,jsOptionalOperator,@jsOperators
 
 " Loops
 syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition

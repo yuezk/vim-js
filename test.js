@@ -421,9 +421,10 @@ label: {
 	const hello = world;
 }
 
-func()?.prop
+func()?.prop	/* comment */
 obj?.prop       // optional static property access
 obj?.[expr]     // optional dynamic property access
+obj?.[expr]?.func()     // optional dynamic property access
 obj?.b()
 Math.func?.(...args) // optional function or method call
 
