@@ -24,9 +24,44 @@ var a = { a: 1 }, c;
 
 const a = (1 + 2) / 3;
 const a = a > 0 ? a : b;
+const b = a / b / d;
+
+a /= 3;
+
+function testRegexp() {
+	// Assertions
+	let regex = /First(?= test)/g;
+	console.log(/\d+(?!\.)/g.exec('3.141')); // [ '141', index: 2, input: '3.141' ]
+	let ripe_oranges = oranges.filter( fruit => fruit.match(/(?<=ripe )orange/));
+	/(?<!-)\d+/.exec('3')
+
+	// Boundaries
+	let regex = /^abcd$/;
+	let regex = /\bm/;
+	let regex = /\Bon/;
+
+	let regex = /\n\cM\x33\uDDDD\u{3333}\u{33333}/
+
+	// Groups and Ranges
+	let regex = /(foo)/	
+	let regex = /(?:foo)/	
+	let regex = /(?<name>foo)/
+	let regex = /[^xyz\b\w^$]/
+	let regex = /[-a-z^0-9-()-]?/
+	let regex = /apple(,)\sorange\1/
+
+	let regex = /x{1}y{1,}z{1,2}?/
+
+	let regex = /\\\\\..*\b\w?\{}\?\*\(\)\|\[\]\^\$/
+
+	// Unicode property escapes
+	regex = /\p{Shorthand}/
+	regex = /\p{UnicodePropertyName}/
+	regex = /\p{UnicodePropertyName=UnicodePropertyValue}/
+}
 
 (function () {
-    // const regexp = /^[+-]?(?:(?:(?:(?:0|[1-9]\d*)\.\d*|\.\d+|(?:0|[1-9]\d*))(?:e[+-]?\d+)?)|0b[01]+|0o[0-7]+|0x[0-9a-f]+)$/i;
+    const regexp = /^[+-]?(?:(?:(?:(?:0|[1-9]\d*)\.\d*|\.\d+|(?:0|[1-9]\d*))(?:e[+-]?\d+)?)|0b[01]+|0o[0-7]+|0x[0-9a-f]+)$/i;
 
     const testCases = [
         0., 0.E1, 0.e-1,0.e0, 0.1, 0.12, 0.12e2, 0.12e-2,0.12E0,0.0e1, 0.0e-1, 0.0E0,
@@ -306,7 +341,8 @@ this["hll"];
 }
 
 const another = ({
-	wow = (2 + x) / 10
+	wow = (2 + x) / 10,
+	foo = /test/
 }) => [wow, another]
 
 const a = ({
@@ -339,7 +375,10 @@ const func = funcCall(({
 	return fun();
 }, 1);
 
-if (a > 0) return null;
+const a = a / 3;
+/test/.test('test');
+
+if (a > 0 && a / 3 && /test/.test(a)) return null;
 
 if (a > 0 && b < 0 && a[0] > 0
 	|| (a() > 0) && [0, 1].length > 0
@@ -431,6 +470,8 @@ obj?.[expr]?.func()     // optional dynamic property access
 obj?.b()
 Math.func?.(...args) // optional function or method call
 
+const a = (a + b)
+
 const a = b ?? 'hello';
 
 var x = 0;
@@ -496,6 +537,7 @@ try {
 } catch (e) {
   // statements to handle any unspecified exceptions
   throw new Error();
+} finally {
 }
 
 var a, x, y;

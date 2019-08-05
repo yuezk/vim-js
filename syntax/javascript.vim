@@ -58,6 +58,40 @@ syntax region  jsModuleBlock matchgroup=jsModuleBrace start=+{+ end=+}+ containe
 syntax match   jsModuleName +\<\K\k*\>+ contained contains=jsModuleDefault skipwhite skipempty nextgroup=jsFrom,jsModuleComma,jsModuleAs display
 syntax match   jsModuleComma +,+ contained skipwhite skipempty nextgroup=jsModuleBlock,jsModuleName,jsModuleAsterisk display
 
+" RegExp
+syntax region  jsRegexp matchgroup=jsRegexpSlashes start=+/+ skip=+\\/+ end=+/+ contains=@jsRegexpTokens,jsRegexpError nextgroup=jsRegexpFlags
+syntax match   jsRegexpFlags +[gimsuy]\++ contained display
+syntax match   jsRegexpChars +.+ contained display
+syntax match   jsRegexpError +)+ contained display
+
+syntax match   jsRegexpEscape +\\+ contained nextgroup=jsRegexpChars
+syntax match   jsRegexpOr +|+ contained display
+syntax match   jsRegexpQuantifier +[*?+]+ contained display
+syntax match   jsRegexpQuantifier +{\d\+\%(,\%(\d\+\)\?\)\?}+ contained display
+syntax match   jsRegexpGroupReference +\\\d\++ contained display
+syntax match   jsRegexpRangeHyphen +\[\@1<!-]\@!+ contained display
+syntax match   jsRegexpRangeCaret +\[\@1<=\^+ contained display
+
+syntax match   jsRegexpDot +\.+ contained display
+syntax match   jsRegexpCharacterClass +\\[bBdDwWsStrnvf0]+ contained display
+syntax match   jsRegexpCharacterClass +\\c\u+ contained display
+syntax match   jsRegexpCharacterClass +\\x\x\{2}+ contained display
+syntax match   jsRegexpCharacterClass +\\u\x\{4}+ contained display
+syntax match   jsRegexpCharacterClass +\\u{\x\{4,5}}+ contained display
+
+syntax match   jsRegexpBoundaries +[$^]\|\\[Bb]+ contained display
+
+syntax region  jsRegexpUnicode matchgroup=jsRegexpUnicodeBraces start=+\\p{+ end=+}+ contained contains=jsRegexpUnicodeName
+syntax match   jsRegexpUnicodeName +\K\k*+ contained nextgroup=jsRegexpUnicodeEqual display
+syntax match   jsRegexpUnicodeEqual +=+ contained nextgroup=jsRegexpUnicodeValue display
+syntax match   jsRegexpUnicodeValue +\K\k*+ contained display
+
+syntax region  jsRegexpGroup matchgroup=jsRegexpGroupParens start=+(\%(?\%(:\|<\K\k*>\)\)\?+ end=+)+ contained contains=@jsRegexpTokens
+syntax region  jsRegexpRange matchgroup=jsRegexpRangeBrackets start=+\[+ end=+]+ contained contains=jsRegexpChars,jsRegexpCharacterClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
+syntax region  jsRegexpAssertion matchgroup=jsRegexpAssertionParens start=+(?<\?[=!]+ end=+)+ contained contains=@jsRegexpTokens
+
+syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroupReference,jsRegexpOr,jsRegexpRange,jsRegexpAssertion,jsRegexpBoundaries,jsRegexpQuantifier,jsRegexpEscape,jsRegexpDot,jsRegexpCharacterClass,jsRegexpUnicode
+
 " Comments
 " Comments can be treat as a special expression which produce nothing, so
 " I added it to the expression cluster
@@ -197,7 +231,7 @@ syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithParen
 syntax region  jsWithParen matchgroup=jsWithBrace start=+(+ end=+)+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsBlock
 
 syntax cluster jsGlobalValues contains=jsBuiltinValues,jsThis,jsSuper
-syntax cluster jsExpression contains=jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
+syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
 
 " Operators
 highlight default link jsUnaryOperator Keyword
@@ -225,6 +259,31 @@ highlight default link jsTemplateString String
 highlight default link jsTemplateBrace Keyword
 highlight default link jsBuiltinValues Constant
 highlight default link jsNumber Number
+
+" RegExp
+highlight default link jsRegexpError Error
+highlight default link jsRegexpSlashes Special
+highlight default link jsRegexpFlags Keyword
+highlight default link jsRegexpChars Character
+
+highlight default link jsRegexpQuantifier Special
+highlight default link jsRegexpOr Special
+highlight default link jsRegexpEscape Special
+highlight default link jsRegexpRangeHyphen Special
+highlight default link jsRegexpRangeCaret Special
+highlight default link jsRegexpBoundaries Special
+
+highlight default link jsRegexpDot Keyword
+highlight default link jsRegexpCharacterClass Keyword
+highlight default link jsRegexpUnicodeBraces Special
+highlight default link jsRegexpUnicodeName Keyword
+highlight default link jsRegexpUnicodeEqual Special
+highlight default link jsRegexpUnicodeValue Constant
+
+highlight default link jsRegexpGroupParens Special
+highlight default link jsRegexpGroupReference Keyword
+highlight default link jsRegexpRangeBrackets Special
+highlight default link jsRegexpAssertionParens Special
 
 " Functions
 highlight default link jsAsync Keyword
