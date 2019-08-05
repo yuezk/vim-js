@@ -31,7 +31,7 @@ syntax match   jsParensError +[)}\]]+ display
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
 syntax keyword jsUnaryOperator delete void typeof new skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsRelationalOperator in instanceof skipwhite skipempty nextgroup=@jsExpression
-syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorBit +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
@@ -98,11 +98,11 @@ syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroup
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
 syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell extend keepend
 syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell extend fold
-syntax region  jsHashbangComment start=+\%^#!+ end=+$+ display
+syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsIdentifier,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobalValues,jsTemplateStringTag skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor,jsOptionalOperator,@jsOperators display
+syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobalValues,jsTemplateStringTag skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor,jsOptionalOperator,@jsOperators
 
 " Strings
 syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor,@jsOperators
@@ -183,7 +183,7 @@ syntax match   jsMethodType +\<[sg]et\>+ contained skipwhite skipempty nextgroup
 syntax region  jsComputed matchgroup=jsComputedBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAssignmentEqual,jsFunctionArgs,jsColon
 
 " Generator
-syntax match   jsGeneratorAsterisk +\*+ contained skipwhite skipempty nextgroup=jsFunctionName,jsMethod,jsComputed display
+syntax match   jsGeneratorAsterisk +\*+ contained skipwhite skipempty nextgroup=jsFunctionName,jsMethod,jsComputed
 syntax match   jsYieldAsterisk +\*+ contained skipwhite skipempty nextgroup=@jsExpression display
 syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYieldAsterisk
 
