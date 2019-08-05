@@ -158,7 +158,7 @@ syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=j
 " Decorator
 " REFERENCE: https://github.com/tc39/proposal-decorators
 syntax keyword jsDecorator decorator skipwhite skipempty nextgroup=jsDecoratorName
-syntax match   jsDecoratorName +@\K\k*+ skipwhite skipempty nextgroup=jsDecoratorBlock,jsDecoratorParams
+syntax match   jsDecoratorName +@\K\k*+ skipwhite skipempty nextgroup=jsDecoratorBlock,jsDecoratorParams,jsFrom
 syntax region  jsDecoratorParams matchgroup=jsDecoratorParens start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread nextgroup=jsDecoratorBlock
 syntax region  jsDecoratorBlock matchgroup=jsDecoratorBraces start=+{+ end=+}+ contained contains=jsDecoratorName,jsDecoratorParams
 
