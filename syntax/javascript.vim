@@ -96,8 +96,8 @@ syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroup
 " Comments can be treat as a special expression which produce nothing, so
 " I added it to the expression cluster
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
-syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell extend keepend
-syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell extend fold
+syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell extend keepend skipwhite skipempty nextgroup=@jsOperators
+syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell extend fold skipwhite skipempty nextgroup=@jsOperators
 syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
