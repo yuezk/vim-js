@@ -48,7 +48,7 @@ function testRegexp() {
 	let regex = /(?<name>foo)/
 	let regex = /[^xyz\b\w^$]/
 	let regex = /[-a-z^0-9-()-]?/
-	let regex = /apple(,)\sorange\1/
+	let regex = /apple(,)\sorange\1\0/
 
 	let regex = /x{1}y{1,}z{1,2}?/
 

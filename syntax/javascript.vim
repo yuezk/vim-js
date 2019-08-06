@@ -66,18 +66,17 @@ syntax match   jsRegexpError +)+ contained display
 
 syntax match   jsRegexpEscape +\\+ contained nextgroup=jsRegexpChars
 syntax match   jsRegexpOr +|+ contained display
-syntax match   jsRegexpQuantifier +[*?+]+ contained display
-syntax match   jsRegexpQuantifier +{\d\+\%(,\%(\d\+\)\?\)\?}+ contained display
-syntax match   jsRegexpGroupReference +\\\d\++ contained display
+syntax match   jsRegexpQuantifier +[*?+]\|{\d\+\%(,\d*\)\?}+ contained display
+syntax match   jsRegexpGroupReference +\\[1-9]\d*+ contained display
 syntax match   jsRegexpRangeHyphen +\[\@1<!-]\@!+ contained display
 syntax match   jsRegexpRangeCaret +\[\@1<=\^+ contained display
 
 syntax match   jsRegexpDot +\.+ contained display
-syntax match   jsRegexpCharacterClass +\\[bBdDwWsStrnvf0]+ contained display
-syntax match   jsRegexpCharacterClass +\\c\u+ contained display
-syntax match   jsRegexpCharacterClass +\\x\x\{2}+ contained display
-syntax match   jsRegexpCharacterClass +\\u\x\{4}+ contained display
-syntax match   jsRegexpCharacterClass +\\u{\x\{4,5}}+ contained display
+syntax match   jsRegexpCharClass +\\[bBdDwWsStrnvf0]+ contained display
+syntax match   jsRegexpCharClass +\\c\u+ contained display
+syntax match   jsRegexpCharClass +\\x\x\{2}+ contained display
+syntax match   jsRegexpCharClass +\\u\x\{4}+ contained display
+syntax match   jsRegexpCharClass +\\u{\x\{4,5}}+ contained display
 
 syntax match   jsRegexpBoundaries +[$^]\|\\[Bb]+ contained display
 
@@ -87,10 +86,10 @@ syntax match   jsRegexpUnicodeEqual +=+ contained nextgroup=jsRegexpUnicodeValue
 syntax match   jsRegexpUnicodeValue +\K\k*+ contained display
 
 syntax region  jsRegexpGroup matchgroup=jsRegexpGroupParens start=+(\%(?\%(:\|<\K\k*>\)\)\?+ end=+)+ contained contains=@jsRegexpTokens
-syntax region  jsRegexpRange matchgroup=jsRegexpRangeBrackets start=+\[+ end=+]+ contained contains=jsRegexpChars,jsRegexpCharacterClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
+syntax region  jsRegexpRange matchgroup=jsRegexpRangeBrackets start=+\[+ end=+]+ contained contains=jsRegexpChars,jsRegexpCharClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
 syntax region  jsRegexpAssertion matchgroup=jsRegexpAssertionParens start=+(?<\?[=!]+ end=+)+ contained contains=@jsRegexpTokens
 
-syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroupReference,jsRegexpOr,jsRegexpRange,jsRegexpAssertion,jsRegexpBoundaries,jsRegexpQuantifier,jsRegexpEscape,jsRegexpDot,jsRegexpCharacterClass,jsRegexpUnicode
+syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroupReference,jsRegexpOr,jsRegexpRange,jsRegexpAssertion,jsRegexpBoundaries,jsRegexpQuantifier,jsRegexpEscape,jsRegexpDot,jsRegexpCharClass,jsRegexpUnicode
 
 " Comments
 " Comments can be treat as a special expression which produce nothing, so
@@ -264,7 +263,7 @@ highlight default link jsNumber Number
 highlight default link jsRegexpError Error
 highlight default link jsRegexpSlashes Special
 highlight default link jsRegexpFlags Keyword
-highlight default link jsRegexpChars Character
+highlight default link jsRegexpChars String
 
 highlight default link jsRegexpQuantifier Special
 highlight default link jsRegexpOr Special
@@ -273,8 +272,8 @@ highlight default link jsRegexpRangeHyphen Special
 highlight default link jsRegexpRangeCaret Special
 highlight default link jsRegexpBoundaries Special
 
-highlight default link jsRegexpDot Keyword
-highlight default link jsRegexpCharacterClass Keyword
+highlight default link jsRegexpDot Character
+highlight default link jsRegexpCharClass Character
 highlight default link jsRegexpUnicodeBraces Special
 highlight default link jsRegexpUnicodeName Keyword
 highlight default link jsRegexpUnicodeEqual Special
