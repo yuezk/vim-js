@@ -114,7 +114,9 @@ syntax keyword jsBuiltinValues undefined null NaN true false Infinity Symbol con
 
 " Numbers
 " REFERENCE: http://www.ecma-international.org/ecma-262/10.0/index.html#prod-NumericLiteral
-syntax match   jsNumber +\c[+-]\?\%(0b[01]\+\|0o\o\+\|0x\x\+\|\%(\%(\%(0\|[1-9]\d*\)\.\d*\|\.\d\+\|\%(0\|[1-9]\d*\)\)\%(e[+-]\?\d\+\)\?\)\)+ skipwhite skipempty nextgroup=jsAccessor,@jsOperators display
+syntax match   jsNumber +\c[+-]\?\%(0b[01]\%(_\?[01]\)*\|0o\o\%(_\?\o\)*\|0x\x\%(_\?\x\)*\|\%(\%(\%(0\|[1-9]\%(_\?\d\%(_\?\d\)*\)\?\)\.\%(\d\%(_\?\d\)*\)\?\|\.\d\%(_\?\d\)*\|\%(0\|[1-9]\%(_\?\d\%(_\?\d\)*\)\?\)\)\%(e[+-]\?\d\%(_\?\d\)*\)\?\)\)+ contains=jsNumberDot,jsNumberSeparator skipwhite skipempty nextgroup=jsAccessor,@jsOperators display
+syntax match   jsNumberDot +\.+ contained display
+syntax match   jsNumberSeparator +_+ contained display
 
 " Code blocks
 syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
@@ -258,6 +260,8 @@ highlight default link jsTemplateString String
 highlight default link jsTemplateBrace Keyword
 highlight default link jsBuiltinValues Constant
 highlight default link jsNumber Number
+highlight default link jsNumberDot Special
+highlight default link jsNumberSeparator Number
 
 " RegExp
 highlight default link jsRegexpError Error
