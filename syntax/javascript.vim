@@ -23,7 +23,8 @@ syntax match   jsSemicolon +;+ display
 syntax match   jsComma +,+ display
 syntax match   jsColon +:+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsAssignmentEqual +=+ skipwhite skipempty nextgroup=@jsExpression
-syntax match   jsDot +\.+ skipwhite skipempty nextgroup=jsIdentifier,jsFunctionCall display
+syntax match   jsPrivateIdentifier +#+ nextgroup=jsIdentifier,jsFunctionCall display
+syntax match   jsDot +\.+ skipwhite skipempty nextgroup=jsPrivateIdentifier,jsIdentifier,jsFunctionCall display
 syntax match   jsSpread +\.\.\.+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsParensError +[)}\]]+ display
 
@@ -101,7 +102,7 @@ syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsIdentifier,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobalValues,jsTemplateStringTag skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor,jsOptionalOperator,@jsOperators
+syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobalValues,jsTemplateStringTag skipwhite skipempty nextgroup=jsOperatorComparison,jsOperatorAssignment,jsAssignmentEqual,jsArrow,jsAccessor,jsDot,jsOptionalOperator,@jsOperators
 
 " Strings
 syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor,@jsOperators
@@ -153,8 +154,9 @@ syntax keyword jsConstructor constructor contained
 syntax keyword jsSuper super contained
 syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassProp,jsMethod
 syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody
-syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,jsOptionalOperator,@jsOperators,jsDecoratorName,jsDecoratorParams extend fold
+syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassPrivate,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,jsOptionalOperator,@jsOperators,jsDecoratorName,jsDecoratorParams extend fold
 syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsAssignmentEqual display
+syntax match   jsClassPrivate +#+ contained skipempty skipempty nextgroup=jsClassProp,jsMethod display
 
 " Decorator
 " REFERENCE: https://github.com/tc39/proposal-decorators
@@ -248,6 +250,7 @@ highlight default link jsOptionalOperator Operator
 highlight default link jsNullishOperator Operator
 
 " highlight default link jsIdentifier Ignore
+highlight default link jsPrivateIdentifier Type
 highlight default link jsSemicolon Operator
 highlight default link jsComma Operator
 highlight default link jsColon Operator
@@ -313,6 +316,7 @@ highlight default link jsSuper Keyword
 highlight default link jsStatic Keyword
 highlight default link jsClassName Identifier
 highlight default link jsClassProp Identifier
+highlight default link jsClassPrivate Type
 
 " Decorator
 highlight default link jsDecorator Keyword

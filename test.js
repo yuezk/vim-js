@@ -278,6 +278,32 @@ class Square extends Polygon {
 	  : this.props.accountsFilter;
 }
 
+class Counter extends HTMLElement {
+  #xValue = 0;
+
+  get #x() { return #xValue; }
+  set #x(value) {
+    this.#xValue = value; 
+    window.requestAnimationFrame(this.#render.bind(this));
+  }
+
+  #clicked() {
+    this.#x++;
+  }
+
+  constructor() {
+    super();
+    this.onclick = this.#clicked.bind(this);
+  }
+
+  connectedCallback() { this.#render(); }
+
+  #render() {
+    this.textContent = this.#x.toString();
+  }
+}
+window.customElements.define('num-counter', Counter);
+
 async function test () {
   a == 3
   const b = {};
