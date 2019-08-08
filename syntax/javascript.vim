@@ -71,16 +71,9 @@ syntax match   jsRegexpQuantifier +[*?+]\|{\d\+\%(,\d*\)\?}+ contained display
 syntax match   jsRegexpGroupReference +\\[1-9]\d*+ contained display
 syntax match   jsRegexpRangeHyphen +\[\@1<!-]\@!+ contained display
 syntax match   jsRegexpRangeCaret +\[\@1<=\^+ contained display
-
 syntax match   jsRegexpDot +\.+ contained display
-syntax match   jsRegexpCharClass +\\[bBdDwWsStrnvf0]+ contained display
-syntax match   jsRegexpCharClass +\\c\u+ contained display
-syntax match   jsRegexpCharClass +\\x\x\{2}+ contained display
-syntax match   jsRegexpCharClass +\\u\x\{4}+ contained display
-syntax match   jsRegexpCharClass +\\u{\x\{4,5}}+ contained display
-
+syntax match   jsRegexpCharClass +\\[bBdDwWsStrnvf0]\|\\c\u\|\\x\x\{2}\|\\u\x\{4}\|\\u{\x\{4,5}}+ contained display
 syntax match   jsRegexpBoundaries +[$^]\|\\[Bb]+ contained display
-
 syntax region  jsRegexpUnicode matchgroup=jsRegexpUnicodeBraces start=+\\p{+ end=+}+ contained contains=jsRegexpUnicodeName
 syntax match   jsRegexpUnicodeName +\K\k*+ contained nextgroup=jsRegexpUnicodeEqual display
 syntax match   jsRegexpUnicodeEqual +=+ contained nextgroup=jsRegexpUnicodeValue display
