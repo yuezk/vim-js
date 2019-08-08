@@ -30,7 +30,7 @@ syntax match   jsParensError +[)}\]]+ display
 
 " Operators
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
-syntax keyword jsUnaryOperator delete void typeof new skipwhite skipempty nextgroup=@jsExpression
+syntax keyword jsUnaryOperator delete void typeof skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsRelationalOperator in instanceof skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
@@ -149,7 +149,12 @@ syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassPr
 syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody
 syntax region  jsClassBody matchgroup=jsClassBrace start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassPrivate,jsClassProp,jsMethod,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsDot,jsOptionalOperator,@jsOperators,jsDecoratorName,jsDecoratorParams extend fold
 syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsAssignmentEqual display
-syntax match   jsClassPrivate +#+ contained skipempty skipempty nextgroup=jsClassProp,jsMethod display
+syntax match   jsClassPrivate +#+ contained nextgroup=jsClassProp,jsMethod display
+
+syntax keyword jsNew new skipwhite skipempty nextgroup=jsClassNew
+syntax match   jsClassNew +\K\k*\%(\.\K\k*\)*+ contained contains=jsNewDot skipwhite skipempty nextgroup=jsClassNewArgs display
+syntax region  jsClassNewArgs matchgroup=jsClassNewBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,jsOptionalOperator,@jsOperators
+syntax match   jsNewDot +\.+ contained display
 
 " Decorator
 " REFERENCE: https://github.com/tc39/proposal-decorators
@@ -185,7 +190,7 @@ syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYield
 
 " Function Call
 syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallParen
-syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread extend skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,jsOptionalOperator,@jsOperators
+syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,jsOptionalOperator,@jsOperators
 
 " Loops
 syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
@@ -227,7 +232,7 @@ syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithParen
 syntax region  jsWithParen matchgroup=jsWithBrace start=+(+ end=+)+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsBlock
 
 syntax cluster jsGlobalValues contains=jsBuiltinValues,jsThis,jsSuper
-syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator
+syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator,jsNew
 
 " Operators
 highlight default link jsUnaryOperator Keyword
@@ -310,6 +315,8 @@ highlight default link jsStatic Keyword
 highlight default link jsClassName Identifier
 highlight default link jsClassProp Identifier
 highlight default link jsClassPrivate Type
+highlight default link jsNew Keyword
+highlight default link jsClassNew Identifier
 
 " Decorator
 highlight default link jsDecorator Keyword

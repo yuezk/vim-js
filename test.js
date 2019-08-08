@@ -28,6 +28,9 @@ const b = a / b / d;
 
 a /= 3;
 
+new Foo.Bar();
+new Foo.Bar.Baz;
+
 function testRegexp() {
 	// Assertions
 	let regex = /First(?= test)/g;
@@ -328,7 +331,7 @@ async function test () {
 	    [foo + bar]() {
 		    return "computed";
 	    },
-	    void: new Date(),
+	    void: new Date(123, /hhh/)['getDate'](),
 	    delete: 'hello',
 	    *generator() {},
 	    *[Symbol.iterator]() {
@@ -563,7 +566,7 @@ try {
   // statements to handle EvalError exceptions
 } catch (e) {
   // statements to handle any unspecified exceptions
-  throw new Error();
+  throw new Error(a, b, ...d);
 } finally {
 }
 
