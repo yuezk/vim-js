@@ -21,7 +21,7 @@ syntax case match
 syntax keyword jsDebugger debugger
 syntax match   jsSemicolon +;+ display
 syntax match   jsComma +,+ display
-syntax match   jsColon +:+ skipwhite skipempty nextgroup=@jsExpression display
+syntax match   jsColonAssignment +:+ contained skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsAssignmentEqual +=+ skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsPrivateIdentifier +#+ nextgroup=jsIdentifier,jsFunctionCall display
 syntax match   jsDot +\.+ skipwhite skipempty nextgroup=jsPrivateIdentifier,jsIdentifier,jsFunctionCall display
@@ -121,9 +121,8 @@ syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpr
 
 " Object
 syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained contains=jsComment,jsIdentifier,jsObjectKey,jsObjectKeyString,jsTemplateString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread,jsDot,jsOptionalOperator,@jsOperators,jsObject
-syntax match   jsObjectKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsColon display
-syntax match   jsObjectKey +\d\++ contained skipwhite skipempty nextgroup=jsColon display
-syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColon
+syntax match   jsObjectKey +\<\k\+\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsColonAssignment display
+syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColonAssignment
 
 " Property accessor, e.g., arr[1] or obj["prop"]
 syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen,jsOptionalOperator,@jsOperators
@@ -181,7 +180,7 @@ syntax match   jsMethod +\<\K\k*\>\(\_s*(\)\@=+ contains=jsConstructor skipwhite
 syntax match   jsMethodType +\<[sg]et\>+ contained skipwhite skipempty nextgroup=jsMethod display
 
 " Computed property
-syntax region  jsComputed matchgroup=jsComputedBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAssignmentEqual,jsFunctionArgs,jsColon
+syntax region  jsComputed matchgroup=jsComputedBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAssignmentEqual,jsFunctionArgs,jsColonAssignment
 
 " Generator
 syntax match   jsGeneratorAsterisk +\*+ contained skipwhite skipempty nextgroup=jsFunctionName,jsMethod,jsComputed
@@ -204,8 +203,9 @@ syntax keyword jsWhile while skipwhite skipempty nextgroup=jsLoopCondition
 syntax keyword jsBreak break skipwhite skipempty nextgroup=jsLabelText
 syntax keyword jsContinue continue skipwhite skipempty nextgroup=jsLabelText
 
-syntax match   jsLabel +\<\K\k*\>\_s*:+ contains=jsColon,jsLabelText skipwhite skipempty nextgroup=jsBlock,jsFor,jsDo,jsWhile display
-syntax match   jsLabelText +\<\K\k*\>+ contained
+syntax match   jsLabel +\<\K\k*\>\_s*:+ contains=jsLabelText skipwhite skipempty nextgroup=jsBlock,jsFor,jsDo,jsWhile display
+syntax match   jsLabelText +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsLabelColon display
+syntax match   jsLabelColon +:+ contained display
 
 " Control flow
 " If statements
@@ -216,10 +216,7 @@ syntax region  jsConditionalBlock matchgroup=jsConditionalBrace start=+{+ end=+}
 
 " Switch statements
 syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
-syntax keyword jsCase case contained skipwhite skipempty nextgroup=@jsExpression
-syntax keyword jsDefault default contained
-syntax match   jsSwitchColon +:+ contained
-syntax region  jsCaseStatement start=+\<\(case\|default\)\>+ end=+:+ contains=jsComment,jsCase,jsDefault,jsSwitchColon keepend
+syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contains=jsComment,@jsExpression keepend
 
 " Exceptions
 syntax keyword jsTry try skipwhite skipempty nextgroup=jsBlock
@@ -251,7 +248,7 @@ highlight default link jsNullishOperator Operator
 highlight default link jsPrivateIdentifier Type
 highlight default link jsSemicolon Operator
 highlight default link jsComma Operator
-highlight default link jsColon Operator
+highlight default link jsColonAssignment Operator
 highlight default link jsSpread Operator
 highlight default link jsParensError Error
 
@@ -350,9 +347,8 @@ highlight default link jsAssignmentEqual Operator
 highlight default link jsIf Keyword
 highlight default link jsElse Keyword
 highlight default link jsSwitch Keyword
-highlight default link jsCase Keyword
-highlight default link jsDefault Keyword
-highlight default link jsSwitchColon jsColon
+highlight default link jsSwitchCase Keyword
+highlight default link jsSwitchColon Operator
 
 highlight default link jsBreak Keyword
 highlight default link jsContinue Keyword
@@ -363,6 +359,7 @@ highlight default link jsOf Keyword
 highlight default link jsDo Keyword
 highlight default link jsWhile Keyword
 highlight default link jsLabelText Identifier
+highlight default link jsLabelColon Operator
 
 " Exceptions
 highlight default link jsTry Keyword
