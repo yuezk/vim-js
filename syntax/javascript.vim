@@ -41,7 +41,7 @@ syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhit
 syntax region  jsTernary matchgroup=jsTernaryOperator start=+?+ end=+:+ contained contains=@jsExpression skipwhite skipempty nextgroup=@jsExpression
 
 syntax match   jsOptionalOperator +?\.+ contained skipwhite skipempty nextgroup=jsIdentifier,jsAccessor,jsFunctionCall,jsFunctionCallParen 
-syntax match   jsOperatorNullish +??+ contained skipwhite skipwhite nextgroup=@jsExpression display
+syntax match   jsOperatorNullish +??+ contained skipwhite skipwhite nextgroup=@jsExpression
 
 syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator.*
 
