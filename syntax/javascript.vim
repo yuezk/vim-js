@@ -36,14 +36,14 @@ syntax match   jsOperatorArithmetic +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite sk
 syntax match   jsOperatorComparison +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorBit +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression display
 syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression display
-syntax match   jsOperatorConditional +[?:]+ skipwhite skipempty nextgroup=@jsExpression display
 " " *=/=%=+=-=<<=>>=>>>=&=^=|=**=
 syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhite skipempty nextgroup=@jsExpression display
+syntax region  jsTernary matchgroup=jsTernaryOperator start=+?+ end=+:+ contained contains=@jsExpression skipwhite skipempty nextgroup=@jsExpression
 
-syntax cluster jsOperators contains=jsRelationalOperator,jsOperator.*
+syntax match   jsOptionalOperator +?\.+ contained skipwhite skipempty nextgroup=jsIdentifier,jsAccessor,jsFunctionCall,jsFunctionCallParen 
+syntax match   jsOperatorNullish +??+ contained skipwhite skipwhite nextgroup=@jsExpression display
 
-syntax match   jsOptionalOperator +?\.+ skipwhite skipempty nextgroup=jsIdentifier,jsAccessor,jsFunctionCall,jsFunctionCallParen display
-syntax match   jsNullishOperator +??+ skipwhite skipwhite nextgroup=@jsExpression display
+syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator.*
 
 " Modules
 " REFERENCE:
@@ -242,7 +242,7 @@ highlight default link jsOperatorAssignment Operator
 
 highlight default link jsRelationalOperator Keyword
 highlight default link jsOptionalOperator Operator
-highlight default link jsNullishOperator Operator
+highlight default link jsOperatorNullish Operator
 
 " highlight default link jsIdentifier Ignore
 highlight default link jsPrivateIdentifier Type
@@ -349,7 +349,6 @@ highlight default link jsElse Keyword
 highlight default link jsSwitch Keyword
 highlight default link jsSwitchCase Keyword
 highlight default link jsSwitchColon Operator
-
 highlight default link jsBreak Keyword
 highlight default link jsContinue Keyword
 

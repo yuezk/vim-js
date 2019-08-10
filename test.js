@@ -16,6 +16,11 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
+function nullishTest() {
+    const obj = { a: 'a' };
+    console.log(obj.b ?? 'empty');
+}
+
 const a = 1;
 let b;
 var a1, a2;
@@ -25,10 +30,15 @@ var a = { a: 1 }, c;
 const a = (1 + 2) / 3;
 const a = a > 0 ? a : b;
 const b = a / b / d;
+const a = a ? (a > 0 ? 1 : 0) : 0
+
+const foo = maybe1 > maybe2
+  ? "bar"
+  : value1 > value2 ? "baz" : null;
 
 a /= 3;
 
-new Foo.Bar();
+new Foo.Bar(a ? b : c);
 new Foo.Bar.Baz;
 
 function testRegexp() {
