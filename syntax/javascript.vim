@@ -99,7 +99,7 @@ syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroup
 " I added it to the expression cluster
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
 syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell keepend
-syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell fold
+syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocBlockTag fold
 syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
@@ -309,6 +309,21 @@ syntax region  jsComment matchgroup=jsFlowComment start=+/\*\%(::\|flow-include\
 
 syntax cluster jsFlowTop contains=jsFlowDeclare,jsFlowAliasType,jsFlowOpaque,jsFlowInterface
 syntax cluster jsFlowTypes contains=jsFlowType,jsFlowBoolean,jsFlowString,jsFlowNumber,jsFlowObject,jsFlowArray,jsFlowTuple,jsFlowParen,jsFlowTypeof
+
+" JSDoc
+syntax match   jsDocAt +@+ contained skipwhite skipempty nextgroup=jsDocTags
+syntax keyword jsDocTagDirectives abstract virtual
+" syntax keyword jsDocTagAccess access 
+
+syntax region  jsDocTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained contains=jsDocType
+syntax match   jsDocType +\<\K\k*\>+ contained
+
+syntax cluster jsDocTags contains=jsDocTagDirectives
+
+highlight default link jsDocBlockTag Keyword
+highlight default link jsDocBraces Special
+highlight default link jsDocType Type
+
 
 " Operators
 highlight default link jsUnaryOperator Keyword
