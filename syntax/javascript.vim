@@ -40,7 +40,7 @@ syntax match   jsOperatorLogical +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup
 syntax match   jsOperatorAssignment +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhite skipempty nextgroup=@jsExpression
 syntax region  jsTernary matchgroup=jsTernaryOperator start=+?+ end=+:+ contained contains=@jsExpression skipwhite skipempty nextgroup=@jsExpression
 
-syntax match   jsOptionalOperator +?\.+ contained skipwhite skipempty nextgroup=jsIdentifier,jsAccessor,jsFunctionCall,jsFunctionCallParen 
+syntax match   jsOptionalOperator +?\.+ contained skipwhite skipempty nextgroup=jsIdentifier,jsAccessor,jsFunctionCall,jsFunctionCallArgs 
 syntax match   jsOperatorNullish +??+ contained skipwhite skipwhite nextgroup=@jsExpression
 
 syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator.*
@@ -123,7 +123,7 @@ syntax match   jsNumberSeparator +_+ contained
 
 " Code blocks
 syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
-syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpression,jsComma,jsSpread,@jsOperators extend fold skipwhite skipempty nextgroup=jsArrow,jsFunctionCallParen,jsAccessor,@jsOperators,jsFlowColon
+syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpression,jsComma,jsSpread,@jsOperators extend fold skipwhite skipempty nextgroup=jsArrow,jsFunctionCallArgs,jsAccessor,@jsOperators,jsFlowColon
 
 " Array
 syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor,@jsOperators,jsFlowColon
@@ -134,7 +134,7 @@ syntax match   jsObjectKey +\<\k\+\>\ze\s*:+ contained skipwhite skipempty nextg
 syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColonAssignment
 
 " Property accessor, e.g., arr[1] or obj["prop"]
-syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallParen,jsOptionalOperator,@jsOperators,jsFlowColon
+syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsOptionalOperator,@jsOperators,jsFlowColon
 
 " Array Destructuring
 " Cases like [a, b] = [1, 2] and the array destructuring in the arrow function arguments cannot be highlighted
@@ -161,7 +161,7 @@ syntax match   jsClassPrivate +#+ contained nextgroup=jsClassProp,jsMethod
 
 syntax keyword jsNew new skipwhite skipempty nextgroup=jsClassNew
 syntax match   jsClassNew +\K\k*\%(\.\K\k*\)*+ contained contains=jsNewDot skipwhite skipempty nextgroup=jsClassNewArgs,jsFlowGenericCall
-syntax region  jsClassNewArgs matchgroup=jsClassNewBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread,@jsOperators skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,jsOptionalOperator,@jsOperators
+syntax region  jsClassNewArgs matchgroup=jsClassNewBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread,@jsOperators skipwhite skipempty nextgroup=jsFunctionCallArgs,jsAccessor,jsOptionalOperator,@jsOperators
 syntax match   jsNewDot +\.+ contained
 
 " Decorator
@@ -198,8 +198,8 @@ syntax keyword jsYield yield skipwhite skipempty nextgroup=@jsExpression,jsYield
 
 " Function Call
 " Matches: func(), obj.func(), obj.func?.(), obj.func<Array<number | string>>() etc.
-syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*<\%(\_[^&|]\{-1,}\%([&|]\_[^&|]\{-1,}\)*\)>\)\?\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper,jsFlowGenericCall skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallParen
-syntax region  jsFunctionCallParen matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread,@jsOperators skipwhite skipempty nextgroup=jsFunctionCallParen,jsAccessor,jsOptionalOperator,@jsOperators
+syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*<\%(\_[^&|]\{-1,}\%([&|]\_[^&|]\{-1,}\)*\)>\)\?\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper,jsFlowGenericCall skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallArgs
+syntax region  jsFunctionCallArgs matchgroup=jsFunctionCallBrace start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread,@jsOperators skipwhite skipempty nextgroup=jsFunctionCallArgs,jsAccessor,jsOptionalOperator,@jsOperators
 
 " Loops
 syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
@@ -318,6 +318,7 @@ highlight default link jsOperatorBit Operator
 highlight default link jsOperatorLogical Operator
 highlight default link jsOperatorConditional Operator
 highlight default link jsOperatorAssignment Operator
+highlight default link jsTernaryOperator Operator
 
 highlight default link jsRelationalOperator Keyword
 highlight default link jsOptionalOperator Operator
