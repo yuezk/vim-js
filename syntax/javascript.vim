@@ -99,7 +99,7 @@ syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroup
 " I added it to the expression cluster
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
 syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell keepend
-syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocBlockTag fold
+syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocTags fold
 syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
@@ -311,19 +311,52 @@ syntax cluster jsFlowTop contains=jsFlowDeclare,jsFlowAliasType,jsFlowOpaque,jsF
 syntax cluster jsFlowTypes contains=jsFlowType,jsFlowBoolean,jsFlowString,jsFlowNumber,jsFlowObject,jsFlowArray,jsFlowTuple,jsFlowParen,jsFlowTypeof
 
 " JSDoc
-syntax match   jsDocAt +@+ contained skipwhite skipempty nextgroup=jsDocTags
-syntax keyword jsDocTagDirectives abstract virtual
+" syntax match   jsDocAt +@+ contained skipwhite skipempty nextgroup=jsDocTags
+" syntax keyword jsDocTagDirectives abstract virtual
 " syntax keyword jsDocTagAccess access 
 
-syntax region  jsDocTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained contains=jsDocType
+syntax match   jsDocTags +@\%(abstract\|virtual\|async\|classdesc\|description\|desc\)\>+ contained
+syntax match   jsDocTags +@access\>+ contained skipwhite skipempty nextgroup=jsDocAccessTypes
+syntax keyword jsDocAccessTypes package private protected public
+
+syntax match   jsDocTags +@\%(alias\|augments\|extends\|borrows\|callback\)\>+ contained skipwhite skipempty nextgroup=jsDocNamepath
+syntax match   jsDocNamepath +\<\K\k*\%([.#~]\K\k*\)*+ contained skipwhite skipempty nextgroup=jsDocAs
+syntax keyword jsDocAs as contained skipwhite skipempty nextgroup=jsDocNamepath
+
+syntax match   jsDocTags +@author\>+ contained skipwhite skipempty nextgroup=jsDocAuthorName
+syntax match   jsDocAuthorName +[^<>]\++ contained skipwhite skipempty nextgroup=jsDocAuthorMail
+syntax region  jsDocAuthorMail matchgroup=jsDocAngleBrackets start=+<+ end=+>+ contained
+
+syntax match   jsDocTags +@\%(class\|constructor\|constant\|const\|enum\)\>+ skipwhite skipempty nextgroup=jsDocTypeBlock
+syntax match   jsDocTags +@\%(constructs\)\>+ skipwhite skipempty nextgroup=jsDocIdentifer
+
+syntax match   jsDocTags +@\%(copyright\|deprecated\)\>+ skipwhite skipempty nextgroup=jsDocImportant
+syntax match   jsDocImportant +.\++ contained
+
+syntax match   jsDocTags +@\%(default\|defaultValue\)\>+ contained skipwhite nextgroup=jsDocValue
+syntax match   jsDocValue +.\++ contained
+
+syntax match   jsDocTags +@event\>+ contained skipwhite nextgroup=jsDocEvent
+syntax match   jsDocEvent +\K\k*#\%(\)+
+
+syntax region  jsDocTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained contains=jsDocType skipwhite skipempty nextgroup=jsDocIdentifer
 syntax match   jsDocType +\<\K\k*\>+ contained
+syntax match   jsDocIdentifer +\<\K\k*\>+ contained
 
 syntax cluster jsDocTags contains=jsDocTagDirectives
 
-highlight default link jsDocBlockTag Keyword
 highlight default link jsDocBraces Special
-highlight default link jsDocType Type
+highlight default link jsDocTags PreProc
+highlight default link jsDocAccessTypes Keyword
+highlight default link jsDocAuthorName Keyword
+highlight default link jsDocAuthorMail Keyword
+highlight default link jsDocImportant Keyword
+highlight default link jsDocValue Constant
 
+highlight default link jsDocAngleBrackets Special
+
+highlight default link jsDocAs Keyword
+highlight default link jsDocType Type
 
 " Operators
 highlight default link jsUnaryOperator Keyword
