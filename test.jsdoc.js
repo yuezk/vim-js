@@ -313,3 +313,220 @@ Hurl.prototype.snowball = function() {
  * @type {object}
  * @property {boolean} isPacked - Indicates whether the snowball is tightly packed.
  */
+
+// @example
+/**
+ * Solves equations of the form a * x = b
+ * @example
+ * // returns 2
+ * globalNS.method1(5, 10);
+ * @example
+ * // returns 3
+ * globalNS.method(5, 15);
+ * @returns {Number} Returns the value of x for the equation.
+ */
+globalNS.method1 = function (a, b) {
+    return b / a;
+};
+/**
+ * Solves equations of the form a * x = b
+ * @example <caption>Example usage of method1.</caption>
+ * // returns 2
+ * globalNS.method1(5, 10);
+ * @returns {Number} Returns the value of x for the equation.
+ */
+globalNS.method1 = function (a, b) {
+    return b / a;
+};
+
+// @exports
+/**
+ * A module that says hello!
+ * @module hello/world
+ */
+
+/** Say hello. */
+define(function () {
+
+    /**
+     * A module that says hello!
+     * @exports hello/world
+     */
+    var ns = {};
+});
+
+// @external/@host
+/**
+ * The built in string object.
+ * @external String
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String|String}
+ */
+
+/**
+ * Create a ROT13-encoded version of the string. Added by the `foo` package.
+ * @function external:String#rot13
+ * @example
+ * var greeting = new String('hello world');
+ * console.log( greeting.rot13() ); // uryyb jbeyq
+ */
+
+/**
+ * The jQuery plugin namespace.
+ * @external "jQuery.fn"
+ * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
+ */
+
+/**
+ * A jQuery plugin to make stars fly around your home page.
+ * @function external:"jQuery.fn".starfairy
+ */
+
+// @file/@fileoverview/@overview
+/**
+ * @file Manages the configuration settings for the widget.
+ * @author Rowina Sanela 
+ */
+
+// @fires/@emits
+/**
+ * Drink the milkshake.
+ *
+ * @fires Milkshake#drain
+ */
+Milkshake.prototype.drink = function() {
+    // ...
+};
+
+// @function/@func/@method
+/** @function myFunction */
+
+// the above is the same as:
+/** @function
+ * @name myFunction */
+
+// @generator
+/**
+ * Generate numbers in the Fibonacci sequence.
+ *
+ * @generator
+ * @function fibonacci
+ * @yields {number} The next number in the Fibonacci sequence.
+ */
+
+// @global
+(function() {
+    /** @global */
+    var foo = 'hello foo';
+
+    this.foo = foo;
+}).apply(window);
+
+// @implements
+/**
+ * Class representing a color with transparency information.
+ *
+ * @class
+ * @implements {Color}
+ */
+function TransparentColor() {}
+
+// @kind
+/**
+ * A constant.
+ * @kind constant
+ */
+const asdf = 1;
+
+define('hurler', [], function () {
+    /**
+     * Event reporting that a snowball has been hurled.
+     *
+     * @event module:hurler~snowball
+     * @property {number} velocity - The snowball's velocity, in meters per second.
+     */
+
+    /**
+     * Snowball-hurling module.
+     *
+     * @module hurler
+     */
+    var exports = {
+        /**
+         * Attack an innocent (or guilty) person with a snowball.
+         *
+         * @method
+         * @fires module:hurler~snowball
+         */
+        attack: function () {
+            this.emit('snowball', { velocity: 10 });
+        }
+    };
+
+    return exports;
+});
+
+define('playground/monitor', [], function () {
+    /**
+     * Keeps an eye out for snowball-throwers.
+     *
+     * @module playground/monitor
+     */
+    var exports = {
+        /**
+         * Report the throwing of a snowball.
+         *
+         * @method
+         * @param {module:hurler~event:snowball} e - A snowball event.
+         * @listens module:hurler~event:snowball
+         */
+        reportThrowage: function (e) {
+            this.log('snowball thrown: velocity ' + e.velocity);
+        }
+    };
+
+    return exports;
+});
+
+// @member
+/** @class */
+function Data() {
+    /** @member {Object} */
+    this.point = {};
+}
+
+/**
+ * A variable in the global namespace called 'foo'.
+ * @var {number} foo
+ */
+
+/** @class */
+function Data() {
+    /**
+     * @type {object}
+     * @property {number} y This will show up as a property of `Data#point`,
+     * but you cannot link to the property as {@link Data#point.y}.
+     */
+    this.point = {
+        /**
+         * The @alias and @memberof! tags force JSDoc to document the
+         * property as `point.x` (rather than `x`) and to be a member of
+         * `Data#`. You can link to the property as {@link Data#point.x}.
+         * @alias point.x
+         * @memberof! Data#
+         */
+        x: 0,
+        y: 1
+    };
+}
+
+/**
+ * @constructor FormButton
+ * @mixes Eventful
+ */
+var FormButton = function() {
+    // code...
+};
+
+/** @module myModule */
+/** @module {number} myModule */
+
