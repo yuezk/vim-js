@@ -530,3 +530,188 @@ var FormButton = function() {
 /** @module myModule */
 /** @module {number} myModule */
 
+// @param
+/**
+ * @param somebody
+ */
+function sayHello(somebody) {
+    alert('Hello ' + somebody);
+}
+
+/**
+ * @param {string} somebody
+ */
+function sayHello(somebody) {
+    alert('Hello ' + somebody);
+}
+
+/**
+ * @param {string} somebody Somebody's name.
+ */
+function sayHello(somebody) {
+    alert('Hello ' + somebody);
+}
+
+/**
+ * @param {string} somebody - Somebody's name.
+ */
+function sayHello(somebody) {
+    alert('Hello ' + somebody);
+}
+
+/**
+ * Assign the project to an employee.
+ * @param {Object} employee - The employee who is responsible for the project.
+ * @param {string} employee.name - The name of the employee.
+ * @param {string} employee.department - The employee's department.
+ */
+Project.prototype.assign = function(employee) {
+    // ...
+};
+
+/**
+ * Assign the project to a list of employees.
+ * @param {Object[]} employees - The employees who are responsible for the project.
+ * @param {string} employees[].name - The name of an employee.
+ * @param {string} employees[].department - The employee's department.
+ */
+Project.prototype.assign = function(employees) {
+    // ...
+};
+
+/**
+ * @param {string} [somebody=John Doe] - Somebody's name.
+ */
+function sayHello(somebody) {
+    if (!somebody) {
+        somebody = 'John Doe';
+    }
+    alert('Hello ' + somebody);
+}
+
+/**
+ * @param {(string|string[])} [somebody=John Doe] - Somebody's name, or an array of names.
+ */
+function sayHello(somebody) {
+    if (!somebody) {
+        somebody = 'John Doe';
+    } else if (Array.isArray(somebody)) {
+        somebody = somebody.join(', ');
+    }
+    alert('Hello ' + somebody);
+}
+
+/**
+ * Returns the sum of all numbers passed to the function.
+ * @param {...number} num - A positive or negative number.
+ */
+function sum(num) {
+    var i = 0, n = arguments.length, t = 0;
+    for (; i < n; i++) {
+        t += arguments[i];
+    }
+    return t;
+}
+
+// @requires
+/**
+ * This class requires the modules {@link module:xyzcorp/helper} and
+ * {@link module:xyzcorp/helper.ShinyWidget#polish}.
+ * @class
+ * @requires module:xyzcorp/helper
+ * @requires xyzcorp/helper.ShinyWidget#polish
+ */
+function Widgetizer() {}
+
+// @returns
+/**
+ * Returns the sum of a and b
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+function sum(a, b) {
+    return a + b;
+}
+
+/**
+ * Returns the sum of a and b
+ * @param {number} a
+ * @param {number} b
+ * @param {boolean} retArr If set to true, the function will return an array
+ * @returns {(number|Array)} Sum of a and b or an array that contains a, b and the sum of a and b.
+ */
+function sum(a, b, retArr) {
+    if (retArr) {
+        return [a, b, a + b];
+    }
+    return a + b;
+}
+
+// @see
+/**
+ * Both of these will link to the bar function.
+ * @see {@link bar}
+ * @see bar
+ */
+function foo() {}
+
+// Use the inline {@link} tag to include a link within a free-form description.
+/**
+ * @see {@link foo} for further information.
+ * @see {@link http://github.com|GitHub}
+ */
+function bar() {}
+
+/**
+ * See {@link MyClass} and [MyClass's foo property]{@link MyClass#foo}.
+ * Also, check out {@link http://www.google.com|Google} and
+ * {@link https://github.com GitHub}.
+ */
+function myFunction() {}
+
+// @throws
+/**
+ * @throws {InvalidArgumentException}
+ */
+function foo(x) {}
+/**
+ * @throws Will throw an error if the argument is null.
+ */
+function bar(x) {}
+/**
+ * @throws {DivideByZero} Argument x must be non-zero.
+ */
+function baz(x) {}
+
+/**
+ * Description
+ * @class
+ * @tutorial tutorial-1
+ * @tutorial tutorial-2
+ */
+function MyClass() {}
+/**
+ * See {@tutorial gettingstarted} and [Configuring the Dashboard]{@tutorial dashboard}.
+ * For more information, see {@tutorial create|Creating a Widget} and
+ * {@tutorial destroy Destroying a Widget}.
+ */
+function myFunction() {}
+
+/**
+ * A number, or a string containing a number.
+ * @typedef {(number|string)} NumberLike
+ */
+
+/**
+ * Set the magic number.
+ * @param {NumberLike} x - The magic number.
+ */
+function setMagicNumber(x) {
+}
+/**
+ * Generate the Fibonacci sequence of numbers.
+ *
+ * @yields {number} The next number in the Fibonacci sequence.
+ */
+function* fibonacci() {}

@@ -99,7 +99,7 @@ syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroup
 " I added it to the expression cluster
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
 syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell keepend
-syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocTags fold
+syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocTags,jsDocInline fold
 syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
@@ -312,22 +312,21 @@ syntax cluster jsFlowTop contains=jsFlowDeclare,jsFlowAliasType,jsFlowOpaque,jsF
 syntax cluster jsFlowTypes contains=jsFlowType,jsFlowBoolean,jsFlowString,jsFlowNumber,jsFlowObject,jsFlowArray,jsFlowTuple,jsFlowParen,jsFlowTypeof
 
 " JSDoc
-syntax match   jsDocTags +@\%(abstract\|virtual\|async\|classdesc\|description\|desc\|file\|fileoverview\|overview\|generator\|global\|hideconstructor\|ignore\|inheritdoc\|inner\|instance\|overide\)\>+ contained
-syntax match   jsDocTags +@access\>+ contained skipwhite skipempty nextgroup=jsDocAccessTypes
+syntax match   jsDocTags +@\%(abstract\|virtual\|async\|classdesc\|description\|desc\|file\|fileoverview\|overview\|generator\|global\|hideconstructor\|ignore\|inheritdoc\|inner\|instance\|override\|readonly\|static\|summary\|todo\)\>+ contained
+syntax match   jsDocTags +@access\>+ contained skipwhite nextgroup=jsDocAccessTypes
 syntax keyword jsDocAccessTypes package private protected public
 
-syntax match   jsDocTags +@\%(alias\|augments\|extends\|borrows\|callback\|external\|host\|lends\|memberof!\?\|mixes\|name\)+ contained skipwhite skipempty nextgroup=jsDocNamepath
-syntax match   jsDocNamepath +\S\++ contained skipwhite skipempty nextgroup=jsDocAs
-syntax keyword jsDocAs as contained skipwhite skipempty nextgroup=jsDocNamepath
+syntax match   jsDocTags +@\%(alias\|augments\|extends\|borrows\|callback\|constructs\|external\|function\|func\|method\|interface\|mixin\|host\|lends\|memberof!\?\|mixes\|name\|this\|tutorial\)+ contained skipwhite nextgroup=jsDocNamepath
+syntax match   jsDocNamepath +\S\++ contained skipwhite nextgroup=jsDocAs
+syntax keyword jsDocAs as contained skipwhite nextgroup=jsDocNamepath
 
-syntax match   jsDocTags +@author\>+ contained skipwhite skipempty nextgroup=jsDocAuthorName
-syntax match   jsDocAuthorName +[^<>]\++ contained skipwhite skipempty nextgroup=jsDocAuthorMail
+syntax match   jsDocTags +@author\>+ contained skipwhite nextgroup=jsDocAuthorName
+syntax match   jsDocAuthorName +[^<>]\++ contained skipwhite nextgroup=jsDocAuthorMail
 syntax region  jsDocAuthorMail matchgroup=jsDocAngleBrackets start=+<+ end=+>+ contained
 
-syntax match   jsDocTags +@\%(class\|constructor\|constant\|const\|enum\|implements\|member\|var\|package\)\>+ skipwhite skipempty nextgroup=jsDocTypeBlock
-syntax match   jsDocTags +@\%(constructs\|function\|func\|method\|interface\|mixin\)\>+ skipwhite skipempty nextgroup=jsDocIdentifer
+syntax match   jsDocTags +@\%(class\|constructor\|constant\|const\|enum\|implements\|member\|var\|package\|private\|protected\|public\|type\)\>+ skipwhite nextgroup=jsDocTypeBlock
 
-syntax match   jsDocTags +@\%(copyright\|deprecated\|license\)\>+ skipwhite skipempty nextgroup=jsDocImportant
+syntax match   jsDocTags +@\%(copyright\|deprecated\|license\|since\|variation\|version\)\>+ skipwhite nextgroup=jsDocImportant
 syntax match   jsDocImportant +.\++ contained
 
 syntax match   jsDocTags +@\%(default\|defaultValue\)\>+ contained skipwhite nextgroup=jsDocValue
@@ -336,40 +335,31 @@ syntax match   jsDocValue +.\++ contained
 syntax match   jsDocTags +@\%(event\|fires\|emits\|listens\)\>+ contained skipwhite nextgroup=jsDocEvent
 syntax match   jsDocEvent +\S\++ contained
 
-syntax match   jsDocTags +@example\>+ contained skipwhite skipempty nextgroup=,jsDocExample,jsDocCaption
+syntax match   jsDocTags +@example\>+ contained skipwhite skipempty nextgroup=jsDocExample,jsDocCaption
 syntax region  jsDocCaption matchgroup=jsDocCaptionTag start=+<caption>+ end=+</caption>+ contained skipwhite skipempty nextgroup=jsDocExample
+syntax region  jsDocExample matchgroup=jsDocExampleBoundary start=+\*\%([*/]\|\s*@\)\@!+ end=+$+ contained contains=TOP keepend skipwhite skipempty nextgroup=jsDocExample
 
-syntax match   jsDocTags +@exports\>+ contained skipwhite nextgroup=jsDocModuleName
-syntax match   jsDocModuleName +\%(\<module:\)\?\K\k*\%(/\K\k*\)*+ contained
+syntax match   jsDocTags +@\%(exports\|requires\)\>+ contained skipwhite nextgroup=jsDocModuleName
+syntax match   jsDocModuleName +\%(module:\)\?\K\k*\%([/.#]\K\k*\)*+ contained
 
 syntax match   jsDocTags +@kind\>+ contained skipwhite nextgroup=jsDocKinds
 syntax keyword jsDocKinds class constant event external file function member mixin module namespace typedef contained
 
-syntax match   jsDocTags +@\%(module\|namespace\)\>+ contained skipwhite nextgroup=jsDocTypeBlock,jsDocIdentifer
-
-syntax region  jsDocExample matchgroup=jsDocExampleBoundary start=+\*\%([*/]\|\s*@\)\@!+ end=+$+ contained contains=@jsTop keepend skipwhite skipempty nextgroup=jsDocExample
+syntax match   jsDocTags +@\%(module\|namespace\|param\|arg\|argument\|prop\|property\|typedef\)\>+ contained skipwhite nextgroup=jsDocTypeBlock,jsDocModuleName
+syntax match   jsDocTags +@\%(returns\|return\|throws\|exception\|yields\|yield\)\>+ contained skipwhite nextgroup=jsDocReturnTypeBlock
+syntax match   jsDocTags +@\%(see\)\>+ contained skipwhite nextgroup=jsDocNamepath,jsDocInline
 
 syntax region  jsDocTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained keepend contains=jsDocType skipwhite nextgroup=jsDocIdentifer
+syntax region  jsDocReturnTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained keepend contains=jsDocType
 syntax match   jsDocType +\S\++ contained
-syntax match   jsDocIdentifer +\<\K\k*\>+ contained
+syntax match   jsDocIdentifer +\[\?\K\k*\%(\%(\[]\)\?\.\K\k*\)*\%(=[^]]\+\)\?]\?+ contained skipwhite nextgroup=jsDocHyphen
+syntax match   jsDocHyphen +-+ contained
 
-syntax cluster jsDocTags contains=jsDocTagDirectives
-
-highlight default link jsDocBraces Special
-highlight default link jsDocTags PreProc
-highlight default link jsDocAccessTypes Keyword
-highlight default link jsDocAuthorName Keyword
-highlight default link jsDocAuthorMail Keyword
-highlight default link jsDocImportant Keyword
-highlight default link jsDocValue Constant
-highlight default link jsDocCaptionTag Type
-highlight default link jsDocKinds Keyword
-highlight default link jsDocExampleBoundary jsComment
-
-highlight default link jsDocAngleBrackets Special
-
-highlight default link jsDocAs Keyword
-highlight default link jsDocType Type
+syntax region  jsDocInline matchgroup=jsDocBraces start=+{@\@=+ end=+}+ contained contains=jsDocTagsInline keepend
+syntax match   jsDocTagsInline +@\%(link\|linkcode\|linkplain\|tutorial\)\>+ contained skipwhite nextgroup=jsDocLinkPath
+syntax match   jsDocLinkPath +[^[:blank:]|]\++ contained skipwhite nextgroup=jsDocLinkSeparator
+syntax match   jsDocLinkSeparator +[[:blank:]|]+ contained skipwhite nextgroup=jsDocLinkText
+syntax match   jsDocLinkText +[^|]\++ contained
 
 " Operators
 highlight default link jsUnaryOperator Keyword
@@ -507,7 +497,7 @@ highlight default link jsCatch Keyword
 highlight default link jsFinally Keyword
 highlight default link jsThrow Keyword
 
-" with
+" with statement
 highlight default link jsWith Keyword
 
 " Flow syntax
@@ -560,6 +550,28 @@ highlight default link jsFlowModuleTypeof Keyword
 highlight default link jsFlowModuleAsterisk Operator
 highlight default link jsFlowModuleAs Keyword
 highlight default link jsFlowComment Comment
+
+" JSDoc
+highlight default link jsDocBraces Special
+highlight default link jsDocTags PreProc
+highlight default link jsDocAccessTypes Keyword
+highlight default link jsDocAuthorName Keyword
+highlight default link jsDocAuthorMail Keyword
+highlight default link jsDocImportant Keyword
+highlight default link jsDocValue Constant
+highlight default link jsDocCaptionTag Type
+highlight default link jsDocKinds Keyword
+highlight default link jsDocExampleBoundary jsComment
+
+highlight default link jsDocAngleBrackets Special
+highlight default link jsDocHyphen Special
+
+highlight default link jsDocTagsInline jsDocTags
+highlight default link jsDocLinkPath Keyword
+highlight default link jsDocLinkSeparator jsDocBraces
+
+highlight default link jsDocAs Keyword
+highlight default link jsDocType Type
 
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'
