@@ -38,6 +38,7 @@ const foo = maybe1 > maybe2
 
 a /= 3;
 
+~a
 new Foo.Bar(a ? b : c);
 new Foo.Bar.Baz;
 
