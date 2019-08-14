@@ -21,6 +21,14 @@ function nullishTest() {
     console.log(obj.b ?? 'empty');
 }
 
+const a = '\\';
+const b = 'abc \
+def';
+const c = `
+ddd
+\\\`
+`;
+
 const a = 1;
 let b;
 var a1, a2;
@@ -59,7 +67,7 @@ function testRegexp() {
 	let regex = /(foo)/	
 	let regex = /(?:foo)/	
 	let regex = /(?<name>foo)/
-	let regex = /[^xyz\b\w^$]/
+	let regex = /[^xyz\b\w^$\\]/
 	let regex = /[-a-z^0-9-()-]?/
 	let regex = /apple(,)\sorange\1\0/
 
@@ -113,8 +121,11 @@ var a1 = arr[1];
 
 const str = tag`<div></div>`;
 const str = tag()`<div></div>`;
-const str2 = String.raw`hello, ${world}`;
-const str2 = String().raw`hello, ${world}`;
+const str2 = String.raw`${world}`;
+const str2 = String().raw`\${world}`;
+const str2 = String().raw`\\${world}`;
+const str2 = String().raw`\\\${world}`;
+const str2 = String().raw`\\\\${world}`;
 const str2 = String['hello'].raw`hello, ${world}`;
 
 ++i;
@@ -848,7 +859,7 @@ function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
 	];
 	const [a,b,...rest] = [1, 2]
 	const {hello: [a = 3, b, { d }], world: {hello: world}, foo = [{key: 1}], bar = { hello: 'world' }} = {foo: foo, bar: 'ddd', test}
-	// ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
+	({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
 	//
 	//
 	//

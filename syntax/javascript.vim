@@ -28,6 +28,10 @@ syntax match   jsDot +\.+ skipwhite skipempty nextgroup=jsPrivateIdentifier,jsId
 syntax match   jsSpread +\.\.\.+ skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsParensError +[)}\]]+
 
+" Code blocks
+syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
+syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpression,jsComma,jsSpread,@jsOperators extend fold skipwhite skipempty nextgroup=jsArrow,jsFunctionCallArgs,jsAccessor,jsDot,@jsOperators,jsFlowColon
+
 " Operators
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
 syntax keyword jsUnaryOperator delete void typeof skipwhite skipempty nextgroup=@jsExpression
@@ -98,7 +102,7 @@ syntax match   jsRegexpUnicodeValue +\K\k*+ contained
 " Match the groups. (x), (?<Name>x), (?:x)
 syntax region  jsRegexpGroup matchgroup=jsRegexpGroupParens start=+(\%(?\%(:\|<\K\k*>\)\)\?+ end=+)+ contained contains=@jsRegexpTokens
 " Match the range. [a-b]
-syntax region  jsRegexpRange matchgroup=jsRegexpRangeBrackets start=+\[+ end=+]+ contained contains=jsRegexpChars,jsRegexpCharClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
+syntax region  jsRegexpRange matchgroup=jsRegexpRangeBrackets start=+\[+ end=+]+ contained contains=jsRegexpEscape,jsRegexpChars,jsRegexpCharClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
 " Match the assertions. x(?=y), x(?!y), (?<=y)x, (?<!y)x
 syntax region  jsRegexpAssertion matchgroup=jsRegexpAssertionParens start=+(?<\?[=!]+ end=+)+ contained contains=@jsRegexpTokens
 
@@ -113,13 +117,13 @@ syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsIdentifier,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobalValues,jsTemplateStringTag skipwhite skipempty nextgroup=jsAssignmentEqual,jsArrow,jsAccessor,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
+syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobals,jsTemplateStringTag skipwhite skipempty nextgroup=jsAssignmentEqual,jsArrow,jsAccessor,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
 
 " Strings
-syntax region  jsString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAccessor,@jsOperators,jsFlowColon
+syntax region  jsString start=+\z(["']\)+  skip=+\\\\\|\\\z1\|\\\n+  end=+\z1+ contains=@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
 syntax match   jsTemplateStringTag +\<\K\k*\>\(\_s*`\)\@=+ skipwhite skipempty nextgroup=jsTemplateString
-syntax region  jsTemplateString start=+`+ skip=+\\`+ end=+`+ contains=jsTemplateExpression,@Spell skipwhite skipempty nextgroup=jsAccessor,@jsOperators,jsFlowColon
-syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\\\@1<!${+ end=+}+ contained contains=@jsExpression,@jsOperators
+syntax region  jsTemplateString start=+`+ skip=+\\\\\|\\`\|\\\n+ end=+`+ contains=jsTemplateExpression,@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
+syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\%([^\\]\%(\\\\\)*\)\@<=${+ end=+}+ contained contains=@jsExpression,@jsOperators
 
 " Built-in values
 syntax keyword jsBuiltinValues undefined null NaN true false Infinity Symbol contained
@@ -130,31 +134,27 @@ syntax match   jsNumber +\c[+-]\?\%(0b[01]\%(_\?[01]\)*\|0o\o\%(_\?\o\)*\|0x\x\%
 syntax match   jsNumberDot +\.+ contained
 syntax match   jsNumberSeparator +_+ contained
 
-" Code blocks
-syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
-syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpression,jsComma,jsSpread,@jsOperators extend fold skipwhite skipempty nextgroup=jsArrow,jsFunctionCallArgs,jsAccessor,@jsOperators,jsFlowColon
-
 " Array
-syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor,@jsOperators,jsFlowColon
+syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
 
 " Object
-syntax region  jsObject matchgroup=jsObjectBrace start=+{+ end=+}+ contained contains=jsComment,jsIdentifier,jsObjectKey,jsObjectKeyString,jsTemplateString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread,jsDot,jsOptionalOperator,@jsOperators,jsObject skipwhite skipempty nextgroup=jsFlowColon
+syntax region  jsObject matchgroup=jsObjectBraces start=+{+ end=+}+ contained contains=jsComment,jsIdentifier,jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread skipwhite skipempty nextgroup=jsFlowColon
 syntax match   jsObjectKey +\<\k\+\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsColonAssignment
-syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColonAssignment
+syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\\\|\\\z1\|\\\n+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsColonAssignment
 
 " Property accessor, e.g., arr[1] or obj["prop"]
-syntax region  jsAccessor matchgroup=jsAccessorBrace start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsOptionalOperator,@jsOperators,jsFlowColon
+syntax region  jsAccessor matchgroup=jsAccessorBrackets start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
 
 " Array Destructuring
 " Cases like [a, b] = [1, 2] and the array destructuring in the arrow function arguments cannot be highlighted
 " as array destructuring, they are highlighted as Array, but it doesn't break the syntax
-syntax region  jsArrayDestructuring matchgroup=jsDestructuringBrace start=+\[+ end=+]+ contained contains=jsComment,jsIdentifier,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual,jsFlowColon
+syntax region  jsArrayDestructuring matchgroup=jsDestructuringBrackets start=+\[+ end=+]+ contained contains=jsComment,jsIdentifier,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual,jsFlowColon
 
 " Object Destructuring
 " Cases like ({a, b} = {a: 1, b: 2}) and the object destructuring in the arrow function arguments cannot be highlighted
 " as object destructuring, they are highlighted as Object, but it doesn't break the syntax
-syntax region  jsObjectDestructuring matchgroup=jsDestructuringBrace start=+{+ end=+}+ contained contains=jsComment,jsObjectDestructuringKey,jsIdentifier,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual,jsFlowColon
-syntax match   jsObjectDestructuringKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsAssignmentEqual,jsObjectDestructuringColon
+syntax region  jsObjectDestructuring matchgroup=jsDestructuringBraces start=+{+ end=+}+ contained contains=jsComment,jsObjectDestructuringKey,jsIdentifier,jsComma,jsObjectDestructuring,jsArrayDestructuring,jsSpread skipwhite skipempty nextgroup=jsAssignmentEqual,jsFlowColon
+syntax match   jsObjectDestructuringKey +\<\K\k*\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsObjectDestructuringColon
 syntax match   jsObjectDestructuringColon +:+ contained skipwhite skipempty nextgroup=jsIdentifier,jsObjectDestructuring,jsArrayDestructuring
 
 " Class
@@ -247,7 +247,7 @@ syntax keyword jsThrow throw skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithParen
 syntax region  jsWithParen matchgroup=jsWithBrace start=+(+ end=+)+ contained contains=@jsExpression,@jsOperators skipwhite skipempty nextgroup=jsBlock
 
-syntax cluster jsGlobalValues contains=jsBuiltinValues,jsThis,jsSuper
+syntax cluster jsGlobals contains=jsBuiltinValues,jsThis,jsSuper
 syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator,jsNew
 syntax cluster jsTop contains=TOP
 
@@ -380,29 +380,25 @@ syntax match   jsDocLinkPath +[^[:blank:]|]\++ contained skipwhite nextgroup=jsD
 syntax match   jsDocLinkSeparator +[[:blank:]|]+ contained skipwhite nextgroup=jsDocLinkText
 syntax match   jsDocLinkText +[^|]\++ contained
 
+" Basics
+highlight default link jsDebugger Keyword
+highlight default link jsSemicolon Operator
+highlight default link jsComma Operator
+highlight default link jsColonAssignment Operator
+highlight default link jsAssignmentEqual Operator
+highlight default link jsPrivateIdentifier Type
+highlight default link jsSpread Operator
+highlight default link jsParensError Error
+highlight default link jsBraces Special
+highlight default link jsParens Special
+highlight default link jsBrackets Special
+
 " Operators
 highlight default link jsUnaryOperator Keyword
 highlight default link jsRelationalOperator Keyword
 highlight default link jsOperator Operator
 highlight default link jsTernaryOperator jsOperator
 highlight default link jsOptionalOperator jsOperator
-
-highlight default link jsPrivateIdentifier Type
-highlight default link jsSemicolon Operator
-highlight default link jsComma Operator
-highlight default link jsColonAssignment Operator
-highlight default link jsSpread Operator
-highlight default link jsParensError Error
-
-" Strings and Values
-highlight default link jsString String
-highlight default link jsTemplateStringTag Identifier
-highlight default link jsTemplateString String
-highlight default link jsTemplateBrace Keyword
-highlight default link jsNumber Number
-highlight default link jsNumberDot Special
-highlight default link jsNumberSeparator Number
-highlight default link jsBuiltinValues Constant
 
 " RegExp
 highlight default link jsRegexpError Error
@@ -425,6 +421,35 @@ highlight default link jsRegexpGroupParens Special
 highlight default link jsRegexpGroupReference Keyword
 highlight default link jsRegexpRangeBrackets Special
 highlight default link jsRegexpAssertionParens Special
+
+" Comments
+highlight default link jsComment Comment
+highlight default link jsHashbangComment PreProc
+highlight default link jsCommentTodo Todo
+
+" Declaration
+highlight default link jsVariableType Type
+
+" Strings and Values
+highlight default link jsString String
+highlight default link jsTemplateStringTag Identifier
+highlight default link jsTemplateString String
+highlight default link jsTemplateBrace Keyword
+highlight default link jsBuiltinValues Constant
+highlight default link jsNumber Number
+highlight default link jsNumberDot Special
+highlight default link jsNumberSeparator Number
+
+" Object
+highlight default link jsObjectBraces jsBraces
+highlight default link jsObjectKey Identifier
+highlight default link jsObjectKeyString String
+highlight default link jsAccessorBrackets jsBrackets
+
+" Destructuring
+highlight default link jsDestructuringBrackets jsBrackets
+highlight default link jsDestructuringBraces jsBraces
+highlight default link jsObjectDestructuringColon Operator
 
 " Functions
 highlight default link jsAsync Keyword
@@ -457,11 +482,6 @@ highlight default link jsNewClassName Identifier
 highlight default link jsDecorator Keyword
 highlight default link jsDecoratorName Type
 
-" Object
-highlight default link jsObjectKey Identifier
-highlight default link jsObjectKeyString String
-highlight default link jsObjectDestructuringColon Operator
-
 " Modules
 highlight default link jsImport PreProc
 highlight default link jsExport jsImport
@@ -470,16 +490,6 @@ highlight default link jsModuleDefault Keyword
 highlight default link jsModuleAsterisk Operator
 highlight default link jsModuleAs jsImport
 highlight default link jsModuleName jsIdentifier
-
-" Comments
-highlight default link jsComment Comment
-highlight default link jsHashbangComment PreProc
-highlight default link jsCommentTodo Todo
-
-" Declaration
-highlight default link jsVariableType Type
-highlight default link jsVariableDeclare Identifier
-highlight default link jsAssignmentEqual Operator
 
 " Conditional Statements
 highlight default link jsIf Keyword
