@@ -16,6 +16,8 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
+debugger;
+
 function nullishTest() {
     const obj = { a: 'a' };
     console.log(obj.b ?? 'empty');
@@ -976,6 +978,8 @@ class Square extends Polygon {
     this.name = 'Square';
   }
 
+  handleClick = () => {}
+
   async test() {
 	  const a = 0;
   }
@@ -1322,6 +1326,7 @@ export { name8, name9 } from "other-module";
 export { import1 as name10, import2 as name12, nameN } from "other-module";
 
 export decorator @logged {
+  // hello, comment
   @wrap(f => {
     const name = f.name;
     function wrapped(...args) {
