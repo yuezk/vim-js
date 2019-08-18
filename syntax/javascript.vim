@@ -112,7 +112,7 @@ syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroup
 " Comments can be treat as a special expression which produces nothing, so I added it to the expression cluster
 syntax keyword jsCommentTodo contained TODO FIXME XXX TBD
 syntax region  jsComment start=+//+ end=/$/ contains=jsCommentTodo,@Spell keepend
-syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocTags,jsDocInline fold
+syntax region  jsComment start=+/\*+  end=+\*/+ contains=jsCommentTodo,@Spell,jsDocTags,jsDocInline fold keepend
 syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
@@ -120,9 +120,9 @@ syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsIden
 syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobals,jsTemplateStringTag skipwhite skipempty nextgroup=jsAssignmentEqual,jsArrow,jsAccessor,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
 
 " Strings
-syntax region  jsString start=+\z(["']\)+  skip=+\\\\\|\\\z1\|\\\n+  end=+\z1+ contains=@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
+syntax region  jsString start=+\z(["']\)+ skip=+\\\\\|\\\z1\|\\\n+ end=+\z1+ contains=@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
 syntax match   jsTemplateStringTag +\<\K\k*\>\(\_s*`\)\@=+ skipwhite skipempty nextgroup=jsTemplateString
-syntax region  jsTemplateString start=+`+ skip=+\\\\\|\\`\|\\\n+ end=+`+ contains=jsTemplateExpression,@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
+syntax region  jsTemplateString start=+`+ skip=+\\\\\|\\`\|\\\n+ end=+`+ contains=jsTemplateExpression,@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon keepend
 syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\%([^\\]\%(\\\\\)*\)\@<=${+ end=+}+ contained contains=@jsExpression,@jsOperators
 
 " Built-in values
@@ -140,7 +140,7 @@ syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpr
 " Object
 syntax region  jsObject matchgroup=jsObjectBraces start=+{+ end=+}+ contained contains=jsComment,jsIdentifier,jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread skipwhite skipempty nextgroup=jsFlowColon
 syntax match   jsObjectKey +\<\k\+\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsAssignmentColon
-syntax region  jsObjectKeyString start=+\z(["']\)+  skip=+\\\\\|\\\z1\|\\\n+  end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAssignmentColon
+syntax region  jsObjectKeyString start=+\z(["']\)+ skip=+\\\\\|\\\z1\|\\\n+ end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAssignmentColon
 
 " Property accessor, e.g., arr[1] or obj["prop"]
 syntax region  jsAccessor matchgroup=jsAccessorBrackets start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
@@ -253,133 +253,10 @@ syntax cluster jsTop contains=TOP
 syntax cluster jsGlobals contains=jsBuiltinValues,jsThis,jsSuper
 syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator,jsNew
 
-" Flow syntax highlighting
-" Syntax groups for flow module
-syntax keyword jsFlowModuleType type contained skipwhite skipempty nextgroup=jsFlowModuleTypeName,jsFlowModuleBlock
-syntax match   jsFlowModuleTypeName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFlowModuleComma,jsFrom
-syntax match   jsFlowModuleComma +,+ contained skipwhite skipempty nextgroup=jsFlowModuleBlock,jsFlowModuleTypeName
-syntax region  jsFlowModuleBlock matchgroup=jsFlowModuleBraces start=+{+ end=+}+ contained contains=jsFlowModuleTypeName,jsFlowModuleComma skipwhite skipempty nextgroup=jsFrom
-syntax keyword jsFlowModuleTypeof typeof contained skipwhite skipempty nextgroup=jsModuleName,jsModuleBlock,jsFlowModuleAsterisk
-syntax match   jsFlowModuleAsterisk +\*+ contained skipwhite skipempty nextgroup=jsFlowModuleAs
-syntax keyword jsFlowModuleAs as contained skipwhite skipempty nextgroup=jsFlowModuleTypeName
-
-syntax match   jsFlowColon +?\?:+ contained skipwhite skipempty nextgroup=@jsFlowTypes,jsFlowMaybe,jsFlowArrayShorthand,jsFlowChecks,jsFlowGenericContained
-syntax match   jsFlowMaybe +?+ contained skipwhite skipempty nextgroup=@jsFlowTypes
-syntax match   jsFlowUnion +|+ contained skipwhite skipempty nextgroup=@jsFlowTypes
-syntax match   jsFlowIntersection +&+ contained skipwhite skipempty nextgroup=@jsFlowTypes
-syntax match   jsFlowChecks +%checks+ contained skipwhite skipempty nextgroup=jsFunctionBody
-syntax match   jsFlowArrow +=>+ contained skipwhite skipempty nextgroup=@jsFlowTypes
-syntax match   jsFlowModifier +[+-]+ contained skipwhite skipempty nextgroup=jsFlowKey,jsFlowIndexer
-syntax keyword jsFlowTypeof typeof contained skipwhite skipempty nextgroup=@jsExpression
-
-" Tokens that can appear after a flow type
-syntax cluster jsFlowTokensAfterType contains=jsAssignmentEqual,jsFlowUnion,jsFlowIntersection,jsFlowArrow
-
-syntax match   jsFlowType +\<\K\k*\>+ contained contains=jsFlowPrimitives,jsFlowSpecialType,jsFlowUtility skipwhite skipempty nextgroup=@jsFlowTokensAfterType,jsFunctionBody,jsArrow,jsFlowGenericContained,jsFlowArrayShorthand,jsFlowChecks,jsFlowColon
-syntax keyword jsFlowPrimitives boolean Boolean number Number string String null void contained
-syntax keyword jsFlowSpecialType mixed any Object Function contained
-syntax match   jsFlowUtility +$\K\k*+ contained
-
-syntax keyword jsFlowBoolean true false contained skipwhite skipempty nextgroup=@jsFlowTokensAfterType
-syntax region  jsFlowString start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contained skipwhite skipempty nextgroup=@jsFlowTokensAfterType
-syntax match   jsFlowNumber +\c-\?\%(0b[01]\%(_\?[01]\)*\|0o\o\%(_\?\o\)*\|0x\x\%(_\?\x\)*\|\%(\%(\%(0\|[1-9]\%(_\?\d\%(_\?\d\)*\)\?\)\.\%(\d\%(_\?\d\)*\)\?\|\.\d\%(_\?\d\)*\|\%(0\|[1-9]\%(_\?\d\%(_\?\d\)*\)\?\)\)\%(e[+-]\?\d\%(_\?\d\)*\)\?\)\)+ contained contains=jsNumberDot,jsNumberSeparator skipwhite skipempty nextgroup=@jsFlowTokensAfterType
-
-" Generic used after function name or class name
-syntax region  jsFlowGenericDeclare matchgroup=jsFlowAngleBrackets start=+<+ end=+>+ contained contains=@jsFlowTypes,jsFlowMaybe,jsComma skipwhite skipempty nextgroup=jsFunctionArgs,jsClassBody,jsExtends,jsFlowImplments
-" Generic used after new Class or function call
-syntax region  jsFlowGenericCall matchgroup=jsFlowAngleBrackets start=+<+ end=+>+ contained contains=@jsFlowTypes,jsFlowMaybe,jsComma skipwhite skipempty nextgroup=jsNewClassArgs
-" Generic used elsewhere
-syntax region  jsFlowGenericContained matchgroup=jsFlowAngleBrackets start=+<+ end=+>+ contained contains=@jsFlowTypes,jsFlowMaybe,jsComma,jsFlowGenericContained skipwhite skipempty nextgroup=@jsFlowTokensAfterType,jsFlowParen,jsFlowChecks
-
-syntax keyword jsFlowArray Array contained skipwhite skipempty nextgroup=jsFlowGenericContained
-syntax match   jsFlowArrayShorthand contained +\[\_s*]+ skipwhite skipempty nextgroup=@jsFlowTokensAfterType,jsFlowChecks
-syntax region  jsFlowTuple matchgroup=jsFlowBrackets start=+\[+ end=+]+ contained contains=jsComma,@jsFlowTypes skipwhite skipempty nextgroup=@jsFlowTokensAfterType,jsFlowChecks
-
-syntax region  jsFlowObject matchgroup=jsFlowBraces start=+{|\?+ end=+|\?}+ contained contains=jsFlowModifier,jsFlowKey,jsComma,jsSemicolon,@jsFlowTypes,jsFlowIndexer,jsComment,jsFlowSpread skipwhite skipempty nextgroup=@jsFlowTokensAfterType,jsFlowChecks
-syntax match   jsFlowKey +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFlowColon,jsFlowGenericContained,jsFlowParen
-syntax region  jsFlowIndexer matchgroup=jsFlowBrackets start=+\[+ end=+]+ contained contains=jsFlowIndexerKey,@jsFlowTypes skipwhite skipempty nextgroup=jsFlowColon
-syntax match   jsFlowIndexerKey +\<\K\k*\>\ze\s*?\?:+ contained skipwhite skipempty nextgroup=jsFlowColon
-syntax match   jsFlowSpread +\.\.\.+ contained skipwhite skipempty nextgroup=jsFlowType
-
-syntax region  jsFlowParen matchgroup=jsFlowParens start=+(+ end=+)+ contained contains=jsFlowMaybe,@jsFlowTypes,jsFlowParameter,jsSpread skipwhite skipempty nextgroup=jsFlowArrayShorthand,jsFlowArrow,jsFlowColon
-syntax match   jsFlowParameter +\<\K\k*\>\ze\s*?\?:+ contained skipwhite skipempty nextgroup=jsFlowColon
-
-syntax keyword jsFlowDeclare declare skipwhite skipempty nextgroup=jsFlowModuleDeclare
-syntax keyword jsFlowModuleDeclare module contained skipwhite skipempty nextgroup=jsFlowModuleName
-syntax region  jsFlowModuleName start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contained skipwhite skipempty nextgroup=jsFlowModuleBody
-syntax region  jsFlowModuleBody matchgroup=jsFlowBraces start=+{+ end=+}+ contained contains=TOP
-
-syntax keyword jsFlowOpaque opaque skipwhite skipempty nextgroup=jsFlowAliasType
-syntax keyword jsFlowAliasType type skipwhite skipempty nextgroup=jsFlowAliasName
-syntax match   jsFlowAliasName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFlowAliasEqual,jsFlowGenericAlias,jsFlowAliasSubtyping
-syntax region  jsFlowGenericAlias matchgroup=jsFlowAngleBrackets start=+<+ end=+>+ contained contains=@jsFlowTypes,jsFlowMaybe skipwhite skipempty nextgroup=jsFlowAliasEqual,jsFlowAliasSubtyping
-syntax region  jsFlowAliasSubtyping matchgroup=jsFlowColon start=+:+ matchgroup=jsFlowAliasEqual end=+=+ end=+\ze\%(;\|$\)+ contained contains=@jsFlowTypes skipwhite skipempty nextgroup=@jsFlowTypes
-syntax match   jsFlowAliasEqual +=+ contained skipwhite skipempty nextgroup=@jsFlowTypes,jsFlowUnion,jsFlowIntersection,jsFlowMaybe,jsFlowGenericContained
-
-syntax keyword jsFlowInterface interface skipwhite skipempty nextgroup=jsFlowInterfaceName,jsFlowGenericInterface
-syntax match   jsFlowInterfaceName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFlowInterfaceBody,jsFlowGenericInterface
-syntax region  jsFlowGenericInterface matchgroup=jsFlowAngleBrackets start=+<+ end=+>+ contained contains=@jsFlowTypes,jsFlowMaybe skipwhite skipempty nextgroup=jsFlowInterfaceBody
-syntax region  jsFlowInterfaceBody matchgroup=jsFlowBraces start=+{+ end=+}+ contained contains=jsFlowKey,jsFlowIndexer,jsFlowGenericContained,jsSemicolon,jsComment,jsFlowModifier
-
-syntax keyword jsFlowImplments implements contained skipwhite skipempty nextgroup=jsFlowImplmentsName
-syntax match   jsFlowImplmentsName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFlowImplmentsComma,jsClassBody
-syntax match   jsFlowImplmentsComma +,+ contained skipwhite skipempty nextgroup=jsFlowImplmentsName
-
-syntax region  jsComment matchgroup=jsFlowComment start=+/\*:+  end=+\*/+ contains=@jsFlowTypes fold
-syntax region  jsComment matchgroup=jsFlowComment start=+/\*\%(::\|flow-include\)+  end=+\*/+ contains=@jsFlowTop,jsFlowColon,jsSemicolon,jsFlowParameter fold
-
-syntax cluster jsFlowTop contains=jsFlowDeclare,jsFlowAliasType,jsFlowOpaque,jsFlowInterface
-syntax cluster jsFlowTypes contains=jsFlowType,jsFlowBoolean,jsFlowString,jsFlowNumber,jsFlowObject,jsFlowArray,jsFlowTuple,jsFlowParen,jsFlowTypeof
-
-" JSDoc
-syntax match   jsDocTags +@\%(abstract\|virtual\|async\|classdesc\|description\|desc\|file\|fileoverview\|overview\|generator\|global\|hideconstructor\|ignore\|inheritdoc\|inner\|instance\|override\|readonly\|static\|summary\|todo\)\>+ contained
-syntax match   jsDocTags +@access\>+ contained skipwhite nextgroup=jsDocAccessTypes
-syntax keyword jsDocAccessTypes package private protected public
-
-syntax match   jsDocTags +@\%(alias\|augments\|extends\|borrows\|callback\|constructs\|external\|function\|func\|method\|interface\|mixin\|host\|lends\|memberof!\?\|mixes\|name\|this\|tutorial\)+ contained skipwhite nextgroup=jsDocNamepath
-syntax match   jsDocNamepath +\S\++ contained skipwhite nextgroup=jsDocAs
-syntax keyword jsDocAs as contained skipwhite nextgroup=jsDocNamepath
-
-syntax match   jsDocTags +@author\>+ contained skipwhite nextgroup=jsDocAuthorName
-syntax match   jsDocAuthorName +[^<>]\++ contained skipwhite nextgroup=jsDocAuthorMail
-syntax region  jsDocAuthorMail matchgroup=jsDocAngleBrackets start=+<+ end=+>+ contained
-
-syntax match   jsDocTags +@\%(class\|constructor\|constant\|const\|enum\|implements\|member\|var\|package\|private\|protected\|public\|type\)\>+ skipwhite nextgroup=jsDocTypeBlock
-
-syntax match   jsDocTags +@\%(copyright\|deprecated\|license\|since\|variation\|version\)\>+ skipwhite nextgroup=jsDocImportant
-syntax match   jsDocImportant +.\++ contained
-
-syntax match   jsDocTags +@\%(default\|defaultValue\)\>+ contained skipwhite nextgroup=jsDocValue
-syntax match   jsDocValue +.\++ contained
-
-syntax match   jsDocTags +@\%(event\|fires\|emits\|listens\)\>+ contained skipwhite nextgroup=jsDocEvent
-syntax match   jsDocEvent +\S\++ contained
-
-syntax match   jsDocTags +@example\>+ contained skipwhite skipempty nextgroup=jsDocExample,jsDocCaption
-syntax region  jsDocCaption matchgroup=jsDocCaptionTag start=+<caption>+ end=+</caption>+ contained skipwhite skipempty nextgroup=jsDocExample
-syntax region  jsDocExample matchgroup=jsDocExampleBoundary start=+\*\%([*/]\|\s*@\)\@!+ end=+$+ contained contains=TOP keepend skipwhite skipempty nextgroup=jsDocExample
-
-syntax match   jsDocTags +@\%(exports\|requires\)\>+ contained skipwhite nextgroup=jsDocModuleName
-syntax match   jsDocModuleName +\%(module:\)\?\K\k*\%([/.#]\K\k*\)*+ contained
-
-syntax match   jsDocTags +@kind\>+ contained skipwhite nextgroup=jsDocKinds
-syntax keyword jsDocKinds class constant event external file function member mixin module namespace typedef contained
-
-syntax match   jsDocTags +@\%(module\|namespace\|param\|arg\|argument\|prop\|property\|typedef\)\>+ contained skipwhite nextgroup=jsDocTypeBlock,jsDocModuleName
-syntax match   jsDocTags +@\%(returns\|return\|throws\|exception\|yields\|yield\)\>+ contained skipwhite nextgroup=jsDocReturnTypeBlock
-syntax match   jsDocTags +@\%(see\)\>+ contained skipwhite nextgroup=jsDocNamepath,jsDocInline
-
-syntax region  jsDocTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained keepend contains=jsDocType skipwhite nextgroup=jsDocIdentifer
-syntax region  jsDocReturnTypeBlock matchgroup=jsDocBraces start=+{+ end=+}+ contained keepend contains=jsDocType
-syntax match   jsDocType +\S\++ contained
-syntax match   jsDocIdentifer +\[\?\K\k*\%(\%(\[]\)\?\.\K\k*\)*\%(=[^]]\+\)\?]\?+ contained skipwhite nextgroup=jsDocHyphen
-syntax match   jsDocHyphen +-+ contained
-
-syntax region  jsDocInline matchgroup=jsDocBraces start=+{@\@=+ end=+}+ contained contains=jsDocTagsInline keepend
-syntax match   jsDocTagsInline +@\%(link\|linkcode\|linkplain\|tutorial\)\>+ contained skipwhite nextgroup=jsDocLinkPath
-syntax match   jsDocLinkPath +[^[:blank:]|]\++ contained skipwhite nextgroup=jsDocLinkSeparator
-syntax match   jsDocLinkSeparator +[[:blank:]|]+ contained skipwhite nextgroup=jsDocLinkText
-syntax match   jsDocLinkText +[^|]\++ contained
+" Highlight flow syntax
+runtime syntax/extras/flow.vim
+" Highlight jsodc
+runtime syntax/extras/jsdoc.vim
 
 " Basics
 highlight default link jsDebugger Error
@@ -540,79 +417,6 @@ highlight default link jsExceptionBraces jsBraces
 " with statement
 highlight default link jsWith Keyword
 highlight default link jsWithParens jsParens
-
-" Flow syntax
-highlight default link jsFlowColon Operator
-highlight default link jsFlowMaybe Operator
-highlight default link jsFlowUnion Operator
-highlight default link jsFlowIntersection Operator
-
-highlight default link jsFlowType Type
-highlight default link jsFlowPrimitives Keyword
-highlight default link jsFlowSpecialType Type
-highlight default link jsFlowUtility Keyword
-highlight default link jsFlowBoolean Constant
-highlight default link jsFlowString String
-highlight default link jsFlowNumber Number
-
-highlight default link jsFlowKey Identifier
-highlight default link jsFlowSpread Special
-highlight default link jsFlowIndexerKey Identifier
-highlight default link jsFlowArray Type
-highlight default link jsFlowArrayShorthand Special
-highlight default link jsFlowAngleBrackets Special
-highlight default link jsFlowBrackets Special
-highlight default link jsFlowBraces Special
-highlight default link jsFlowParens Special
-highlight default link jsFlowArrow Special
-highlight default link jsFlowChecks Special
-highlight default link jsFlowTypeof Keyword
-
-highlight default link jsFlowDeclare Keyword
-highlight default link jsFlowModuleDeclare Keyword
-highlight default link jsFlowModuleName String
-highlight default link jsFlowOpaque PreProc
-highlight default link jsFlowAliasType Keyword
-highlight default link jsFlowAliasName Type
-highlight default link jsFlowAliasEqual Operator
-
-highlight default link jsFlowInterface Keyword
-highlight default link jsFlowInterfaceName Type
-highlight default link jsFlowImplments Keyword
-highlight default link jsFlowImplmentsName Type
-highlight default link jsFlowImplmentsComma Operator
-highlight default link jsFlowModifier Operator
-
-highlight default link jsFlowModuleType Keyword
-highlight default link jsFlowModuleTypeName Type
-highlight default link jsFlowModuleComma jsComma
-highlight default link jsFlowModuleBraces jsModuleBrace
-highlight default link jsFlowModuleTypeof Keyword
-highlight default link jsFlowModuleAsterisk Operator
-highlight default link jsFlowModuleAs Keyword
-highlight default link jsFlowComment Comment
-
-" JSDoc
-highlight default link jsDocBraces Special
-highlight default link jsDocTags PreProc
-highlight default link jsDocAccessTypes Keyword
-highlight default link jsDocAuthorName Keyword
-highlight default link jsDocAuthorMail Keyword
-highlight default link jsDocImportant Keyword
-highlight default link jsDocValue Constant
-highlight default link jsDocCaptionTag Type
-highlight default link jsDocKinds Keyword
-highlight default link jsDocExampleBoundary jsComment
-
-highlight default link jsDocAngleBrackets Special
-highlight default link jsDocHyphen Special
-
-highlight default link jsDocTagsInline jsDocTags
-highlight default link jsDocLinkPath Keyword
-highlight default link jsDocLinkSeparator jsDocBraces
-
-highlight default link jsDocAs Keyword
-highlight default link jsDocType Type
 
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'
