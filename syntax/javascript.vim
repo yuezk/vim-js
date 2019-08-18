@@ -70,7 +70,7 @@ syntax match   jsModuleName +\<\K\k*\>+ contained contains=jsModuleDefault skipw
 syntax match   jsModuleComma +,+ contained skipwhite skipempty nextgroup=jsModuleBlock,jsModuleName,jsModuleAsterisk
 
 " RegExp
-syntax region  jsRegexp matchgroup=jsRegexpSlashes start=+/+ skip=+\\\\\|\\/+ end=+/+ contains=@jsRegexpTokens,jsRegexpError nextgroup=jsRegexpFlags keepend
+syntax region  jsRegexp matchgroup=jsRegexpSlashes start=+/+ end=+\%([^\\]\%(\\\\\)*\\\)\@<!/+ contains=@jsRegexpTokens,jsRegexpError nextgroup=jsRegexpFlags
 syntax match   jsRegexpFlags +[gimsuy]\++ contained
 syntax match   jsRegexpChars +.+ contained
 syntax match   jsRegexpError +)+ contained

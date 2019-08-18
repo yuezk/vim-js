@@ -19,6 +19,7 @@ var promise = import("module-name");
 const regex = /\\\//;
 const regex = /rv:([^\);\]]+)(\(\)|;)/;
 const regex = /x(?=\))/;
+const regex = /^(?:(?:https?|mailto|ftp):|[^:/?#]*(?:[/?#]|$))/
 
 debugger;
 
