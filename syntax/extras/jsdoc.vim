@@ -1,7 +1,7 @@
 " JSDoc
 syntax match   jsDocTags +@\%(abstract\|virtual\|async\|classdesc\|description\|desc\|file\|fileoverview\|overview\|generator\|global\|hideconstructor\|ignore\|inheritdoc\|inner\|instance\|override\|readonly\|static\|summary\|todo\)\>+ contained
 syntax match   jsDocTags +@access\>+ contained skipwhite nextgroup=jsDocAccessTypes
-syntax keyword jsDocAccessTypes package private protected public
+syntax keyword jsDocAccessTypes package private protected public contained
 
 syntax match   jsDocTags +@\%(alias\|augments\|extends\|borrows\|callback\|constructs\|external\|function\|func\|method\|interface\|mixin\|host\|lends\|memberof!\?\|mixes\|name\|this\|tutorial\)+ contained skipwhite nextgroup=jsDocNamepath
 syntax match   jsDocNamepath +[^[:blank:]*]\++ contained skipwhite nextgroup=jsDocAs
@@ -11,9 +11,9 @@ syntax match   jsDocTags +@author\>+ contained skipwhite nextgroup=jsDocAuthorNa
 syntax match   jsDocAuthorName +[^<>]\++ contained skipwhite nextgroup=jsDocAuthorMail
 syntax region  jsDocAuthorMail matchgroup=jsDocAngleBrackets start=+<+ end=+>+ contained
 
-syntax match   jsDocTags +@\%(class\|constructor\|constant\|const\|enum\|implements\|member\|var\|package\|private\|protected\|public\|type\)\>+ skipwhite nextgroup=jsDocTypeBlock,jsDocIdentifier
+syntax match   jsDocTags +@\%(class\|constructor\|constant\|const\|enum\|implements\|member\|var\|package\|private\|protected\|public\|type\)\>+ contained skipwhite nextgroup=jsDocTypeBlock,jsDocIdentifier
 
-syntax match   jsDocTags +@\%(copyright\|deprecated\|license\|since\|variation\|version\)\>+ skipwhite nextgroup=jsDocImportant
+syntax match   jsDocTags +@\%(copyright\|deprecated\|license\|since\|variation\|version\)\>+ contained skipwhite nextgroup=jsDocImportant
 syntax match   jsDocImportant +.\++ contained
 
 syntax match   jsDocTags +@\%(default\|defaultValue\)\>+ contained skipwhite nextgroup=jsDocValue

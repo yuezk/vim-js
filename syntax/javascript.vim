@@ -20,16 +20,16 @@ syntax case match
 " Basic tokens
 syntax keyword jsDebugger debugger
 syntax match   jsSemicolon +;+
-syntax match   jsComma +,+
+syntax match   jsComma +,+ contained
 syntax match   jsAssignmentColon +:+ contained skipwhite skipempty nextgroup=@jsExpression
-syntax match   jsAssignmentEqual +=+ skipwhite skipempty nextgroup=@jsExpression
-syntax match   jsPrivateIdentifier +#+ nextgroup=jsIdentifier,jsFunctionCall
-syntax match   jsDot +\.+ skipwhite skipempty nextgroup=jsPrivateIdentifier,jsIdentifier,jsFunctionCall
-syntax match   jsSpread +\.\.\.+ skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsAssignmentEqual +=+ contained skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsPrivateIdentifier +#+ contained nextgroup=jsIdentifier,jsFunctionCall
+syntax match   jsDot +\.+ contained skipwhite skipempty nextgroup=jsPrivateIdentifier,jsIdentifier,jsFunctionCall
+syntax match   jsSpread +\.\.\.+ contained skipwhite skipempty nextgroup=@jsExpression
 syntax match   jsParensError +[)}\]]+
 
 " Code blocks
-syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=TOP extend fold
+syntax region  jsBlock matchgroup=jsBraces start=+{+ end=+}+ contains=@jsTop extend fold
 syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpression,jsComma,jsSpread,@jsOperators extend fold skipwhite skipempty nextgroup=jsArrow,jsFunctionCallArgs,jsAccessor,jsDot,@jsOperators,jsFlowColon
 
 " Operators
@@ -117,7 +117,7 @@ syntax region  jsHashbangComment start=+^#!+ end=+$+
 
 " Declaration
 syntax keyword jsVariableType const let var skipwhite skipempty nextgroup=jsIdentifier,jsObjectDestructuring,jsArrayDestructuring
-syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobals,jsTemplateStringTag skipwhite skipempty nextgroup=jsAssignmentEqual,jsArrow,jsAccessor,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
+syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobals,jsTemplateStringTag skipwhite skipempty nextgroup=jsAssignmentEqual,jsComma,jsArrow,jsAccessor,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
 
 " Strings
 syntax region  jsString start=+\z(["']\)+ skip=+\\\\\|\\\z1\|\\\n+ end=+\z1+ contains=@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
@@ -140,7 +140,7 @@ syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpr
 " Object
 syntax region  jsObject matchgroup=jsObjectBraces start=+{+ end=+}+ contained contains=jsComment,jsIdentifier,jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread skipwhite skipempty nextgroup=jsFlowColon
 syntax match   jsObjectKey +\<\k\+\>\ze\s*:+ contained skipwhite skipempty nextgroup=jsAssignmentColon
-syntax region  jsObjectKeyString start=+\z(["']\)+ skip=+\\\\\|\\\z1\|\\\n+ end=+\z1+ contains=@Spell extend skipwhite skipempty nextgroup=jsAssignmentColon
+syntax region  jsObjectKeyString start=+\z(["']\)+ skip=+\\\\\|\\\z1\|\\\n+ end=+\z1+ contained contains=@Spell skipwhite skipempty nextgroup=jsAssignmentColon
 
 " Property accessor, e.g., arr[1] or obj["prop"]
 syntax region  jsAccessor matchgroup=jsAccessorBrackets start=+\[+ end=+]+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsDot,jsOptionalOperator,@jsOperators,jsFlowColon
@@ -188,13 +188,13 @@ syntax keyword jsReturn return skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsFunction function skipwhite skipempty nextgroup=jsGeneratorAsterisk,jsFunctionName,jsFunctionArgs
 syntax match   jsFunctionName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFunctionArgs,jsFlowGenericDeclare
 syntax region  jsFunctionArgs matchgroup=jsFunctionParens start=+(+ end=+)+ contained contains=jsComment,jsIdentifier,jsComma,jsSpread,jsObjectDestructuring,jsArrayDestructuring skipwhite skipempty nextgroup=jsArrow,jsFunctionBody,jsFlowColon fold
-syntax region  jsFunctionBody matchgroup=jsFunctionBraces start=+{+ end=+}+ contained contains=TOP fold
+syntax region  jsFunctionBody matchgroup=jsFunctionBraces start=+{+ end=+}+ contained contains=@jsTop fold
 
 " Arrow Function
 syntax match   jsArrow +=>+ contained skipwhite skipempty nextgroup=@jsExpression,jsFunctionBody
 
 " Object method
-syntax match   jsMethod +\<\K\k*\>\(\_s*(\)\@=+ contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs
+syntax match   jsMethod +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs
 syntax match   jsMethodType +\<[sg]et\>+ contained skipwhite skipempty nextgroup=jsMethod
 
 " Computed property
@@ -212,9 +212,9 @@ syntax region  jsFunctionCallArgs matchgroup=jsFunctionParens start=+(+ end=+)+ 
 
 " Loops
 syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
-syntax keyword jsOf of skipwhite skipempty nextgroup=@jsExpression
+syntax keyword jsOf of contained skipwhite skipempty nextgroup=@jsExpression
 syntax region  jsLoopCondition matchgroup=jsLoopParens start=+(+ end=+)+ contained contains=@jsExpression,jsOf,jsVariableType,jsSemicolon,jsComma,@jsOperators skipwhite skipempty nextgroup=jsLoopBlock
-syntax region  jsLoopBlock matchgroup=jsLoopBraces start=+{+ end=+}+ contained contains=TOP skipwhite skipempty nextgroup=jsWhile
+syntax region  jsLoopBlock matchgroup=jsLoopBraces start=+{+ end=+}+ contained contains=@jsTop skipwhite skipempty nextgroup=jsWhile
 
 syntax keyword jsDo do skipwhite skipempty nextgroup=jsLoopBlock
 syntax keyword jsWhile while skipwhite skipempty nextgroup=jsLoopCondition
@@ -228,18 +228,20 @@ syntax match   jsLabelColon +:+ contained
 
 " Control flow
 " If statement
-syntax keyword jsIf if skipwhite skipempty nextgroup=jsCondition,jsConditionalBlock
-syntax keyword jsElse else skipwhite skipempty nextgroup=jsIf,jsConditionalBlock
-syntax region  jsCondition matchgroup=jsConditionParens start=+(+ end=+)+ contained contains=@jsExpression,jsVariableType,jsComma,@jsOperators skipwhite skipempty nextgroup=jsConditionalBlock
-syntax region  jsConditionalBlock matchgroup=jsConditionalBraces start=+{+ end=+}+ contained contains=TOP skipwhite skipempty nextgroup=jsElse
+syntax keyword jsIf if skipwhite skipempty nextgroup=jsIfCondition,jsIfBlock
+syntax keyword jsElse else contained skipwhite skipempty nextgroup=jsIf,jsIfBlock
+syntax region  jsIfCondition matchgroup=jsIfParens start=+(+ end=+)+ contained contains=@jsExpression,jsVariableType,jsComma,@jsOperators skipwhite skipempty nextgroup=jsIfBlock
+syntax region  jsIfBlock matchgroup=jsIfBraces start=+{+ end=+}+ contained contains=@jsTop skipwhite skipempty nextgroup=jsElse
 
 " Switch statements
-syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsCondition
-syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contains=@jsExpression keepend
+syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsSwitchCondition
+syntax region  jsSwitchCondition matchgroup=jsSwitchParens start=+(+ end=+)+ contained contains=@jsExpression,jsVariableType,jsComma,@jsOperators skipwhite skipempty nextgroup=jsSwitchBlock
+syntax region  jsSwitchBlock matchgroup=jsSwitchBraces start=+{+ end=+}+ contained contains=jsCaseStatement,@jsTop
+syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contained contains=@jsExpression keepend
 
 " Exceptions
 syntax keyword jsTry try skipwhite skipempty nextgroup=jsExceptionBlock
-syntax region  jsExceptionBlock matchgroup=jsExceptionBraces start=+{+ end=+}+ contained contains=TOP skipwhite skipempty nextgroup=jsCatch
+syntax region  jsExceptionBlock matchgroup=jsExceptionBraces start=+{+ end=+}+ contained contains=@jsTop skipwhite skipempty nextgroup=jsCatch
 syntax keyword jsCatch catch skipwhite skipempty nextgroup=jsExceptionBlock,jsExceptionParams,jsFinally
 syntax region  jsExceptionParams matchgroup=jsExceptionParens start=+(+ end=+)+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsExceptionBlock
 syntax keyword jsFinally finally contained skipwhite skipempty nextgroup=jsExceptionBlock
@@ -249,9 +251,12 @@ syntax keyword jsThrow throw skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsWith with skipwhite skipempty nextgroup=jsWithExpression
 syntax region  jsWithExpression matchgroup=jsWithParens start=+(+ end=+)+ contained contains=@jsExpression,jsVariableType,jsComma,@jsOperators skipwhite skipempty nextgroup=jsBlock
 
-syntax cluster jsTop contains=TOP
-syntax cluster jsGlobals contains=jsBuiltinValues,jsThis,jsSuper
+" Tokens that appear at the top-level
+syntax cluster jsTop contains=jsDebugger,jsSemicolon,jsParensError,jsBlock,jsParen,jsUnaryOperator,jsOperator,jsImport,jsExport,jsRegexp,jsComment,jsVariableType,jsIdentifier,jsString,jsTemplateString,jsTemplateStringTag,jsNumber,jsArray,jsClass,jsNew,jsDecorator,jsDecoratorName,jsAsync,jsAwait,jsReturn,jsFunction,jsYield,jsFunctionCall,jsFor,jsDo,jsWhile,jsBreak,jsContinue,jsLabel,jsIf,jsSwitch,jsTry,jsThrow,jsWith
+" Tokens that produce a value
 syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,jsUnaryOperator,jsNew
+" Tokens that are globally used by JavaScript
+syntax cluster jsGlobals contains=jsBuiltinValues,jsThis,jsSuper
 
 " Highlight flow syntax
 runtime syntax/extras/flow.vim
@@ -400,9 +405,11 @@ highlight default link jsContinue Keyword
 " Conditional Statements
 highlight default link jsIf Keyword
 highlight default link jsElse Keyword
-highlight default link jsConditionParens jsParens
-highlight default link jsConditionalBraces jsBraces
+highlight default link jsIfParens jsParens
+highlight default link jsIfBraces jsBraces
 highlight default link jsSwitch Keyword
+highlight default link jsSwitchParens jsParens
+highlight default link jsSwitchBraces jsBraces
 highlight default link jsSwitchCase Keyword
 highlight default link jsSwitchColon jsOperator
 

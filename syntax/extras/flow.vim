@@ -49,10 +49,10 @@ syntax match   jsFlowSpread +\.\.\.+ contained skipwhite skipempty nextgroup=jsF
 syntax region  jsFlowParen matchgroup=jsFlowParens start=+(+ end=+)+ contained contains=jsFlowMaybe,@jsFlowTypes,jsFlowParameter,jsSpread skipwhite skipempty nextgroup=jsFlowArrayShorthand,jsFlowArrow,jsFlowColon
 syntax match   jsFlowParameter +\<\K\k*\>\ze\s*?\?:+ contained skipwhite skipempty nextgroup=jsFlowColon
 
-syntax keyword jsFlowDeclare declare skipwhite skipempty nextgroup=jsFlowModuleDeclare
+syntax keyword jsFlowDeclare declare skipwhite skipempty nextgroup=jsFlowModuleDeclare,jsClass,jsFunction,jsVariableType,jsExport
 syntax keyword jsFlowModuleDeclare module contained skipwhite skipempty nextgroup=jsFlowModuleName
 syntax region  jsFlowModuleName start=+\z(["']\)+  skip=+\\\%(\z1\|$\)+  end=+\z1+ contained skipwhite skipempty nextgroup=jsFlowModuleBody
-syntax region  jsFlowModuleBody matchgroup=jsFlowBraces start=+{+ end=+}+ contained contains=TOP
+syntax region  jsFlowModuleBody matchgroup=jsFlowBraces start=+{+ end=+}+ contained contains=jsComment,@jsFlowTop
 
 syntax keyword jsFlowOpaque opaque skipwhite skipempty nextgroup=jsFlowAliasType
 syntax keyword jsFlowAliasType type skipwhite skipempty nextgroup=jsFlowAliasName
@@ -75,6 +75,7 @@ syntax region  jsComment matchgroup=jsFlowComment start=+/\*\%(::\|flow-include\
 
 syntax cluster jsFlowTop contains=jsFlowDeclare,jsFlowAliasType,jsFlowOpaque,jsFlowInterface
 syntax cluster jsFlowTypes contains=jsFlowType,jsFlowBoolean,jsFlowString,jsFlowNumber,jsFlowObject,jsFlowArray,jsFlowTuple,jsFlowParen,jsFlowTypeof
+syntax cluster jsTop add=@jsFlowTop
 
 " Flow syntax
 highlight default link jsFlowColon Operator
