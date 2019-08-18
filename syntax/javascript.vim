@@ -313,10 +313,10 @@ highlight default link jsRegexpUnicodeBraces Keyword
 highlight default link jsRegexpUnicodeName Type
 highlight default link jsRegexpUnicodeEqual Special
 highlight default link jsRegexpUnicodeValue Constant
-highlight default link jsRegexpParens Keyword
+highlight default link jsRegexpParens Type
 highlight default link jsRegexpGroupReference Keyword
-highlight default link jsRegexpBrackets Keyword
-highlight default link jsRegexpAssertionParens Keyword
+highlight default link jsRegexpBrackets Type
+highlight default link jsRegexpAssertionParens Type
 
 " Comments
 highlight default link jsComment Comment
