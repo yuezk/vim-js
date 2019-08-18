@@ -16,6 +16,10 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
+const regex = /\\\//;
+const regex = /rv:([^\);\]]+)(\(\)|;)/;
+const regex = /x(?=\))/;
+
 debugger;
 
 function nullishTest() {

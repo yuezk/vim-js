@@ -70,7 +70,7 @@ syntax match   jsModuleName +\<\K\k*\>+ contained contains=jsModuleDefault skipw
 syntax match   jsModuleComma +,+ contained skipwhite skipempty nextgroup=jsModuleBlock,jsModuleName,jsModuleAsterisk
 
 " RegExp
-syntax region  jsRegexp matchgroup=jsRegexpSlashes start=+/+ skip=+\\/+ end=+/+ contains=@jsRegexpTokens,jsRegexpError nextgroup=jsRegexpFlags
+syntax region  jsRegexp matchgroup=jsRegexpSlashes start=+/+ skip=+\\\\\|\\/+ end=+/+ contains=@jsRegexpTokens,jsRegexpError nextgroup=jsRegexpFlags keepend
 syntax match   jsRegexpFlags +[gimsuy]\++ contained
 syntax match   jsRegexpChars +.+ contained
 syntax match   jsRegexpError +)+ contained
@@ -100,11 +100,12 @@ syntax match   jsRegexpUnicodeEqual +=+ contained nextgroup=jsRegexpUnicodeValue
 syntax match   jsRegexpUnicodeValue +\K\k*+ contained
 
 " Match the groups. (x), (?<Name>x), (?:x)
-syntax region  jsRegexpGroup matchgroup=jsRegexpGroupParens start=+(\%(?\%(:\|<\K\k*>\)\)\?+ end=+)+ contained contains=@jsRegexpTokens
+" skip=+\\)+ seems not work, so I have to write a complex end pattern
+syntax region  jsRegexpGroup matchgroup=jsRegexpParens start=+(?<\K\k*>+ start=+(?:+ start=+(+ end=+\%([^\\]\%(\\\\\)*\\\)\@<!)+ contained contains=@jsRegexpTokens
 " Match the range. [a-b]
-syntax region  jsRegexpRange matchgroup=jsRegexpRangeBrackets start=+\[+ end=+]+ contained contains=jsRegexpEscape,jsRegexpChars,jsRegexpCharClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
+syntax region  jsRegexpRange matchgroup=jsRegexpBrackets start=+\[+ end=+\%([^\\]\%(\\\\\)*\\\)\@<!]+ contained contains=jsRegexpEscape,jsRegexpChars,jsRegexpCharClass,jsRegexpRangeHyphen,jsRegexpRangeCaret
 " Match the assertions. x(?=y), x(?!y), (?<=y)x, (?<!y)x
-syntax region  jsRegexpAssertion matchgroup=jsRegexpAssertionParens start=+(?<\?[=!]+ end=+)+ contained contains=@jsRegexpTokens
+syntax region  jsRegexpAssertion matchgroup=jsRegexpAssertionParens start=+(?<\?[=!]+ end=+\%([^\\]\%(\\\\\)*\\\)\@<!)+ contained contains=@jsRegexpTokens
 
 syntax cluster jsRegexpTokens contains=jsRegexpChars,jsRegexpGroup,jsRegexpGroupReference,jsRegexpOr,jsRegexpRange,jsRegexpAssertion,jsRegexpBoundaries,jsRegexpQuantifier,jsRegexpEscape,jsRegexpDot,jsRegexpCharClass,jsRegexpUnicode
 
@@ -298,24 +299,24 @@ highlight default link jsModuleBraces jsBraces
 " RegExp
 highlight default link jsRegexpError Error
 highlight default link jsRegexpSlashes Special
-highlight default link jsRegexpFlags Keyword
+highlight default link jsRegexpFlags Type
 highlight default link jsRegexpChars String
-highlight default link jsRegexpQuantifier Special
-highlight default link jsRegexpOr Special
-highlight default link jsRegexpEscape Special
-highlight default link jsRegexpRangeHyphen Special
-highlight default link jsRegexpRangeCaret Special
-highlight default link jsRegexpBoundaries Special
+highlight default link jsRegexpQuantifier Keyword
+highlight default link jsRegexpOr Keyword
+highlight default link jsRegexpEscape Keyword
+highlight default link jsRegexpRangeHyphen Keyword
+highlight default link jsRegexpRangeCaret Keyword
+highlight default link jsRegexpBoundaries Keyword
 highlight default link jsRegexpDot Character
-highlight default link jsRegexpCharClass Keyword
-highlight default link jsRegexpUnicodeBraces Special
-highlight default link jsRegexpUnicodeName Keyword
+highlight default link jsRegexpCharClass Type
+highlight default link jsRegexpUnicodeBraces Keyword
+highlight default link jsRegexpUnicodeName Type
 highlight default link jsRegexpUnicodeEqual Special
 highlight default link jsRegexpUnicodeValue Constant
-highlight default link jsRegexpGroupParens Special
+highlight default link jsRegexpParens Keyword
 highlight default link jsRegexpGroupReference Keyword
-highlight default link jsRegexpRangeBrackets Special
-highlight default link jsRegexpAssertionParens Special
+highlight default link jsRegexpBrackets Keyword
+highlight default link jsRegexpAssertionParens Keyword
 
 " Comments
 highlight default link jsComment Comment
