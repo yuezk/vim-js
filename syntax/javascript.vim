@@ -37,15 +37,15 @@ syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpress
 syntax keyword jsUnaryOperator delete void typeof skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsRelationalOperator in instanceof contained skipwhite skipempty nextgroup=@jsExpression
 " Arithmetic operators (%, ++, --, -, +, **, /)
-syntax match   jsOperator +\([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsOperator +\%([+*-]\{1,2}\|%\|/\ze[^/*]\)+ skipwhite skipempty nextgroup=@jsExpression
 " Comparison operators (==, !=, ===, !==, >, >=, <, <=)
-syntax match   jsOperator +\([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsOperator +\%([=!]==\?\|[<>]=\?\)+ skipwhite skipempty nextgroup=@jsExpression
 " Bitwise operators (&, |, ^, ~, <<, >>, >>>)
-syntax match   jsOperator +\([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsOperator +\%([&^|~]\|<<\|>>>\?\)+ skipwhite skipempty nextgroup=@jsExpression
 " Logical operators (&&, ||, !)
-syntax match   jsOperator +\(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsOperator +\%(!\|[|&]\{2}\)+ skipwhite skipempty nextgroup=@jsExpression
 " Assignment operators (*=, /=, %=, +=, -=, <<=, >>=, >>>=, &=, ^=, |=, **=)
-syntax match   jsOperator +\([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhite skipempty nextgroup=@jsExpression
+syntax match   jsOperator +\%([-/%+&|^]\|<<\|>>>\?\|\*\*\?\)=+ skipwhite skipempty nextgroup=@jsExpression
 " Ternary expression
 syntax region  jsTernary matchgroup=jsTernaryOperator start=+?+ end=+:+ contained contains=@jsExpression skipwhite skipempty nextgroup=@jsExpression
 " Optional chaining operator: https://github.com/TC39/proposal-optional-chaining
@@ -122,7 +122,7 @@ syntax match   jsIdentifier +\<\K\k*\>+ contains=@jsGlobals,jsTemplateStringTag 
 
 " Strings
 syntax region  jsString start=+\z(["']\)+ skip=+\\\\\|\\\z1\|\\\n+ end=+\z1+ contains=@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
-syntax match   jsTemplateStringTag +\<\K\k*\>\(\_s*`\)\@=+ skipwhite skipempty nextgroup=jsTemplateString
+syntax match   jsTemplateStringTag +\<\K\k*\>\%(\_s*`\)\@=+ skipwhite skipempty nextgroup=jsTemplateString
 syntax region  jsTemplateString start=+`+ skip=+\\\\\|\\`\|\\\n+ end=+`+ contains=jsTemplateExpression,@Spell skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon keepend
 syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\%([^\\]\%(\\\\\)*\)\@<=${+ end=+}+ contained contains=@jsExpression,@jsOperators
 
@@ -195,7 +195,7 @@ syntax region  jsFunctionBody matchgroup=jsFunctionBraces start=+{+ end=+}+ cont
 syntax match   jsArrow +=>+ contained skipwhite skipempty nextgroup=@jsExpression,jsFunctionBody
 
 " Object method
-syntax match   jsMethod +\<\K\k*\>\(\_s*(\)\@=+ contained contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs
+syntax match   jsMethod +\<\K\k*\>\%(\_s*(\)\@=+ contained contains=jsConstructor skipwhite skipempty nextgroup=jsFunctionArgs
 syntax match   jsMethodType +\<[sg]et\>+ contained skipwhite skipempty nextgroup=jsMethod
 
 " Computed property
@@ -238,7 +238,7 @@ syntax region  jsIfBlock matchgroup=jsIfBraces start=+{+ end=+}+ contained conta
 syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsSwitchCondition
 syntax region  jsSwitchCondition matchgroup=jsSwitchParens start=+(+ end=+)+ contained contains=@jsExpression,jsVariableType,jsComma,@jsOperators skipwhite skipempty nextgroup=jsSwitchBlock
 syntax region  jsSwitchBlock matchgroup=jsSwitchBraces start=+{+ end=+}+ contained contains=jsCaseStatement,@jsTop
-syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contained contains=@jsExpression keepend
+syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\%(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contained contains=@jsExpression keepend
 
 " Exceptions
 syntax keyword jsTry try skipwhite skipempty nextgroup=jsExceptionBlock
