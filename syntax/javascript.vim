@@ -242,8 +242,8 @@ syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\(case\|default\
 
 " Exceptions
 syntax keyword jsTry try skipwhite skipempty nextgroup=jsExceptionBlock
-syntax region  jsExceptionBlock matchgroup=jsExceptionBraces start=+{+ end=+}+ contained contains=@jsTop skipwhite skipempty nextgroup=jsCatch
-syntax keyword jsCatch catch skipwhite skipempty nextgroup=jsExceptionBlock,jsExceptionParams,jsFinally
+syntax region  jsExceptionBlock matchgroup=jsExceptionBraces start=+{+ end=+}+ contained contains=@jsTop skipwhite skipempty nextgroup=jsCatch,jsFinally
+syntax keyword jsCatch catch skipwhite skipempty nextgroup=jsExceptionBlock,jsExceptionParams
 syntax region  jsExceptionParams matchgroup=jsExceptionParens start=+(+ end=+)+ contained contains=@jsExpression skipwhite skipempty nextgroup=jsExceptionBlock
 syntax keyword jsFinally finally contained skipwhite skipempty nextgroup=jsExceptionBlock
 syntax keyword jsThrow throw skipwhite skipempty nextgroup=@jsExpression
