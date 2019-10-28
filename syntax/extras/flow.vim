@@ -84,9 +84,9 @@ highlight default link jsFlowUnion Operator
 highlight default link jsFlowIntersection Operator
 
 highlight default link jsFlowType Type
-highlight default link jsFlowPrimitives Keyword
+highlight default link jsFlowPrimitives Type
 highlight default link jsFlowSpecialType Type
-highlight default link jsFlowUtility Keyword
+highlight default link jsFlowUtility PreProc
 highlight default link jsFlowBoolean Constant
 highlight default link jsFlowString String
 highlight default link jsFlowNumber Number

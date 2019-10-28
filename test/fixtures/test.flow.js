@@ -56,6 +56,10 @@ a /= 3;
 new Foo.Bar(a ? b : c);
 new Foo.Bar.Baz;
 
+new Date();
+
+decodeURIComponent()
+
 function testRegexp() {
 	// Assertions
 	let regex = /First(?= test)/g;
@@ -378,6 +382,9 @@ function testFlowAlias() {
 	};
 	type UnionAlias = 1 | 2 | 3;
 	type AliasAlias = ObjectAlias;
+
+	type Test = Test2<{}>;
+
 
 	// Type Alias Generics 
 	type MyObject<A, B, C> = {

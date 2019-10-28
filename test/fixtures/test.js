@@ -16,11 +16,42 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
+/** # In the above code the password is stored plainly in the password field so it can be validated, but is never stored in the DB.
+ *
+ * @example <caption>Checking password length before hashing it</caption>
+ * sequelize.define('user', {
+ *   password_hash: DataTypes.STRING,
+ *   password: {
+ *     *[foo]() {
+ *
+ *     
+ *     },
+ *     *gen() {
+ *       const a = 3;
+ *     },
+ *     type: DataTypes.VIRTUAL,
+ *     set: function (val) {
+ *        // Remember to set the data value, otherwise it won't be validated
+ *        this.setDataValue('password', val);
+ *        this.setDataValue('password_hash', this.salt + val);
+ *      },
+ *      validate: {
+ *         isLongEnough: function (val) {
+ *           if (val.length < 7) {
+ *             throw new Error("Please choose a longer password");
+ *          }
+ *       }
+ *     }
+ *   }
+ * })
+ * @return
+ */
 function nullishTest() {
     const obj = { a: 'a' };
     console.log(obj.b ?? 'empty');
 }
 
+// ~this
 const a = 1;
 let b;
 var a1, a2;
@@ -113,7 +144,7 @@ var arr = [
 var a1 = arr[1];
 
 const str = tag`<div></div>`;
-const str = tag()`<div></div>`;
+const str = tag()`<div>${hello}</div>`;
 const str2 = String.raw`hello, ${world}`;
 const str2 = String().raw`hello, ${world}`;
 const str2 = String['hello'].raw`hello, ${world}`;
@@ -206,6 +237,11 @@ function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
 function* gen() {
 	yield* gen()
 	return 1;
+}
+
+const foo = function* () {
+  yield 10;
+  yield 20;
 }
 
 const func = function(a, b) {
@@ -454,7 +490,7 @@ switch (expression) {
 
 for (;;) console.log('hello');
 
-for (var i = 0; i < 100; i++) {
+for (var i = 0; i < 100 + 100; i++) {
 	// Comment
 	switch (expression) {
 		case 1:
