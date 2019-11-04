@@ -16,36 +16,6 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
-/** # In the above code the password is stored plainly in the password field so it can be validated, but is never stored in the DB.
- *
- * @example <caption>Checking password length before hashing it</caption>
- * sequelize.define('user', {
- *   password_hash: DataTypes.STRING,
- *   password: {
- *     *[foo]() {
- *
- *     
- *     },
- *     *gen() {
- *       const a = 3;
- *     },
- *     type: DataTypes.VIRTUAL,
- *     set: function (val) {
- *        // Remember to set the data value, otherwise it won't be validated
- *        this.setDataValue('password', val);
- *        this.setDataValue('password_hash', this.salt + val);
- *      },
- *      validate: {
- *         isLongEnough: function (val) {
- *           if (val.length < 7) {
- *             throw new Error("Please choose a longer password");
- *          }
- *       }
- *     }
- *   }
- * })
- * @return
- */
 function nullishTest() {
     const obj = { a: 'a' };
     console.log(obj.b ?? 'empty');
