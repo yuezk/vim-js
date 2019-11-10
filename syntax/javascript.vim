@@ -283,9 +283,9 @@ syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateStrin
 syntax cluster jsGlobals contains=jsBuiltinValues,jsThis,jsSuper,jsBuiltinObjects
 
 " Highlight flow syntax
-runtime syntax/extras/flow.vim
+source <sfile>:h/extras/flow.vim
 " Highlight jsodc
-runtime syntax/extras/jsdoc.vim
+source <sfile>:h/extras/jsdoc.vim
 
 " Basics
 highlight default link jsDebugger Error
