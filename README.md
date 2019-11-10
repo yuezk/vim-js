@@ -9,7 +9,7 @@ A Vim syntax highlighting plugin for JavaScript and [Flow.js](https://flow.org/)
 - Better support for [JSDoc](https://jsdoc.app/) syntax
 - More accurate syntax groups, easy for colorscheme customization
 
-<img src="https://github.com/yuezk/vim-js/raw/3c69f3e3a2d2d9712dcc9c79b57dbff55a8455a6/screenshot.png" alt="yuezk/vim-js screenshot" width="500">
+<img src="https://github.com/yuezk/vim-js/raw/3c69f3e3a2d2d9712dcc9c79b57dbff55a8455a6/screenshot.png" alt="yuezk/vim-js screenshot" width="694">
 
 ## Install
 
