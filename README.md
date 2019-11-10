@@ -2,14 +2,14 @@
 
 A Vim syntax highlighting plugin for JavaScript and [Flow.js](https://flow.org/)
 
-![yuezk/vim-js screenshot](./screenshot.png)
-
 ## Pros.
 
 - Better support for the modern JavaScript features ([decorator](https://github.com/tc39/proposal-decorators), [private members](https://github.com/tc39/proposal-private-methods), [numeric seprators](https://github.com/tc39/proposal-numeric-separator), [optional chaining](https://github.com/tc39/proposal-nullish-coalescing), etc.)
 - Better support for [Flow.js](https://flow.org/) syntax
 - Better support for [JSDoc](https://jsdoc.app/) syntax
 - More accurate syntax groups, easy for colorscheme customization
+
+<img src="https://github.com/yuezk/vim-js/raw/3c69f3e3a2d2d9712dcc9c79b57dbff55a8455a6/screenshot.png" alt="yuezk/vim-js screenshot" style="max-width:100%; width: 500px;">
 
 ## Install
 
