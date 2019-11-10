@@ -16,10 +16,10 @@ A Vim syntax highlighting plugin for JavaScript and Flow.js
 
 ## Highlight JSX Syntax
 
-Please use vim-jsx-pretty to highlight the JSX syntax. It's another plugin I currently maintain.
+Please use [vim-jsx-pretty](https://github.com/MaxMEllon/vim-jsx-pretty) to highlight the JSX syntax. It's another plugin I currently maintain.
 
 ```
-Plug install maxmellon/vim-jsx-pretty
+Plug maxmellon/vim-jsx-pretty
 ```
 
 ## License
