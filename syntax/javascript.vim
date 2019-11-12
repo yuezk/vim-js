@@ -209,7 +209,7 @@ syntax keyword jsAsync async skipwhite skipempty nextgroup=jsFunction,jsFunction
 syntax keyword jsAwait await skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsThis this contained
 syntax keyword jsReturn return skipwhite skipempty nextgroup=@jsExpression
-syntax keyword jsFunction function skipwhite skipempty nextgroup=jsGeneratorAsterisk,jsFunctionName,jsFunctionArgs
+syntax keyword jsFunction function skipwhite skipempty nextgroup=jsGeneratorAsterisk,jsFunctionName,jsFunctionArgs,jsFlowGenericDeclare
 syntax match   jsFunctionName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsFunctionArgs,jsFlowGenericDeclare
 syntax region  jsFunctionArgs matchgroup=jsFunctionParens start=+(+ end=+)+ contained contains=jsComment,jsIdentifier,jsComma,jsSpread,jsObjectDestructuring,jsArrayDestructuring skipwhite skipempty nextgroup=jsArrow,jsFunctionBody,jsFlowColon fold
 syntax region  jsFunctionBody matchgroup=jsFunctionBraces start=+{+ end=+}+ contained contains=@jsTop fold
