@@ -231,7 +231,7 @@ syntax match   jsYieldAsterisk +\*+ contained skipwhite skipempty nextgroup=@jsE
 
 " Function Call
 " Matches: func(), obj.func(), obj.func?.(), obj.func<Array<number | string>>() etc.
-syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*<\%(\_[^&|]\{-1,}\%([&|]\_[^&|]\{-1,}\)*\)>\)\?\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper,jsBuiltinFunctions,jsFlowGenericCall skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallArgs
+syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*<\%(\_[^&|)]\{-1,}\%([&|]\_[^&|)]\{-1,}\)*\)>\)\?\%(\_s*\%(?\.\)\?\_s*(\)\@=+ contains=jsImport,jsSuper,jsBuiltinFunctions,jsFlowGenericCall skipwhite skipempty nextgroup=jsOptionalOperator,jsFunctionCallArgs
 syntax region  jsFunctionCallArgs matchgroup=jsFunctionParens start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsDot,jsOptionalOperator,@jsOperators
 
 " Loops
