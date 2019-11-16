@@ -36,6 +36,8 @@ syntax region  jsParen matchgroup=jsParens start=+(+ end=+)+ contains=@jsExpress
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
 syntax keyword jsUnaryOperator delete void typeof skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsRelationalOperator in instanceof contained skipwhite skipempty nextgroup=@jsExpression
+" REFERENCE: https://github.com/tc39/proposal-bind-operator
+syntax match   jsBindOperator +::+ contained skipwhite skipempty nextgroup=@jsExpression
 " Arithmetic operators (**, *, %, /)
 syntax match   jsOperator +\%(\*\*\|[*%]\|/\ze[^/*]\)+ contained skipwhite skipempty nextgroup=@jsExpression
 " Arithmetic operators (+, ++, -, --)
@@ -60,7 +62,7 @@ syntax match   jsOptionalOperator +?\.+ contained skipwhite skipempty nextgroup=
 syntax match   jsOperator +??+ contained skipwhite skipwhite nextgroup=@jsExpression
 
 syntax cluster jsTopOperators contains=jsTopOperator,jsUnaryOperator
-syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator,jsTopOperator
+syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator,jsTopOperator,jsBindOperator
 
 " Modules
 " REFERENCE:
@@ -278,7 +280,7 @@ syntax region  jsWithExpression matchgroup=jsWithParens start=+(+ end=+)+ contai
 " Tokens that appear at the top-level
 syntax cluster jsTop contains=jsDebugger,jsSemicolon,jsParensError,jsBlock,jsParen,@jsTopOperators,jsImport,jsExport,jsRegexp,jsComment,jsVariableType,jsIdentifier,jsString,jsTemplateString,jsTemplateStringTag,jsNumber,jsArray,jsClass,jsNew,jsDecorator,jsDecoratorName,jsAsync,jsAwait,jsReturn,jsFunction,jsYield,jsFunctionCall,jsFor,jsDo,jsWhile,jsBreak,jsContinue,jsLabel,jsIf,jsSwitch,jsTry,jsThrow,jsWith
 " Tokens that produce a value
-syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsTemplateStringTag,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,@jsTopOperators,jsNew
+syntax cluster jsExpression contains=jsRegexp,jsComment,jsString,jsTemplateString,jsTemplateStringTag,jsNumber,jsArray,jsObject,jsIdentifier,jsAsync,jsAwait,jsYield,jsFunction,jsFunctionCall,jsClass,jsParen,@jsTopOperators,jsBindOperator,jsNew
 " Tokens that are globally used by JavaScript
 syntax cluster jsGlobals contains=jsBuiltinValues,jsThis,jsSuper,jsBuiltinObjects
 
@@ -303,6 +305,7 @@ highlight default link jsBrackets Special
 " Operators
 highlight default link jsUnaryOperator Keyword
 highlight default link jsRelationalOperator Keyword
+highlight default link jsBindOperator Keyword
 highlight default link jsOperator Operator
 highlight default link jsTopOperator jsOperator
 highlight default link jsTernaryOperator jsOperator

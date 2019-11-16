@@ -21,6 +21,13 @@ function nullishTest() {
     console.log(obj.b ?? 'empty');
 }
 
+getPlayers()
+::map(x => x.character(), ::this.getFoo())
+::takeWhile(x => x.strength > 100)
+::forEach(::console.log(x));
+
+let log = ::console.log;
+
 // ~this
 const a = 1;
 let b;
