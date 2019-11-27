@@ -141,7 +141,7 @@ syntax region  jsTemplateExpression matchgroup=jsTemplateBrace start=+\%([^\\]\%
 " Built-in values
 " REFERENCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 syntax keyword jsBuiltinValues undefined null NaN true false Infinity globalThis global contained
-syntax keyword jsBuiltinValues window document module require console arguments contained
+syntax keyword jsBuiltinValues window document module exports require console arguments contained
 
 " Built-in objects
 syntax keyword jsBuiltinObjects Object Function Boolean Symbol Error EvalError InternalError RangeError ReferenceError SyntaxError TypeError URIError contained
