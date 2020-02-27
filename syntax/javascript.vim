@@ -237,7 +237,8 @@ syntax match   jsFunctionCall +\<\K\k*\>\%(\_s*<\%(\_[^&|)]\{-1,}\%([&|]\_[^&|)]
 syntax region  jsFunctionCallArgs matchgroup=jsFunctionParens start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor,jsFunctionCallArgs,jsDot,jsOptionalOperator,@jsOperators
 
 " Loops
-syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition
+syntax keyword jsFor for skipwhite skipempty nextgroup=jsLoopCondition,jsForAwait
+syntax keyword jsForAwait await contained skipwhite skipempty nextgroup=jsLoopCondition
 syntax keyword jsOf of contained skipwhite skipempty nextgroup=@jsExpression
 syntax region  jsLoopBlock matchgroup=jsLoopBraces start=+{+ end=+}+ contained contains=@jsTop skipwhite skipempty nextgroup=jsWhile
 syntax region  jsLoopCondition matchgroup=jsLoopParens start=+(+ end=+)+ contained contains=@jsExpression,jsOf,jsVariableType,jsSemicolon,jsComma skipwhite skipempty nextgroup=jsLoopBlock
@@ -422,6 +423,7 @@ highlight default link jsFunctionCall Function
 
 " Loops
 highlight default link jsFor Keyword
+highlight default link jsForAwait jsAwait
 highlight default link jsOf Keyword
 highlight default link jsDo Keyword
 highlight default link jsWhile Keyword

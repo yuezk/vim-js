@@ -496,6 +496,10 @@ for (var i of arr) {
    console.log(i); // logs 3, 5, 7
 }
 
+for await (const x of asyncIterator) {
+    console.log(x);
+}
+
 var a = 0;
 do
   console.log(a++)
