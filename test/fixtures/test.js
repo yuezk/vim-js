@@ -16,6 +16,17 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
+class Foo {
+  foo = async x => {  
+    try {
+      console.log(x)   
+      return x || {}
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+
 function nullishTest() {
     const obj = { a: 'a' };
     console.log(obj.b ?? 'empty');
