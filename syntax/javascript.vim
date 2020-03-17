@@ -207,7 +207,7 @@ syntax region  jsDecoratorBlock matchgroup=jsDecoratorBraces start=+{+ end=+}+ c
 syntax region  jsDecoratorParams matchgroup=jsDecoratorParens start=+(+ end=+)+ contained contains=@jsExpression,jsComma,jsSpread nextgroup=jsDecoratorBlock
 
 " Function
-syntax keyword jsAsync async skipwhite skipempty nextgroup=jsFunction,jsFunctionArgs,jsGeneratorAsterisk,jsComputed
+syntax keyword jsAsync async skipwhite skipempty nextgroup=jsFunction,jsFunctionArgs,jsGeneratorAsterisk,jsComputed,jsIdentifier,jsMethod
 syntax keyword jsAwait await skipwhite skipempty nextgroup=@jsExpression
 syntax keyword jsThis this contained
 syntax keyword jsReturn return skipwhite skipempty nextgroup=@jsExpression
