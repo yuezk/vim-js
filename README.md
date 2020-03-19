@@ -26,4 +26,4 @@ Plug 'maxmellon/vim-jsx-pretty'
 
 ## License
 
-Same as Vim
+[MIT License](License)
