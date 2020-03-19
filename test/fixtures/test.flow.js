@@ -24,8 +24,8 @@ const regex = /^(?:(?:https?|mailto|ftp):|[^:/?#]*(?:[/?#]|$))/
 debugger;
 
 function nullishTest() {
-    const obj = { a: 'a' };
-    console.log(obj.b ?? 'empty');
+  const obj = { a: 'a' };
+  console.log(obj.b ?? 'empty');
 }
 
 const a = '\\';
@@ -61,58 +61,58 @@ new Date();
 decodeURIComponent()
 
 function testRegexp() {
-	// Assertions
-	let regex = /First(?= test)/g;
-	console.log(/\d+(?!\.)/g.exec('3.141')); // [ '141', index: 2, input: '3.141' ]
-	let ripe_oranges = oranges.filter( fruit => fruit.match(/(?<=ripe )orange/));
-	/(?<!-)\d+/.exec('3')
+  // Assertions
+  let regex = /First(?= test)/g;
+  console.log(/\d+(?!\.)/g.exec('3.141')); // [ '141', index: 2, input: '3.141' ]
+  let ripe_oranges = oranges.filter( fruit => fruit.match(/(?<=ripe )orange/));
+  /(?<!-)\d+/.exec('3')
 
-	// Boundaries
-	let regex = /^abcd$/;
-	let regex = /\bm/;
-	let regex = /\Bon/;
+  // Boundaries
+  let regex = /^abcd$/;
+  let regex = /\bm/;
+  let regex = /\Bon/;
 
-	let regex = /\n\cM\x33\uDDDD\u{3333}\u{33333}/
+  let regex = /\n\cM\x33\uDDDD\u{3333}\u{33333}/
 
-	// Groups and Ranges
-	let regex = /(foo)/	
-	let regex = /(?:foo)/	
-	let regex = /(?<name>foo)/
-	let regex = /[^xyz\b\w^$\\]/
-	let regex = /[-a-z^0-9-()-]?/
-	let regex = /apple(,)\sorange\1\0/
+  // Groups and Ranges
+  let regex = /(foo)/	
+  let regex = /(?:foo)/	
+  let regex = /(?<name>foo)/
+  let regex = /[^xyz\b\w^$\\]/
+  let regex = /[-a-z^0-9-()-]?/
+  let regex = /apple(,)\sorange\1\0/
 
-	let regex = /x{1}y{1,}z{1,2}?/
+  let regex = /x{1}y{1,}z{1,2}?/
 
-	let regex = /\\\\\..*\b\w?\{}\?\*\(\)\|\[\]\^\$/
+  let regex = /\\\\\..*\b\w?\{}\?\*\(\)\|\[\]\^\$/
 
-	// Unicode property escapes
-	regex = /\p{Shorthand}/
-	regex = /\p{UnicodePropertyName}/
-	regex = /\p{UnicodePropertyName=UnicodePropertyValue}/
+  // Unicode property escapes
+  regex = /\p{Shorthand}/
+  regex = /\p{UnicodePropertyName}/
+  regex = /\p{UnicodePropertyName=UnicodePropertyValue}/
 }
 
 (function () {
-    const regexp = /^[+-]?(?:(?:(?:(?:0|[1-9]\d*)\.\d*|\.\d+|(?:0|[1-9]\d*))(?:e[+-]?\d+)?)|0b[01]+|0o[0-7]+|0x[0-9a-f]+)$/i;
+  const regexp = /^[+-]?(?:(?:(?:(?:0|[1-9]\d*)\.\d*|\.\d+|(?:0|[1-9]\d*))(?:e[+-]?\d+)?)|0b[01]+|0o[0-7]+|0x[0-9a-f]+)$/i;
 
-    const testCases = [
-        0., 0.E1, 0.e-1,0.e0, 0.1, 0.12, 0.12e2, 0.12e-2,0.12E0,0.0e1, 0.0e-1, 0.0E0,
-        1., 1.E1, 1.e-1,1.e0, 1.1, 1.12, 1.12e2, 1.12e-2,1.12E0,1.0e1, 1.0e-1, 1.0E0,
-	1_0., 1_0_0., 1_0.0_1_2, 1_0_0, 100_000, 1e1_2, 1e+12_0, .1_2_3, .000_111, 10_1.1_2_3, 0.000_111, 0e0, 1_2e10,
-        11., 12.E1, 13.e-1,144.e0, 155.1, 124.12, 14.12e2, 124.12e-2,10.12E0,100.0e1, 101.0e-1, 102.0E0,
-        .0, .0e1, .0e-1, .0E0, .12, .12e1, .12e-1, .12E0,
-        0, 0e1, 0e-1, 0E0, 1, 1e1, 1e-1, 1E0,
-        0b0, 0b1, 0b0000, 0b111, 0b010101, 0b0_1, 0b0000_1111,
-        0B0, 0B1, 0B0000, 0B111, 0B010101,
-        0o0,0o01,0o02,0o07,0o7, 0o00_11, 0o0_1111_00,
-        0O0,0O01,0O02,0O07,0O7,
-        0x0, 0x01, 0xa, 0x1234abcdef, 0xf_ed_123, 0x1234_abcd_ef,
-        0X0, 0X01, 0XA, 0X1234ABCDEF,
-    ];
+  const testCases = [
+    0., 0.E1, 0.e-1,0.e0, 0.1, 0.12, 0.12e2, 0.12e-2,0.12E0,0.0e1, 0.0e-1, 0.0E0,
+    1., 1.E1, 1.e-1,1.e0, 1.1, 1.12, 1.12e2, 1.12e-2,1.12E0,1.0e1, 1.0e-1, 1.0E0,
+    1_0., 1_0_0., 1_0.0_1_2, 1_0_0, 100_000, 1e1_2, 1e+12_0, .1_2_3, .000_111, 10_1.1_2_3, 0.000_111, 0e0, 1_2e10,
+    11., 12.E1, 13.e-1,144.e0, 155.1, 124.12, 14.12e2, 124.12e-2,10.12E0,100.0e1, 101.0e-1, 102.0E0,
+    .0, .0e1, .0e-1, .0E0, .12, .12e1, .12e-1, .12E0,
+    0, 0e1, 0e-1, 0E0, 1, 1e1, 1e-1, 1E0,
+    0b0, 0b1, 0b0000, 0b111, 0b010101, 0b0_1, 0b0000_1111,
+    0B0, 0B1, 0B0000, 0B111, 0B010101,
+    0o0,0o01,0o02,0o07,0o7, 0o00_11, 0o0_1111_00,
+    0O0,0O01,0O02,0O07,0O7,
+    0x0, 0x01, 0xa, 0x1234abcdef, 0xf_ed_123, 0x1234_abcd_ef,
+    0X0, 0X01, 0XA, 0X1234ABCDEF,
+  ];
 
-    testCases.forEach((num) => {
-        console.assert(regexp.test(num), num);
-    });
+  testCases.forEach((num) => {
+    console.assert(regexp.test(num), num);
+  });
 })();
 
 var arr = [];
@@ -122,10 +122,10 @@ var arr = [1,];
 var arr = [, 1];
 var arr = [,,];
 var arr = [
-	first, // Comment
-	second, /* Comment */
-	[1, 2, 3],
-	[,,,],
+  first, // Comment
+  second, /* Comment */
+  [1, 2, 3],
+  [,,,],
 ];
 
 var a1 = arr[1];
@@ -143,275 +143,275 @@ const str2 = String['hello'].raw`hello, ${world}`;
 i++;
 
 function testFlowPrimitive() {
-	// Boolean
-	function acceptsBoolean(value: boolean, value2: Boolean) {
-	  // ...
-	}
+  // Boolean
+  function acceptsBoolean(value: boolean, value2: Boolean) {
+    // ...
+  }
 
-	// Number
-	function acceptsNumber(value: number, value2: Number) {
-	  // ...
-	}
+  // Number
+  function acceptsNumber(value: number, value2: Number) {
+    // ...
+  }
 
-	// String
-	function acceptsString(value: string, valu2: String) {
-	  // ...
-	}
+  // String
+  function acceptsString(value: string, valu2: String) {
+    // ...
+  }
 
-	// null and void
-	function acceptsNull(value: null, value2: void) {
-	  /* ... */
-	}
+  // null and void
+  function acceptsNull(value: null, value2: void) {
+    /* ... */
+  }
 
-	// Maybe types
-	function acceptsMaybeString(value: ?string, value2: ?number) {
-	  // ...
-	}
+  // Maybe types
+  function acceptsMaybeString(value: ?string, value2: ?number) {
+    // ...
+  }
 
-	function acceptsMaybeProp({ value }: { value: ?number }) {
-	  // ...
-	}
+  function acceptsMaybeProp({ value }: { value: ?number }) {
+    // ...
+  }
 
-	// Optional object properties 
-	function acceptsObject(value: { foo?: string }) {
-	  // ...
-	}
+  // Optional object properties 
+  function acceptsObject(value: { foo?: string }) {
+    // ...
+  }
 
-	// Optional function parameters
-	function acceptsOptionalString(value?: string) {
-	  // ...
-	}
+  // Optional function parameters
+  function acceptsOptionalString(value?: string) {
+    // ...
+  }
 
-	// Function parameters with defaults 
-	function acceptsOptionalString(value: string = "foo") {
-	  // ...
-	}
+  // Function parameters with defaults 
+  function acceptsOptionalString(value: string = "foo") {
+    // ...
+  }
 
-	// Symbols, not supported yet
+  // Symbols, not supported yet
 }
 
 function testFlowLiteral() {
-	function acceptsLiteral(value: 2, value2: true, value3: false, value4: 'str') {
-	  // ...
-	}
+  function acceptsLiteral(value: 2, value2: true, value3: false, value4: 'str') {
+    // ...
+  }
 
-	// With union types
-	function getColor(name: "success" | "warning" | "danger") {
-	  switch (name) {
-	    case "success" : return "green";
-	    case "warning" : return "yellow";
-	    case "danger"  : return "red";
-	  }
-	}
+  // With union types
+  function getColor(name: "success" | "warning" | "danger") {
+    switch (name) {
+      case "success" : return "green";
+      case "warning" : return "yellow";
+      case "danger"  : return "red";
+    }
+  }
 }
 
 function testFlowMixed() {
-	// A group of different possible types:
-	function stringifyBasicValue(value: string | number) {
-	  return '' + value;
-	}
+  // A group of different possible types:
+  function stringifyBasicValue(value: string | number) {
+    return '' + value;
+  }
 
-	// A type based on another type:
-	function identity<T>(value: T): T {
-	  return value;
-	}
+  // A type based on another type:
+  function identity<T>(value: T): T {
+    return value;
+  }
 
-	// An arbitrary type that could be anything:
-	function getTypeOf(value: mixed): string {
-	  return typeof value;
-	}
+  // An arbitrary type that could be anything:
+  function getTypeOf(value: mixed): string {
+    return typeof value;
+  }
 }
 
 function testFlowAny() {
-	function add(one: any, two: any): number {
-	  return one + two;
-	}
+  function add(one: any, two: any): number {
+    return one + two;
+  }
 }
 
 function testFlowVariable() {
-	var fooVar /* : number */ = 1;
-	let fooLet /* : number */ = 1;
-	var barVar: number = 2;
-	let barLet: number = 2;
-	var val3: boolean | string = obj.prop;
+  var fooVar /* : number */ = 1;
+  let fooLet /* : number */ = 1;
+  var barVar: number = 2;
+  let barLet: number = 2;
+  var val3: boolean | string = obj.prop;
 }
 
 function testFlowFunction() {
-	// Function Declarations 
-	function method(str: string, bool?: boolean, ...nums: Array<number>): void {
-	  // ...
-	}
+  // Function Declarations 
+  function method(str: string, bool?: boolean, ...nums: Array<number>): void {
+    // ...
+  }
 
-	// Arrow function
-	let method = (str: string, bool?: boolean, ...nums: Array<number>): void => {
-	  // ...
-	};
+  // Arrow function
+  let method = (str: string, bool?: boolean, ...nums: Array<number>): void => {
+    // ...
+  };
 
-	function method(callback: (error: Error | null, value: string | null) => void) {
-	  // ...
-	}
+  function method(callback: (error: Error | null, value: string | null) => void) {
+    // ...
+  }
 
-	async function method(): Promise<number> {
-	  return 123;
-	}
+  async function method(): Promise<number> {
+    return 123;
+  }
 
-	function truthy(a, b): boolean %checks {
-	  return !!a && !!b;
-	}
+  function truthy(a, b): boolean %checks {
+    return !!a && !!b;
+  }
 
-	function truthy(a, b): () => void %checks {
-	  return !!a && !!b;
-	}
+  function truthy(a, b): () => void %checks {
+    return !!a && !!b;
+  }
 
-	function concat(a: ?string, b: ?string): string {
-	  if (truthy(a, b)) {
-	    return a + b;
-	  }
-	  return '';
-	}
+  function concat(a: ?string, b: ?string): string {
+    if (truthy(a, b)) {
+      return a + b;
+    }
+    return '';
+  }
 
-	function foo(x): string | number {
-	  if (isNumberOrString(x)) {
-	    return x + x;
-	  } else {
-	    return x.length; // no error, because Flow infers that x can only be an array
-	  }
-	}
+  function foo(x): string | number {
+    if (isNumberOrString(x)) {
+      return x + x;
+    } else {
+      return x.length; // no error, because Flow infers that x can only be an array
+    }
+  }
 
-	function method(func: (...args: Array<Array<number>>) => any) {
-	  func(1, 2);     // Works.
-	  func("1", "2"); // Works.
-	  func({}, []);   // Works.
-	}
+  function method(func: (...args: Array<Array<number>>) => any) {
+    func(1, 2);     // Works.
+    func("1", "2"); // Works.
+    func({}, []);   // Works.
+  }
 
-	function method(obj: Function) {
-	  obj = 10;
-	}
+  function method(obj: Function) {
+    obj = 10;
+  }
 }
 
 function testFlowObject() {
-	var obj1: { foo: boolean } = { foo: true };
-	var obj2: {
-	  foo: number,
-	  bar: boolean,
-	  baz: string,
-	} = {
-	  foo: 1,
-	  bar: true,
-	  baz: 'three',
-	};
-	var obj: { foo?: boolean } = {};
-	var foo: {| foo: string |} = { foo: "Hello" };
+  var obj1: { foo: boolean } = { foo: true };
+  var obj2: {
+    foo: number,
+      bar: boolean,
+      baz: string,
+  } = {
+    foo: 1,
+    bar: true,
+    baz: 'three',
+  };
+  var obj: { foo?: boolean } = {};
+  var foo: {| foo: string |} = { foo: "Hello" };
 
-	type FooT = {| foo: string |};
-	type BarT = {| bar: number |};
+  type FooT = {| foo: string |};
+  type BarT = {| bar: number |};
 
-	type FooBarFailT = FooT & BarT;
-	type FooBarT = {| ...FooT, ...BarT |};
+  type FooBarFailT = FooT & BarT;
+  type FooBarT = {| ...FooT, ...BarT |};
 
-	// Objects and maps
-	var o: { [string]: number } = {};
-	var obj: { [user_id: number]: string } = {};
-	var obj: {
-	  size: number,
-	  [id: number]: [string, number]
-	} = {
-	  size: 0
-	};
+  // Objects and maps
+  var o: { [string]: number } = {};
+  var obj: { [user_id: number]: string } = {};
+  var obj: {
+    size: number,
+      [id: number]: [string, number]
+  } = {
+    size: 0
+  };
 
-	function method(obj: { [key: string]: any }) {
-	  obj.foo = 42;               // Works.
-	  let bar: boolean = obj.bar; // Works.
-	  obj.baz.bat.bam.bop;        // Works.
-	}
+  function method(obj: { [key: string]: any }) {
+    obj.foo = 42;               // Works.
+    let bar: boolean = obj.bar; // Works.
+    obj.baz.bat.bam.bop;        // Works.
+  }
 }
 
 function testFlowArray() {
-	let arr: Array<number> = [1, 2, 3];
-	let arr1: Array<boolean> = [true, false, true];
-	let arr2: Array<string> = ["A", "B", "C"];
-	let arr3: Array<mixed> = [1, true, "three"]
-	let arr: number[] = [0, 1, 2, 3];
-	let arr: ?number[] = [0, 1, 2, 3];
-	// (?Type)[]
-	let arr2: (?number)[] = [1, 2]; // Works!
+  let arr: Array<number> = [1, 2, 3];
+  let arr1: Array<boolean> = [true, false, true];
+  let arr2: Array<string> = ["A", "B", "C"];
+  let arr3: Array<mixed> = [1, true, "three"]
+  let arr: number[] = [0, 1, 2, 3];
+  let arr: ?number[] = [0, 1, 2, 3];
+  // (?Type)[]
+  let arr2: (?number)[] = [1, 2]; // Works!
 
-	const readonlyArray: $ReadOnlyArray<number> = [1, 2, 3]
-	const readonlyArray: $ReadOnlyArray<{x: number}> = [{x: 1}];
-	const someOperation = (arr: Array<number | string>, arr2: $ReadOnlyArray<number | string>) => {
-	  // Here we could do `arr.push('a string')`
-	}
+  const readonlyArray: $ReadOnlyArray<number> = [1, 2, 3]
+  const readonlyArray: $ReadOnlyArray<{x: number}> = [{x: 1}];
+  const someOperation = (arr: Array<number | string>, arr2: $ReadOnlyArray<number | string>) => {
+    // Here we could do `arr.push('a string')`
+  }
 }
 
 function testFlowTuple() {
-	let tuple1: [number] = [1];
-	let tuple2: [number, boolean] = [1, true];
-	let tuple3: [number, boolean, string] = [1, true, "three"];
+  let tuple1: [number] = [1];
+  let tuple2: [number, boolean] = [1, true];
+  let tuple3: [number, boolean, string] = [1, true, "three"];
 }
 
 function testFlowClass() {
-	class MyClass {
-	  prop: number;
-	  method(value: string): number {
-	    this.prop = 42;
-	  }
-	}
+  class MyClass {
+    prop: number;
+    method(value: string): number {
+      this.prop = 42;
+    }
+  }
 
-	class MyClass {
-	  static constant: number;
-	  static helper: (number) => number;
-	  method: number => number;
-	}
+  class MyClass {
+    static constant: number;
+    static helper: (number) => number;
+    method: number => number;
+  }
 
-	class MyClass<A, B, C> {
-	  property: A;
-	  constructor(arg1: A, arg2: B, arg3: C) {
-	  }
-	  method(val: B): C {
-	    // ...
-	  }
-	}
+  class MyClass<A, B, C> {
+    property: A;
+    constructor(arg1: A, arg2: B, arg3: C) {
+    }
+    method(val: B): C {
+      // ...
+    }
+  }
 }
 
 function testFlowAlias() {
-	// type Alias = Type;
-	type NumberAlias = number;
-	type ObjectAlias = {
-	  property: string,
-	  method(): number,
-	};
-	type UnionAlias = 1 | 2 | 3;
-	type AliasAlias = ObjectAlias;
+  // type Alias = Type;
+  type NumberAlias = number;
+  type ObjectAlias = {
+    property: string,
+    method(): number,
+  };
+  type UnionAlias = 1 | 2 | 3;
+  type AliasAlias = ObjectAlias;
 
-	type Test = Test2<{}>;
+  type Test = Test2<{}>;
 
 
-	// Type Alias Generics 
-	type MyObject<A, B, C> = {
-	  property: A,
-	  method(val: B): C,
-	};
+  // Type Alias Generics 
+  type MyObject<A, B, C> = {
+    property: A,
+    method(val: B): C,
+  };
 
-	// opaque type Alias = Type;
-	// opaque type Alias: SuperType = Type;
-	opaque type StringAlias = string;
-	opaque type ObjectAlias = {
-	  property: string,
-	  method(): number,
-	};
-	opaque type UnionAlias = 1 | 2 | 3;
-	opaque type AliasAlias: ObjectAlias = ObjectAlias;
-	opaque type VeryOpaque: AliasAlias = ObjectAlias;
-	opaque type Good: {x: string} = {x: string, y: number};
+  // opaque type Alias = Type;
+  // opaque type Alias: SuperType = Type;
+  opaque type StringAlias = string;
+  opaque type ObjectAlias = {
+    property: string,
+    method(): number,
+  };
+  opaque type UnionAlias = 1 | 2 | 3;
+  opaque type AliasAlias: ObjectAlias = ObjectAlias;
+  opaque type VeryOpaque: AliasAlias = ObjectAlias;
+  opaque type Good: {x: string} = {x: string, y: number};
 
-	opaque type MyObject<A, B, C>: { foo: A, bar: B } = {
-	  foo: A,
-	  bar: B,
-	  baz: C,
-	};
+  opaque type MyObject<A, B, C>: { foo: A, bar: B } = {
+    foo: A,
+    bar: B,
+    baz: C,
+  };
 
-	declare opaque type Foo;
-	declare opaque type PositiveNumber: number;
+  declare opaque type Foo;
+  declare opaque type PositiveNumber: number;
 }
 
 import type {NumberAlias} from './exports';
@@ -419,153 +419,153 @@ export opaque type NumberAlias = number;
 export opaque type ID: string = string;
 
 function testFlowInterface() {
-	interface Serializable {
-	  serialize(): string;
-	}
+  interface Serializable {
+    serialize(): string;
+  }
 
-	interface MyInterface {
-	  property: string;
-	  property1?: string;
-	  method(value: string): number;
-	  [key: string]: number;
-	}
+  interface MyInterface {
+    property: string;
+    property1?: string;
+    method(value: string): number;
+    [key: string]: number;
+  }
 
-	interface MyInterface<A, B, C> {
-	  property: A;
-	  method(val: B): C;
-	}
+  interface MyInterface<A, B, C> {
+    property: A;
+    method(val: B): C;
+  }
 
-	interface MyInterface {
-	  +covariant: number;     // read-only
-	  -contravariant: number; // write-only
-	  +readOnly: number | string;
-	}
+  interface MyInterface {
+    +covariant: number;     // read-only
+    -contravariant: number; // write-only
+    +readOnly: number | string;
+  }
 
-	class Foo implements Serializable {
-	  serialize() { return '[Foo]'; } // Works!
-	}
+  class Foo implements Serializable {
+    serialize() { return '[Foo]'; } // Works!
+  }
 
-	class Foo implements Bar, Baz {
-	  // ...
-	}
+  class Foo implements Bar, Baz {
+    // ...
+  }
 }
 
 function testFlowGeneric() {
-	function identity<T>(value: T): T {
-	  return value;
-	}
+  function identity<T>(value: T): T {
+    return value;
+  }
 
-	type IdentityWrapper = {
-	  func<T>(T): T
-	}
+  type IdentityWrapper = {
+    func<T>(T): T
+  }
 
-	// Functions with generics 
-	function method<T>(param: T): T {
-	  // ...
-	}
+  // Functions with generics 
+  function method<T>(param: T): T {
+    // ...
+  }
 
-	function<T>(param: T): T {
-	  // ...
-	}
+  function<T>(param: T): T {
+    // ...
+  }
 
-	// Function types with generics
-	function method(func: <T>(param: T) => T) {
-	  // ...
-	}
+  // Function types with generics
+  function method(func: <T>(param: T) => T) {
+    // ...
+  }
 
-	class Item<T> {
-	  prop: T;
+  class Item<T> {
+    prop: T;
 
-	  constructor(param: T) {
-	    this.prop = param;
-	  }
+    constructor(param: T) {
+      this.prop = param;
+    }
 
-	  method(): T {
-	    return this.prop;
-	  }
-	}
+    method(): T {
+      return this.prop;
+    }
+  }
 
-	interface Item<T> {
-	  foo: T,
-	  bar: T,
-	}
+  interface Item<T> {
+    foo: T,
+      bar: T,
+  }
 
-	function doSomething<T>(param: T): T {
-	  // ...
-	  return param;
-	}
+  function doSomething<T>(param: T): T {
+    // ...
+    return param;
+  }
 
-	const abcd = baz < bar && bar > (baz)
-	const abcd = baz < bar || bar > (baz)
-	doSomething<Array<number>>(3);
-	doSomething<Array<number
-		& string>>(3);
-	doSomething<Array<{key: number
-		| string}>>(3);
+  const abcd = baz < bar && bar > (baz)
+  const abcd = baz < bar || bar > (baz)
+  doSomething<Array<number>>(3);
+  doSomething<Array<number
+    & string>>(3);
+  doSomething<Array<{key: number
+    | string}>>(3);
 
-	class GenericClass<T> {}
-	const c = new GenericClass<number>();
+  class GenericClass<T> {}
+  const c = new GenericClass<number>();
 
-	class GenericClass<T, U, V>{}
-	class GenericClass<T, U, V> implements IdentityWrapper {}
+  class GenericClass<T, U, V>{}
+  class GenericClass<T, U, V> implements IdentityWrapper {}
 
-	const c = new GenericClass<_, number, _>()
+  const c = new GenericClass<_, number, _>()
 
-	function constant<T>(value: T): () => T {
-	  return function(): T {
-	    return value;
-	  };
-	}
+  function constant<T>(value: T): () => T {
+    return function(): T {
+      return value;
+    };
+  }
 
-	function logFoo<T: { foo: string }>(obj: T): T {
-	  console.log(obj.foo); // Works!
-	  return obj;
-	}
+  function logFoo<T: { foo: string }>(obj: T): T {
+    console.log(obj.foo); // Works!
+    return obj;
+  }
 
-	function identity<T: number>(value: T): T {
-	  return value;
-	}
+  function identity<T: number>(value: T): T {
+    return value;
+  }
 
-	function identity<T>(val: T): T {
-	  return val;
-	}
+  function identity<T>(val: T): T {
+    return val;
+  }
 
-	type Item<T> = {
-	  prop: T,
-	}
+  type Item<T> = {
+    prop: T,
+  }
 
-	type Item<T: number = 1> = {
-	  prop: T,
-	};
+  type Item<T: number = 1> = {
+    prop: T,
+  };
 
-	let foo: Item<> = { prop: 1 };
-	let bar: Item<2> = { prop: 2 };
+  let foo: Item<> = { prop: 1 };
+  let bar: Item<2> = { prop: 2 };
 
-	type GenericBox<+T> = T;
+  type GenericBox<+T> = T;
 }
 
 function testFlowUnion() {
-	type Foo =
-	  | Type1
-	  | Type2
-	  | Type3
+  type Foo =
+    | Type1
+    | Type2
+    | Type3
 
 
-	type Numbers = 1 | 2;
-	type Colors = 'red' | 'blue'
-	type Fish = Numbers | Colors;
+  type Numbers = 1 | 2;
+  type Colors = 'red' | 'blue'
+  type Fish = Numbers | Colors;
 
-	type Success = {| success: true, value: boolean |};
-	type Failed  = {| error: true, message: string |};
+  type Success = {| success: true, value: boolean |};
+  type Failed  = {| error: true, message: string |};
 }
 
 function testFlowIntersection() {
-	type Foo =
-	  & Type1
-	  & Type2
-	  & TypeN
+  type Foo =
+    & Type1
+    & Type2
+    & TypeN
 
-	type Foo = Type1 & Type2;
+  type Foo = Type1 & Type2;
 
 
 
@@ -627,312 +627,312 @@ function testFlowIntersection() {
 }
 
 function testFlowTypeof() {
-	let num1 = 42;
-	let num2: typeof num1 = 3.14;    // Works!
+  let num1 = 42;
+  let num2: typeof num1 = 3.14;    // Works!
 }
 
 function testFlowCast() {
-	let val = (value: Type);
-	let obj = { prop: (value: Type) };
-	let arr = ([(value: Type), (value: Type)]: Array<Type>);
-	let newValue = ((value: any): string);
+  let val = (value: Type);
+  let obj = { prop: (value: Type) };
+  let arr = ([(value: Type), (value: Type)]: Array<Type>);
+  let newValue = ((value: any): string);
 
-	function cloneObject(obj) {
-	  const clone = {};
+  function cloneObject(obj) {
+    const clone = {};
 
-	  (obj: { [key: string]: mixed });
+    (obj: { [key: string]: mixed });
 
-	  Object.keys(obj).forEach(key => {
-	    clone[key] = obj[key];
-	  });
+    Object.keys(obj).forEach(key => {
+      clone[key] = obj[key];
+    });
 
-	  return ((clone: any): typeof obj); // <<
-	}
+    return ((clone: any): typeof obj); // <<
+  }
 
-	function cloneObject<T: { [key: string]: mixed }>(obj: T): $Shape<T> {
-	 // ...
-	}
+  function cloneObject<T: { [key: string]: mixed }>(obj: T): $Shape<T> {
+    // ...
+  }
 }
 
 function testFlowUtilties() {
-	type Country = $Keys<typeof countries>;
-	type Prop$Values = $Values<Props>;
+  type Country = $Keys<typeof countries>;
+  type Prop$Values = $Values<Props>;
 
-	type ReadOnlyObj = {
-	  +key: any,  // read-only field, marked by the `+` annotation
-	};
-	type ReadOnlyObj = $ReadOnly<{
-	  key: any,
-	}>;
-	type ReadOnlyProps = $ReadOnly<Props>;
-	type MappedObj = $ReadOnly<$ObjMap<Obj, TypeFn>> // Still read-only
+  type ReadOnlyObj = {
+    +key: any,  // read-only field, marked by the `+` annotation
+  };
+  type ReadOnlyObj = $ReadOnly<{
+    key: any,
+  }>;
+  type ReadOnlyProps = $ReadOnly<Props>;
+  type MappedObj = $ReadOnly<$ObjMap<Obj, TypeFn>> // Still read-only
 
-	type ExactUser = $Exact<{name: string}>;
-	type ExactUserShorthand = {| name: string |};
+  type ExactUser = $Exact<{name: string}>;
+  type ExactUserShorthand = {| name: string |};
 
-	type RequiredProps = $Diff<Props, DefaultProps>;
-	type B = $Diff<{}, {nope: number | void}>; // OK
+  type RequiredProps = $Diff<Props, DefaultProps>;
+  type B = $Diff<{}, {nope: number | void}>; // OK
 
-	type C = $Rest<Props, {|age: number|}>
+  type C = $Rest<Props, {|age: number|}>
 
-	const newName: $PropertyType<Person, 'name'> = 'Toni Braxton';
-	const newAge: $PropertyType<Person, 'age'> = 51;
-	const someProps: $PropertyType<Tooltip, 'props'> = {
-	  text: 'foo',
-	  onMouseOver: (data: {x: number, y: number}) => undefined
-	};
-	type PositionHandler = $PropertyType<$PropertyType<Tooltip, 'props'>, 'onMouseOver'>;
+  const newName: $PropertyType<Person, 'name'> = 'Toni Braxton';
+  const newAge: $PropertyType<Person, 'age'> = 51;
+  const someProps: $PropertyType<Tooltip, 'props'> = {
+    text: 'foo',
+    onMouseOver: (data: {x: number, y: number}) => undefined
+  };
+  type PositionHandler = $PropertyType<$PropertyType<Tooltip, 'props'>, 'onMouseOver'>;
 
-	('Jon': $ElementType<Obj, 'name'>);
-	(42: $ElementType<Obj, 'age'>);
-	(true: $ElementType<Arr, number>);
-	(42: $ElementType<$ElementType<NumberObj, 'nums'>, number>);
-	function getProp<O: {+[string]: mixed}, P: $Keys<O>>(o: O, p: P): $ElementType<O, P> {
-	  return o[p];
-	}
+  ('Jon': $ElementType<Obj, 'name'>);
+  (42: $ElementType<Obj, 'age'>);
+  (true: $ElementType<Arr, number>);
+  (42: $ElementType<$ElementType<NumberObj, 'nums'>, number>);
+  function getProp<O: {+[string]: mixed}, P: $Keys<O>>(o: O, p: P): $ElementType<O, P> {
+    return o[p];
+  }
 
-	type MaybeName = ?string;
-	type Name = $NonMaybeType<MaybeName>;
+  type MaybeName = ?string;
+  type Name = $NonMaybeType<MaybeName>;
 
-	// let's write a function type that takes a `() => V` and returns a `V` (its return type)
-	type ExtractReturnType = <V>(() => V) => V;
-	declare function run<O: {[key: string]: Function}>(o: O): $ObjMap<O, ExtractReturnType>;
-	declare function props<A, O: { [key: string]: A }>(promises: O): Promise<$ObjMap<O, typeof $await>>;
+  // let's write a function type that takes a `() => V` and returns a `V` (its return type)
+  type ExtractReturnType = <V>(() => V) => V;
+  declare function run<O: {[key: string]: Function}>(o: O): $ObjMap<O, ExtractReturnType>;
+  declare function props<A, O: { [key: string]: A }>(promises: O): Promise<$ObjMap<O, typeof $await>>;
 
-	type ExtractReturnObjectType = <K, V>(K, () => V) => { k: K, v: V };
-	declare function run<O: Object>(o: O): $ObjMapi<O, ExtractReturnObjectType>;
+  type ExtractReturnObjectType = <K, V>(K, () => V) => { k: K, v: V };
+  declare function run<O: Object>(o: O): $ObjMapi<O, ExtractReturnObjectType>;
 
-	type ExtractReturnType = <V>(() => V) => V
-	function run<A, I: Array<() => A>>(iter: I): $TupleMap<I, ExtractReturnType> {
-	  return iter.map(fn => fn());
-	}
+  type ExtractReturnType = <V>(() => V) => V
+  function run<A, I: Array<() => A>>(iter: I): $TupleMap<I, ExtractReturnType> {
+    return iter.map(fn => fn());
+  }
 
-	// Takes an object type, returns the type of its `prop` key
-	type ExtractPropType = <T>({prop: T}) => T;
-	type Obj = {prop: number};
-	type PropType = $Call<ExtractPropType, Obj>;  // Call `ExtractPropType` with `Obj` as an argument
-	// Takes a function type, and returns its return type
-	// This is useful if you want to get the return type of some function without actually calling it at runtime.
-	type ExtractReturnType = <R>(() => R) => R;
-	type Fn = () => number;
-	type ReturnType = $Call<ExtractReturnType, Fn> // Call `ExtractReturnType` with `Fn` as an argument
-
-
-	// Extracting deeply nested types:
-	type NestedObj = {|
-	  +status: ?number,
-	  +data: ?$ReadOnlyArray<{|
-	    +foo: ?{|
-	       +bar: number,
-	    |},
-	  |}>,
-	|};
-
-	// If you wanted to extract the type for `bar`, you could use $Call:
-	type BarType = $Call<
-	  <T>({
-	    +data: ?$ReadOnlyArray<{
-	      +foo: ?{
-		+bar: ?T
-	      },
-	    }>,
-	  }) => T,
-	  NestedObj,
-	>;
-	// Using $Call, we can get the actual return type of the function above, without calling it at runtime:
-	type Value = $Call<typeof getFirstValue, Map<string, number>>;
-
-	// We could generalize it further:
-	type GetMapValue<M> =
-	  $Call<typeof getFirstValue, M>;
-
-	function makeParamStore<T>(storeClass: Class<ParamStore<T>>, data: T): ParamStore<T> {
-	  return new storeClass(data);
-	}
-
-	type Person = {
-	  age: number,
-	  name: string,
-	}
-	type PersonDetails = $Shape<Person>;
-
-	import typeof * as T from 'my-module';
-	type T = $Exports<'my-module'>;
-	export type T = $Exports<'my-module'>;
-	export type MyModuleType = T;
+  // Takes an object type, returns the type of its `prop` key
+  type ExtractPropType = <T>({prop: T}) => T;
+  type Obj = {prop: number};
+  type PropType = $Call<ExtractPropType, Obj>;  // Call `ExtractPropType` with `Obj` as an argument
+  // Takes a function type, and returns its return type
+  // This is useful if you want to get the return type of some function without actually calling it at runtime.
+  type ExtractReturnType = <R>(() => R) => R;
+  type Fn = () => number;
+  type ReturnType = $Call<ExtractReturnType, Fn> // Call `ExtractReturnType` with `Fn` as an argument
 
 
-	// $Supertype<T> 
-	// $Subtype<T> 
-	// *
+  // Extracting deeply nested types:
+  type NestedObj = {|
+    +status: ?number,
+    +data: ?$ReadOnlyArray<{|
+      +foo: ?{|
+        +bar: number,
+      |},
+    |}>,
+  |};
+
+  // If you wanted to extract the type for `bar`, you could use $Call:
+  type BarType = $Call<
+    <T>({
+      +data: ?$ReadOnlyArray<{
+        +foo: ?{
+          +bar: ?T
+        },
+      }>,
+    }) => T,
+    NestedObj,
+    >;
+  // Using $Call, we can get the actual return type of the function above, without calling it at runtime:
+  type Value = $Call<typeof getFirstValue, Map<string, number>>;
+
+  // We could generalize it further:
+  type GetMapValue<M> =
+    $Call<typeof getFirstValue, M>;
+
+  function makeParamStore<T>(storeClass: Class<ParamStore<T>>, data: T): ParamStore<T> {
+    return new storeClass(data);
+  }
+
+  type Person = {
+    age: number,
+    name: string,
+  }
+  type PersonDetails = $Shape<Person>;
+
+  import typeof * as T from 'my-module';
+  type T = $Exports<'my-module'>;
+  export type T = $Exports<'my-module'>;
+  export type MyModuleType = T;
+
+
+  // $Supertype<T> 
+  // $Subtype<T> 
+  // *
 }
 
 function testFlowModule() {
-	export default class Foo {};
-	export type MyObject = { /* ... */ };
-	export interface MyInterface { /* ... */ };
+  export default class Foo {};
+  export type MyObject = { /* ... */ };
+  export interface MyInterface { /* ... */ };
 
-	const myNumber = 42;
-	export default myNumber;
-	export class MyClass {
-	  // ...
-	}
+  const myNumber = 42;
+  export default myNumber;
+  export class MyClass {
+    // ...
+  }
 
-	import type Foo, {MyObject, MyInterface} from './exports';
-	import typeof myNumber from './exports';
-	import typeof {MyClass} from './exports';
+  import type Foo, {MyObject, MyInterface} from './exports';
+  import typeof myNumber from './exports';
+  import typeof {MyClass} from './exports';
 }
 
 function testFlowDeclare() {
-	declare module "some-es-module" {
-	  declare class URL {
-	    constructor(urlStr: string): URL;
-	    toString(): string;
+  declare module "some-es-module" {
+    declare class URL {
+      constructor(urlStr: string): URL;
+      toString(): string;
 
-	    static compare(url1: URL, url2: URL): boolean;
-	  }
+      static compare(url1: URL, url2: URL): boolean;
+    }
 
-	  // Declares a default export whose type is `typeof URL`
-	  declare export default typeof URL;
-	  declare export function concatPath(dirA: string, dirB: string): Path;
-	}
+    // Declares a default export whose type is `typeof URL`
+    declare export default typeof URL;
+    declare export function concatPath(dirA: string, dirB: string): Path;
+  }
 }
 
 
 function testFlowComment() {
-	/*::
-	type MyAlias = {
-	  foo: number,
-	  bar: boolean,
-	  baz: string,
-	};
-	*/
+  /*::
+  type MyAlias = {
+    foo: number,
+    bar: boolean,
+    baz: string,
+  };
+  */
 
-	/*::
-	declare module "some-es-module" {
-	  declare class URL {
-	    constructor(urlStr: string): URL;
-	    toString(): string;
+    /*::
+  declare module "some-es-module" {
+    declare class URL {
+      constructor(urlStr: string): URL;
+      toString(): string;
 
-	    static compare(url1: URL, url2: URL): boolean;
-	  }
+      static compare(url1: URL, url2: URL): boolean;
+    }
 
-	  // Declares a default export whose type is `typeof URL`
-	  declare export default typeof URL;
-	  declare export function concatPath(dirA: string, dirB: string): Path;
-	}
-	*/
+    // Declares a default export whose type is `typeof URL`
+    declare export default typeof URL;
+    declare export function concatPath(dirA: string, dirB: string): Path;
+  }
+  */
 
-	function method(value /*: MyAlias */) /*: boolean */ {
-	  return value.bar;
-	}
+    function method(value /*: MyAlias */) /*: boolean */ {
+      return value.bar;
+    }
 
-	class MyClass {
-	  /*:: prop: string; */
-	}
+  class MyClass {
+    /*:: prop: string; */
+  }
 
-	/*flow-include
-	type Foo = {
-	  foo: number,
-	  bar: boolean,
-	  baz: string
-	};
-	*/
+  /*flow-include
+  type Foo = {
+    foo: number,
+    bar: boolean,
+    baz: string
+  };
+  */
 
-	class MyClass {
-	  /*flow-include prop: string; */
-	}
+    class MyClass {
+      /*flow-include prop: string; */
+    }
 
-	function method(param /*:: : string */) /*:: : number */ {
-	  // ...
-	}
+  function method(param /*:: : string */) /*:: : number */ {
+    // ...
+  }
 }
 
 // Functions
 function test() {
-	const str = "}";
-	return Math.min([1, 2]);
+  const str = "}";
+  return Math.min([1, 2]);
 }
 
 function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
-	const a = "hello";
-	function test() {
-	}
+  const a = "hello";
+  function test() {
+  }
 
-	var arr = [];
-	var arr = [a1, 1, false, null];
-	var arr = [1,2];
-	var arr = [1,];
-	var arr = [, 1];
-	var arr = [,,];
-	var arr = [
-		first, // Comment
-		second, /* Comment */
-		[1, 2, 3],
-		[,,,],
-	];
-	const [a,b,...rest] = [1, 2]
-	const {hello: [a = 3, b, { d }], world: {hello: world}, foo = [{key: 1}], bar = { hello: 'world' }} = {foo: foo, bar: 'ddd', test}
-	({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+  var arr = [];
+  var arr = [a1, 1, false, null];
+  var arr = [1,2];
+  var arr = [1,];
+  var arr = [, 1];
+  var arr = [,,];
+  var arr = [
+    first, // Comment
+    second, /* Comment */
+    [1, 2, 3],
+    [,,,],
+  ];
+  const [a,b,...rest] = [1, 2]
+  const {hello: [a = 3, b, { d }], world: {hello: world}, foo = [{key: 1}], bar = { hello: 'world' }} = {foo: foo, bar: 'ddd', test}
+  ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
 
-	// 0000000000
+  // 0000000000
 }
 
 function* gen() {
-	yield* gen()
-	return 1;
+  yield* gen()
+  return 1;
 }
 
 const func = function(a, b) {
@@ -947,7 +947,7 @@ const a = () => {};
 const b = () => 1;
 const c = a => foo + bar;
 const d = ({a : { d = 3}, b}, c, [a = 3, b, c]) => {
-	return foo + bar;
+  return foo + bar;
 };
 const e = async (a, b) => {
 };
@@ -975,7 +975,7 @@ class Square extends Polygon {
   name
   foo = bar;
   ['foo' + 'bar'] = 1
-  
+
   @logged(1)
   @logged(2)
   set x(value) {
@@ -993,7 +993,7 @@ class Square extends Polygon {
   handleClick = () => {}
 
   async test() {
-	  const a = 0;
+    const a = 0;
   }
 
   static *triple(n) {
@@ -1017,8 +1017,8 @@ class Square extends Polygon {
   bar = a => a[0]
 
   getAccountIds = () => this?.props.filter.get('accountsIds')
-	  ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
-	  : this.props.accountsFilter;
+    ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
+    : this.props.accountsFilter;
 }
 
 class Counter extends HTMLElement {
@@ -1053,45 +1053,45 @@ async function test () {
   a instanceof 3
   const a = {
     key: {
-	    // Comment
-	    /* comment */
-	    prop1: 1, // Comment
-	    "prop2": 2, /* comment */
-	    33: 3,
-	    shorthand,
-	    [foo + bar]: `computed${hello + world}b`,
-	    func: function () {
-	    },
-	    funcArrow: () => {
-	    },
-	    funcShort() {
-	    },
-	    async funcShort() {
-	    },
-	    [foo + bar]() {
-		    return "computed";
-	    },
-	    void: new Date(123, /hhh/)['getDate'](),
-	    delete: 'hello',
-	    *generator() {},
-	    *[Symbol.iterator]() {
-	    },
-	    get name() {
-	    },
-	    get [computed]() {
-	    },
-	    set name(a) {
-	    },
-	    set [computed]() {
-		    // 0000
-	    },
-	    type: typeof 3,
-	    prop: await 3,
-	    ...b,
-	    getAccountIds: () => this?.props?.filter.get('accountsIds')
-	    ? this.props?.filter?.get('accountIds')?.concat(this.props.accountFilter)?.toJS()
-	    : this.props.accountsFilter;
-	  }
+      // Comment
+      /* comment */
+      prop1: 1, // Comment
+      "prop2": 2, /* comment */
+      33: 3,
+      shorthand,
+      [foo + bar]: `computed${hello + world}b`,
+      func: function () {
+      },
+      funcArrow: () => {
+      },
+      funcShort() {
+      },
+      async funcShort() {
+      },
+      [foo + bar]() {
+        return "computed";
+      },
+      void: new Date(123, /hhh/)['getDate'](),
+      delete: 'hello',
+      *generator() {},
+      *[Symbol.iterator]() {
+      },
+      get name() {
+      },
+      get [computed]() {
+      },
+      set name(a) {
+      },
+      set [computed]() {
+        // 0000
+      },
+      type: typeof 3,
+      prop: await 3,
+      ...b,
+      getAccountIds: () => this?.props?.filter.get('accountsIds')
+      ? this.props?.filter?.get('accountIds')?.concat(this.props.accountFilter)?.toJS()
+      : this.props.accountsFilter;
+    }
   };
 }
 
@@ -1111,17 +1111,17 @@ this["hll"];
 }
 
 const another = ({
-	wow = (2 + x) / 10,
-	foo = /test/
+  wow = (2 + x) / 10,
+  foo = /test/
 }) => [wow, another]
 
 const a = ({
-	example: [
-		x = 2 + 2,
-		{
-			another = ({wow = (2 + x) / 10}) => [wow, another]
-		}
-	]
+  example: [
+    x = 2 + 2,
+    {
+      another = ({wow = (2 + x) / 10}) => [wow, another]
+    }
+  ]
 }) => {};
 
 
@@ -1132,17 +1132,17 @@ export const a = ({first: f, second: s = someDefault(), c = 3}) => {
 
 const myVariable = "hello world";
 const func = () => {
-	funcd ();
+  funcd ();
 };
 const f = bad => {
-	console.log();
+  console.log();
 };
 const func = ({a, b}) => {
 };
 const func = funcCall(({
   sixthVariable = `create${a + b}`
 }) => {
-	return fun();
+  return fun();
 }, 1);
 
 const a = a / 3;
@@ -1151,65 +1151,65 @@ const a = a / 3;
 if (a > 0 && a / 3 && /test/.test(a)) return null;
 
 if (a > 0 && b < 0 && a[0] > 0
-	|| (a() > 0) && [0, 1].length > 0
-	&& a in 'string'
-	&& a instanceof Date
-	// ddd
-	&& typeof a === 'undefined'
+  || (a() > 0) && [0, 1].length > 0
+  && a in 'string'
+  && a instanceof Date
+  // ddd
+  && typeof a === 'undefined'
 ) {
-	const a = 0;
-	console.log('else');
+  const a = 0;
+  console.log('else');
 } else if {
-	const a = 0;
-	console.log('else if');
+  const a = 0;
+  console.log('else if');
 } else {
-	console.log('else');
+  console.log('else');
 }
 
 switch (expression) {
-	case 1:
-		console.log('hello');
-		break;
-	case "hello":
-		console.log('hello');
-		break;
-	case "world":
-	case foo:
-	case bar:
-		break;
-	default:
-		break;
+  case 1:
+    console.log('hello');
+    break;
+  case "hello":
+    console.log('hello');
+    break;
+  case "world":
+  case foo:
+  case bar:
+    break;
+  default:
+    break;
 }
 
 for (;;) console.log('hello');
 
 for (var i = 0; i < 100; i++) {
-	// Comment
-	switch (expression) {
-		case 1:
-			console.log('hello');
-			break;
-		case "hello":
-			console.log('hello');
-			break;
-		case "world":
-		case foo:
-		case bar:
-			break;
-		default:
-			break;
-	}
+  // Comment
+  switch (expression) {
+    case 1:
+      console.log('hello');
+      break;
+    case "hello":
+      console.log('hello');
+      break;
+    case "world":
+    case foo:
+    case bar:
+      break;
+    default:
+      break;
+  }
 }
 
 var arr = [3, 5, 7];
 arr.foo = 'hello';
 
 for (var i in arr) {
-   console.log(i); // logs "0", "1", "2", "foo"
+  console.log(i); // logs "0", "1", "2", "foo"
 }
 
 for (var i of arr) {
-   console.log(i); // logs 3, 5, 7
+  console.log(i); // logs 3, 5, 7
 }
 
 var a = 0;
@@ -1223,14 +1223,14 @@ do {
 } while (a < 0);
 
 while (theMark == true) {
-   doSomething();
+  doSomething();
 }
 
 label:
-	const a = b;
+const a = b;
 
 label: {
-	const hello = world;
+  const hello = world;
 }
 
 func()?.prop	/* comment */
@@ -1268,16 +1268,16 @@ checkiandj:
     console.log(i);
     i += 1;
     checkj:
-      while (j > 4) {
-        console.log(j);
-        j -= 1;
-        if ((j % 2) == 0) {
-          continue checkj;
-        }
-        console.log(j + ' is odd.');
+    while (j > 4) {
+      console.log(j);
+      j -= 1;
+      if ((j % 2) == 0) {
+        continue checkj;
       }
-      console.log('i = ' + i);
-      console.log('j = ' + j);
+      console.log(j + ' is odd.');
+    }
+    console.log('i = ' + i);
+    console.log('j = ' + j);
   }
 
 const myVariable = "hello world";
@@ -1294,7 +1294,7 @@ const checkHightlighting = funcCall(({
     return verify(noHighlightingHere);
   };
 },
-[myVariable]);
+  [myVariable]);
 
 try {
   myroutine(); // may throw three types of exceptions

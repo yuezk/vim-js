@@ -14,7 +14,7 @@ function DairyProduct() {}
  * @return {boolean}
  */
 DairyProduct.prototype.isSolid = function() {
-    throw new Error('must be implemented by subclass!');
+  throw new Error('must be implemented by subclass!');
 };
 
 /**
@@ -29,7 +29,7 @@ function Milk() {}
  * @return {boolean} Always returns false.
  */
 Milk.prototype.isSolid = function() {
-    return false;
+  return false;
 };
 
 
@@ -37,17 +37,17 @@ Milk.prototype.isSolid = function() {
 /** @constructor */
 function Thingy() {
 
-    /** @access private */
-    var foo = 0;
+  /** @access private */
+  var foo = 0;
 
-    /** @access protected */
-    this._bar = 1;
+  /** @access protected */
+  this._bar = 1;
 
-    /** @access package */
-    this.baz = 2;
+  /** @access package */
+  this.baz = 2;
 
-    /** @access public */
-    this.pez = 3;
+  /** @access public */
+  this.pez = 3;
 
 }
 
@@ -56,32 +56,32 @@ function Thingy() {
 /** @constructor */
 function OtherThingy() {
 
-    /** @private */
-    var foo = 0;
+  /** @private */
+  var foo = 0;
 
-    /** @protected */
-    this._bar = 1;
+  /** @protected */
+  this._bar = 1;
 
-    /** @package */
-    this.baz = 2;
+  /** @package */
+  this.baz = 2;
 
-    /** @public */
-    this.pez = 3;
+  /** @public */
+  this.pez = 3;
 
 }
 
 // @alias
 Klass('trackr.CookieManager',
 
-    /**
-     * @class
-     * @alias trackr.CookieManager
-     * @param {Object} kv
-     */
-    function(kv) {
-        /** The value. */
-        this.value = kv;
-    }
+  /**
+   * @class
+   * @alias trackr.CookieManager
+   * @param {Object} kv
+   */
+  function(kv) {
+    /** The value. */
+    this.value = kv;
+  }
 
 );
 
@@ -89,35 +89,35 @@ Klass('trackr.CookieManager',
 var Apple = {};
 
 (function(ns) {
-    /**
-     * @namespace
-     * @alias Apple.Core
-     */
-    var core = {};
+  /**
+   * @namespace
+   * @alias Apple.Core
+   */
+  var core = {};
 
-    /** Documented as Apple.Core.seed */
-    core.seed = function() {};
+  /** Documented as Apple.Core.seed */
+  core.seed = function() {};
 
-    ns.Core = core;
+  ns.Core = core;
 })(Apple);
 
 // Documenting objectA with @alias
 var objectA = (function() {
 
+  /**
+   * Documented as objectA
+   * @alias objectA
+   * @namespace
+   */
+  var x = {
     /**
-     * Documented as objectA
-     * @alias objectA
-     * @namespace
+     * Documented as objectA.myProperty
+     * @member
      */
-    var x = {
-        /**
-         * Documented as objectA.myProperty
-         * @member
-         */
-        myProperty: 'foo'
-    };
+    myProperty: 'foo'
+  };
 
-    return x;
+  return x;
 })();
 
 // @async
@@ -135,8 +135,8 @@ var objectA = (function() {
  * @constructor
  */
 function Animal() {
-    /** Is this animal alive? */
-    this.alive = true;
+  /** Is this animal alive? */
+  this.alive = true;
 }
 
 /**
@@ -158,7 +158,7 @@ function MyClass() {}
  * @borrows trstr as trim
  */
 var util = {
-    trim: trstr
+  trim: trstr
 };
 
 /**
@@ -208,30 +208,30 @@ var ONE = 1;
 
 // @constructs
 var Person = makeClass(
-    /** @lends Person.prototype */
-    {
-        /** @constructs */
-        initialize: function(name) {
-            this.name = name;
-        },
-        /** Describe me. */
-        say: function(message) {
-            return this.name + " says: " + message;
-        }
+  /** @lends Person.prototype */
+  {
+    /** @constructs */
+    initialize: function(name) {
+      this.name = name;
+    },
+    /** Describe me. */
+    say: function(message) {
+      return this.name + " says: " + message;
     }
+  }
 )
 
 makeClass('Menu',
-    /**
-     * @constructs Menu
-     * @param items
-     */
-    function (items) { },
-    {
-        /** @memberof Menu# */
-        show: function(){
-        }
+  /**
+   * @constructs Menu
+   * @param items
+   */
+  function (items) { },
+  {
+    /** @memberof Menu# */
+    show: function(){
     }
+  }
 );
 
 // @copyright
@@ -263,7 +263,7 @@ function old() {
  * @description Add two numbers.
  */
 function add(a, b) {
-    return a + b;
+  return a + b;
 }
 
 // @enum
@@ -273,11 +273,11 @@ function add(a, b) {
  * @enum {number}
  */
 var triState = {
-    /** The true value */
-    TRUE: 1,
-    FALSE: -1,
-    /** @type {boolean} */
-    MAYBE: true
+  /** The true value */
+  TRUE: 1,
+  FALSE: -1,
+  /** @type {boolean} */
+  MAYBE: true
 };
 
 // @event
@@ -287,16 +287,16 @@ var triState = {
  * @fires Hurl#snowball
  */
 Hurl.prototype.snowball = function() {
-    /**
-     * Snowball event.
-     *
-     * @event Hurl#snowball
-     * @type {object}
-     * @property {boolean} isPacked - Indicates whether the snowball is tightly packed.
-     */
-    this.emit('snowball', {
-        isPacked: this._snowball.isPacked
-    });
+  /**
+   * Snowball event.
+   *
+   * @event Hurl#snowball
+   * @type {object}
+   * @property {boolean} isPacked - Indicates whether the snowball is tightly packed.
+   */
+  this.emit('snowball', {
+    isPacked: this._snowball.isPacked
+  });
 };
 
 /**
@@ -305,7 +305,7 @@ Hurl.prototype.snowball = function() {
  * @fires Hurl#snowball
  */
 Hurl.prototype.snowball = function() {
-    // ...
+  // ...
 };
 
 /**
@@ -328,7 +328,7 @@ Hurl.prototype.snowball = function() {
  * @returns {Number} Returns the value of x for the equation.
  */
 globalNS.method1 = function (a, b) {
-    return b / a;
+  return b / a;
 };
 /**
  * Solves equations of the form a * x = b
@@ -338,7 +338,7 @@ globalNS.method1 = function (a, b) {
  * @returns {Number} Returns the value of x for the equation.
  */
 globalNS.method1 = function (a, b) {
-    return b / a;
+  return b / a;
 };
 
 // @exports
@@ -350,11 +350,11 @@ globalNS.method1 = function (a, b) {
 /** Say hello. */
 define(function () {
 
-    /**
-     * A module that says hello!
-     * @exports hello/world
-     */
-    var ns = {};
+  /**
+   * A module that says hello!
+   * @exports hello/world
+   */
+  var ns = {};
 });
 
 // @external/@host
@@ -396,7 +396,7 @@ define(function () {
  * @fires Milkshake#drain
  */
 Milkshake.prototype.drink = function() {
-    // ...
+  // ...
 };
 
 // @function/@func/@method
@@ -417,10 +417,10 @@ Milkshake.prototype.drink = function() {
 
 // @global
 (function() {
-    /** @global */
-    var foo = 'hello foo';
+  /** @global */
+  var foo = 'hello foo';
 
-    this.foo = foo;
+  this.foo = foo;
 }).apply(window);
 
 // @implements
@@ -440,60 +440,60 @@ function TransparentColor() {}
 const asdf = 1;
 
 define('hurler', [], function () {
-    /**
-     * Event reporting that a snowball has been hurled.
-     *
-     * @event module:hurler~snowball
-     * @property {number} velocity - The snowball's velocity, in meters per second.
-     */
+  /**
+   * Event reporting that a snowball has been hurled.
+   *
+   * @event module:hurler~snowball
+   * @property {number} velocity - The snowball's velocity, in meters per second.
+   */
 
+  /**
+   * Snowball-hurling module.
+   *
+   * @module hurler
+   */
+  var exports = {
     /**
-     * Snowball-hurling module.
+     * Attack an innocent (or guilty) person with a snowball.
      *
-     * @module hurler
+     * @method
+     * @fires module:hurler~snowball
      */
-    var exports = {
-        /**
-         * Attack an innocent (or guilty) person with a snowball.
-         *
-         * @method
-         * @fires module:hurler~snowball
-         */
-        attack: function () {
-            this.emit('snowball', { velocity: 10 });
-        }
-    };
+    attack: function () {
+      this.emit('snowball', { velocity: 10 });
+    }
+  };
 
-    return exports;
+  return exports;
 });
 
 define('playground/monitor', [], function () {
+  /**
+   * Keeps an eye out for snowball-throwers.
+   *
+   * @module playground/monitor
+   */
+  var exports = {
     /**
-     * Keeps an eye out for snowball-throwers.
+     * Report the throwing of a snowball.
      *
-     * @module playground/monitor
+     * @method
+     * @param {module:hurler~event:snowball} e - A snowball event.
+     * @listens module:hurler~event:snowball
      */
-    var exports = {
-        /**
-         * Report the throwing of a snowball.
-         *
-         * @method
-         * @param {module:hurler~event:snowball} e - A snowball event.
-         * @listens module:hurler~event:snowball
-         */
-        reportThrowage: function (e) {
-            this.log('snowball thrown: velocity ' + e.velocity);
-        }
-    };
+    reportThrowage: function (e) {
+      this.log('snowball thrown: velocity ' + e.velocity);
+    }
+  };
 
-    return exports;
+  return exports;
 });
 
 // @member
 /** @class */
 function Data() {
-    /** @member {Object} */
-    this.point = {};
+  /** @member {Object} */
+  this.point = {};
 }
 
 /**
@@ -503,22 +503,22 @@ function Data() {
 
 /** @class */
 function Data() {
+  /**
+   * @type {object}
+   * @property {number} y This will show up as a property of `Data#point`,
+   * but you cannot link to the property as {@link Data#point.y}.
+   */
+  this.point = {
     /**
-     * @type {object}
-     * @property {number} y This will show up as a property of `Data#point`,
-     * but you cannot link to the property as {@link Data#point.y}.
+     * The @alias and @memberof! tags force JSDoc to document the
+     * property as `point.x` (rather than `x`) and to be a member of
+     * `Data#`. You can link to the property as {@link Data#point.x}.
+     * @alias point.x
+     * @memberof! Data#
      */
-    this.point = {
-        /**
-         * The @alias and @memberof! tags force JSDoc to document the
-         * property as `point.x` (rather than `x`) and to be a member of
-         * `Data#`. You can link to the property as {@link Data#point.x}.
-         * @alias point.x
-         * @memberof! Data#
-         */
-        x: 0,
-        y: 1
-    };
+    x: 0,
+    y: 1
+  };
 }
 
 /**
@@ -526,7 +526,7 @@ function Data() {
  * @mixes Eventful
  */
 var FormButton = function() {
-    // code...
+  // code...
 };
 
 /** @module myModule */
@@ -537,28 +537,28 @@ var FormButton = function() {
  * @param somebody
  */
 function sayHello(somebody) {
-    alert('Hello ' + somebody);
+  alert('Hello ' + somebody);
 }
 
 /**
  * @param {string} somebody
  */
 function sayHello(somebody) {
-    alert('Hello ' + somebody);
+  alert('Hello ' + somebody);
 }
 
 /**
  * @param {string} somebody Somebody's name.
  */
 function sayHello(somebody) {
-    alert('Hello ' + somebody);
+  alert('Hello ' + somebody);
 }
 
 /**
  * @param {string} somebody - Somebody's name.
  */
 function sayHello(somebody) {
-    alert('Hello ' + somebody);
+  alert('Hello ' + somebody);
 }
 
 /**
@@ -568,7 +568,7 @@ function sayHello(somebody) {
  * @param {string} employee.department - The employee's department.
  */
 Project.prototype.assign = function(employee) {
-    // ...
+  // ...
 };
 
 /**
@@ -578,29 +578,29 @@ Project.prototype.assign = function(employee) {
  * @param {string} employees[].department - The employee's department.
  */
 Project.prototype.assign = function(employees) {
-    // ...
+  // ...
 };
 
 /**
  * @param {string} [somebody=John Doe] - Somebody's name.
  */
 function sayHello(somebody) {
-    if (!somebody) {
-        somebody = 'John Doe';
-    }
-    alert('Hello ' + somebody);
+  if (!somebody) {
+    somebody = 'John Doe';
+  }
+  alert('Hello ' + somebody);
 }
 
 /**
  * @param {(string|string[])} [somebody=John Doe] - Somebody's name, or an array of names.
  */
 function sayHello(somebody) {
-    if (!somebody) {
-        somebody = 'John Doe';
-    } else if (Array.isArray(somebody)) {
-        somebody = somebody.join(', ');
-    }
-    alert('Hello ' + somebody);
+  if (!somebody) {
+    somebody = 'John Doe';
+  } else if (Array.isArray(somebody)) {
+    somebody = somebody.join(', ');
+  }
+  alert('Hello ' + somebody);
 }
 
 /**
@@ -608,11 +608,11 @@ function sayHello(somebody) {
  * @param {...number} num - A positive or negative number.
  */
 function sum(num) {
-    var i = 0, n = arguments.length, t = 0;
-    for (; i < n; i++) {
-        t += arguments[i];
-    }
-    return t;
+  var i = 0, n = arguments.length, t = 0;
+  for (; i < n; i++) {
+    t += arguments[i];
+  }
+  return t;
 }
 
 // @requires
@@ -633,7 +633,7 @@ function Widgetizer() {}
  * @returns {number}
  */
 function sum(a, b) {
-    return a + b;
+  return a + b;
 }
 
 /**
@@ -644,10 +644,10 @@ function sum(a, b) {
  * @returns {(number|Array)} Sum of a and b or an array that contains a, b and the sum of a and b.
  */
 function sum(a, b, retArr) {
-    if (retArr) {
-        return [a, b, a + b];
-    }
-    return a + b;
+  if (retArr) {
+    return [a, b, a + b];
+  }
+  return a + b;
 }
 
 // @see

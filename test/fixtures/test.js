@@ -28,8 +28,8 @@ class Foo {
 }
 
 function nullishTest() {
-    const obj = { a: 'a' };
-    console.log(obj.b ?? 'empty');
+  const obj = { a: 'a' };
+  console.log(obj.b ?? 'empty');
 }
 
 getPlayers()
@@ -62,58 +62,58 @@ new Foo.Bar(a ? b : c);
 new Foo.Bar.Baz;
 
 function testRegexp() {
-	// Assertions
-	let regex = /First(?= test)/g;
-	console.log(/\d+(?!\.)/g.exec('3.141')); // [ '141', index: 2, input: '3.141' ]
-	let ripe_oranges = oranges.filter( fruit => fruit.match(/(?<=ripe )orange/));
-	/(?<!-)\d+/.exec('3')
+  // Assertions
+  let regex = /First(?= test)/g;
+  console.log(/\d+(?!\.)/g.exec('3.141')); // [ '141', index: 2, input: '3.141' ]
+  let ripe_oranges = oranges.filter( fruit => fruit.match(/(?<=ripe )orange/));
+  /(?<!-)\d+/.exec('3')
 
-	// Boundaries
-	let regex = /^abcd$/;
-	let regex = /\bm/;
-	let regex = /\Bon/;
+  // Boundaries
+  let regex = /^abcd$/;
+  let regex = /\bm/;
+  let regex = /\Bon/;
 
-	let regex = /\n\cM\x33\uDDDD\u{3333}\u{33333}/
+  let regex = /\n\cM\x33\uDDDD\u{3333}\u{33333}/
 
-	// Groups and Ranges
-	let regex = /(foo)/	
-	let regex = /(?:foo)/	
-	let regex = /(?<name>foo)/
-	let regex = /[^xyz\b\w^$]/
-	let regex = /[-a-z^0-9-()-]?/
-	let regex = /apple(,)\sorange\1\0/
+  // Groups and Ranges
+  let regex = /(foo)/	
+  let regex = /(?:foo)/	
+  let regex = /(?<name>foo)/
+  let regex = /[^xyz\b\w^$]/
+  let regex = /[-a-z^0-9-()-]?/
+  let regex = /apple(,)\sorange\1\0/
 
-	let regex = /x{1}y{1,}z{1,2}?/
+  let regex = /x{1}y{1,}z{1,2}?/
 
-	let regex = /\\\\\..*\b\w?\{}\?\*\(\)\|\[\]\^\$/
+  let regex = /\\\\\..*\b\w?\{}\?\*\(\)\|\[\]\^\$/
 
-	// Unicode property escapes
-	regex = /\p{Shorthand}/
-	regex = /\p{UnicodePropertyName}/
-	regex = /\p{UnicodePropertyName=UnicodePropertyValue}/
+  // Unicode property escapes
+  regex = /\p{Shorthand}/
+  regex = /\p{UnicodePropertyName}/
+  regex = /\p{UnicodePropertyName=UnicodePropertyValue}/
 }
 
 (function () {
-    const regexp = /^[+-]?(?:(?:(?:(?:0|[1-9]\d*)\.\d*|\.\d+|(?:0|[1-9]\d*))(?:e[+-]?\d+)?)|0b[01]+|0o[0-7]+|0x[0-9a-f]+)$/i;
+  const regexp = /^[+-]?(?:(?:(?:(?:0|[1-9]\d*)\.\d*|\.\d+|(?:0|[1-9]\d*))(?:e[+-]?\d+)?)|0b[01]+|0o[0-7]+|0x[0-9a-f]+)$/i;
 
-    const testCases = [
-        0., 0.E1, 0.e-1,0.e0, 0.1, 0.12, 0.12e2, 0.12e-2,0.12E0,0.0e1, 0.0e-1, 0.0E0,
-        1., 1.E1, 1.e-1,1.e0, 1.1, 1.12, 1.12e2, 1.12e-2,1.12E0,1.0e1, 1.0e-1, 1.0E0,
-	1_0., 1_0_0., 1_0.0_1_2, 1_0_0, 100_000, 1e1_2, 1e+12_0, .1_2_3, .000_111, 10_1.1_2_3, 0.000_111, 0e0, 1_2e10,
-        11., 12.E1, 13.e-1,144.e0, 155.1, 124.12, 14.12e2, 124.12e-2,10.12E0,100.0e1, 101.0e-1, 102.0E0,
-        .0, .0e1, .0e-1, .0E0, .12, .12e1, .12e-1, .12E0,
-        0, 0e1, 0e-1, 0E0, 1, 1e1, 1e-1, 1E0,
-        0b0, 0b1, 0b0000, 0b111, 0b010101, 0b0_1, 0b0000_1111,
-        0B0, 0B1, 0B0000, 0B111, 0B010101,
-        0o0,0o01,0o02,0o07,0o7, 0o00_11, 0o0_1111_00,
-        0O0,0O01,0O02,0O07,0O7,
-        0x0, 0x01, 0xa, 0x1234abcdef, 0xf_ed_123, 0x1234_abcd_ef,
-        0X0, 0X01, 0XA, 0X1234ABCDEF,
-    ];
+  const testCases = [
+    0., 0.E1, 0.e-1,0.e0, 0.1, 0.12, 0.12e2, 0.12e-2,0.12E0,0.0e1, 0.0e-1, 0.0E0,
+    1., 1.E1, 1.e-1,1.e0, 1.1, 1.12, 1.12e2, 1.12e-2,1.12E0,1.0e1, 1.0e-1, 1.0E0,
+    1_0., 1_0_0., 1_0.0_1_2, 1_0_0, 100_000, 1e1_2, 1e+12_0, .1_2_3, .000_111, 10_1.1_2_3, 0.000_111, 0e0, 1_2e10,
+    11., 12.E1, 13.e-1,144.e0, 155.1, 124.12, 14.12e2, 124.12e-2,10.12E0,100.0e1, 101.0e-1, 102.0E0,
+    .0, .0e1, .0e-1, .0E0, .12, .12e1, .12e-1, .12E0,
+    0, 0e1, 0e-1, 0E0, 1, 1e1, 1e-1, 1E0,
+    0b0, 0b1, 0b0000, 0b111, 0b010101, 0b0_1, 0b0000_1111,
+    0B0, 0B1, 0B0000, 0B111, 0B010101,
+    0o0,0o01,0o02,0o07,0o7, 0o00_11, 0o0_1111_00,
+    0O0,0O01,0O02,0O07,0O7,
+    0x0, 0x01, 0xa, 0x1234abcdef, 0xf_ed_123, 0x1234_abcd_ef,
+    0X0, 0X01, 0XA, 0X1234ABCDEF,
+  ];
 
-    testCases.forEach((num) => {
-        console.assert(regexp.test(num), num);
-    });
+  testCases.forEach((num) => {
+    console.assert(regexp.test(num), num);
+  });
 })();
 
 var arr = [];
@@ -123,10 +123,10 @@ var arr = [1,];
 var arr = [, 1];
 var arr = [,,];
 var arr = [
-	first, // Comment
-	second, /* Comment */
-	[1, 2, 3],
-	[,,,],
+  first, // Comment
+  second, /* Comment */
+  [1, 2, 3],
+  [,,,],
 ];
 
 var a1 = arr[1];
@@ -142,89 +142,89 @@ i++;
 
 // Functions
 function test() {
-	const str = "}";
-	return Math.min([1, 2]);
+  const str = "}";
+  return Math.min([1, 2]);
 }
 
 function test(a = 3, b, c, ...rest, { e = 3, ...test}) {
-	const a = "hello";
-	function test() {
-	}
+  const a = "hello";
+  function test() {
+  }
 
-	var arr = [];
-	var arr = [a1, 1, false, null];
-	var arr = [1,2];
-	var arr = [1,];
-	var arr = [, 1];
-	var arr = [,,];
-	var arr = [
-		first, // Comment
-		second, /* Comment */
-		[1, 2, 3],
-		[,,,],
-	];
-	const [a,b,...rest] = [1, 2]
-	const {hello: [a = 3, b, { d }], world: {hello: world}, foo = [{key: 1}], bar = { hello: 'world' }} = {foo: foo, bar: 'ddd', test}
-	// ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//
+  var arr = [];
+  var arr = [a1, 1, false, null];
+  var arr = [1,2];
+  var arr = [1,];
+  var arr = [, 1];
+  var arr = [,,];
+  var arr = [
+    first, // Comment
+    second, /* Comment */
+    [1, 2, 3],
+    [,,,],
+  ];
+  const [a,b,...rest] = [1, 2]
+  const {hello: [a = 3, b, { d }], world: {hello: world}, foo = [{key: 1}], bar = { hello: 'world' }} = {foo: foo, bar: 'ddd', test}
+  // ({hello = 1, world: {hello: world}, bar} = {foo, bar: 'ddd', test})
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
 
-	// 0000000000
+  // 0000000000
 }
 
 function* gen() {
-	yield* gen()
-	return 1;
+  yield* gen()
+  return 1;
 }
 
 const foo = function* () {
@@ -244,7 +244,7 @@ const a = () => {};
 const b = () => 1;
 const c = a => foo + bar;
 const d = ({a : { d = 3}, b}, c, [a = 3, b, c]) => {
-	return foo + bar;
+  return foo + bar;
 };
 const e = async (a, b) => {
 };
@@ -272,7 +272,7 @@ class Square extends Polygon {
   name
   foo = bar;
   ['foo' + 'bar'] = 1
-  
+
   @logged(1)
   @logged(2)
   set x(value) {
@@ -288,7 +288,7 @@ class Square extends Polygon {
   }
 
   async test() {
-	  const a = 0;
+    const a = 0;
   }
 
   static *triple(n) {
@@ -312,8 +312,8 @@ class Square extends Polygon {
   bar = a => a[0]
 
   getAccountIds = () => this?.props.filter.get('accountsIds')
-	  ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
-	  : this.props.accountsFilter;
+    ? this.props.filter.get('accountIds').concat(this.props.accountFilter).toJS()
+    : this.props.accountsFilter;
 }
 
 class Counter extends HTMLElement {
@@ -348,45 +348,45 @@ async function test () {
   a instanceof 3
   const a = {
     key: {
-	    // Comment
-	    /* comment */
-	    prop1: 1, // Comment
-	    "prop2": 2, /* comment */
-	    33: 3,
-	    shorthand,
-	    [foo + bar]: `computed${hello + world}b`,
-	    func: function () {
-	    },
-	    funcArrow: () => {
-	    },
-	    funcShort() {
-	    },
-	    async funcShort() {
-	    },
-	    [foo + bar]() {
-		    return "computed";
-	    },
-	    void: new Date(123, /hhh/)['getDate'](),
-	    delete: 'hello',
-	    *generator() {},
-	    *[Symbol.iterator]() {
-	    },
-	    get name() {
-	    },
-	    get [computed]() {
-	    },
-	    set name(a) {
-	    },
-	    set [computed]() {
-		    // 0000
-	    },
-	    type: typeof 3,
-	    prop: await 3,
-	    ...b,
-	    getAccountIds: () => this?.props?.filter.get('accountsIds')
-	    ? this.props?.filter?.get('accountIds')?.concat(this.props.accountFilter)?.toJS()
-	    : this.props.accountsFilter;
-	  }
+      // Comment
+      /* comment */
+      prop1: 1, // Comment
+      "prop2": 2, /* comment */
+      33: 3,
+      shorthand,
+      [foo + bar]: `computed${hello + world}b`,
+      func: function () {
+      },
+      funcArrow: () => {
+      },
+      funcShort() {
+      },
+      async funcShort() {
+      },
+      [foo + bar]() {
+        return "computed";
+      },
+      void: new Date(123, /hhh/)['getDate'](),
+      delete: 'hello',
+      *generator() {},
+      *[Symbol.iterator]() {
+      },
+      get name() {
+      },
+      get [computed]() {
+      },
+      set name(a) {
+      },
+      set [computed]() {
+        // 0000
+      },
+      type: typeof 3,
+      prop: await 3,
+      ...b,
+      getAccountIds: () => this?.props?.filter.get('accountsIds')
+      ? this.props?.filter?.get('accountIds')?.concat(this.props.accountFilter)?.toJS()
+      : this.props.accountsFilter;
+    }
   };
 }
 
@@ -406,17 +406,17 @@ this["hll"];
 }
 
 const another = ({
-	wow = (2 + x) / 10,
-	foo = /test/
+  wow = (2 + x) / 10,
+  foo = /test/
 }) => [wow, another]
 
 const a = ({
-	example: [
-		x = 2 + 2,
-		{
-			another = ({wow = (2 + x) / 10}) => [wow, another]
-		}
-	]
+  example: [
+    x = 2 + 2,
+    {
+      another = ({wow = (2 + x) / 10}) => [wow, another]
+    }
+  ]
 }) => {};
 
 
@@ -427,17 +427,17 @@ export const a = ({first: f, second: s = someDefault(), c = 3}) => {
 
 const myVariable = "hello world";
 const func = () => {
-	funcd ();
+  funcd ();
 };
 const f = bad => {
-	console.log();
+  console.log();
 };
 const func = ({a, b}) => {
 };
 const func = funcCall(({
   sixthVariable = `create${a + b}`
 }) => {
-	return fun();
+  return fun();
 }, 1);
 
 const a = a / 3;
@@ -446,65 +446,65 @@ const a = a / 3;
 if (a > 0 && a / 3 && /test/.test(a)) return null;
 
 if (a > 0 && b < 0 && a[0] > 0
-	|| (a() > 0) && [0, 1].length > 0
-	&& a in 'string'
-	&& a instanceof Date
-	// ddd
-	&& typeof a === 'undefined'
+  || (a() > 0) && [0, 1].length > 0
+  && a in 'string'
+  && a instanceof Date
+  // ddd
+  && typeof a === 'undefined'
 ) {
-	const a = 0;
-	console.log('else');
+  const a = 0;
+  console.log('else');
 } else if {
-	const a = 0;
-	console.log('else if');
+  const a = 0;
+  console.log('else if');
 } else {
-	console.log('else');
+  console.log('else');
 }
 
 switch (expression) {
-	case 1:
-		console.log('hello');
-		break;
-	case "hello":
-		console.log('hello');
-		break;
-	case "world":
-	case foo:
-	case bar:
-		break;
-	default:
-		break;
+  case 1:
+    console.log('hello');
+    break;
+  case "hello":
+    console.log('hello');
+    break;
+  case "world":
+  case foo:
+  case bar:
+    break;
+  default:
+    break;
 }
 
 for (;;) console.log('hello');
 
 for (var i = 0; i < 100 + 100; i++) {
-	// Comment
-	switch (expression) {
-		case 1:
-			console.log('hello');
-			break;
-		case "hello":
-			console.log('hello');
-			break;
-		case "world":
-		case foo:
-		case bar:
-			break;
-		default:
-			break;
-	}
+  // Comment
+  switch (expression) {
+    case 1:
+      console.log('hello');
+      break;
+    case "hello":
+      console.log('hello');
+      break;
+    case "world":
+    case foo:
+    case bar:
+      break;
+    default:
+      break;
+  }
 }
 
 var arr = [3, 5, 7];
 arr.foo = 'hello';
 
 for (var i in arr) {
-   console.log(i); // logs "0", "1", "2", "foo"
+  console.log(i); // logs "0", "1", "2", "foo"
 }
 
 for (var i of arr) {
-   console.log(i); // logs 3, 5, 7
+  console.log(i); // logs 3, 5, 7
 }
 
 for await (const x of asyncIterator) {
@@ -522,14 +522,14 @@ do {
 } while (a < 0);
 
 while (theMark == true) {
-   doSomething();
+  doSomething();
 }
 
 label:
-	const a = b;
+const a = b;
 
 label: {
-	const hello = world;
+  const hello = world;
 }
 
 func()?.prop	/* comment */
@@ -567,16 +567,16 @@ checkiandj:
     console.log(i);
     i += 1;
     checkj:
-      while (j > 4) {
-        console.log(j);
-        j -= 1;
-        if ((j % 2) == 0) {
-          continue checkj;
-        }
-        console.log(j + ' is odd.');
+    while (j > 4) {
+      console.log(j);
+      j -= 1;
+      if ((j % 2) == 0) {
+        continue checkj;
       }
-      console.log('i = ' + i);
-      console.log('j = ' + j);
+      console.log(j + ' is odd.');
+    }
+    console.log('i = ' + i);
+    console.log('j = ' + j);
   }
 
 const myVariable = "hello world";
@@ -593,7 +593,7 @@ const checkHightlighting = funcCall(({
     return verify(noHighlightingHere);
   };
 },
-[myVariable]);
+  [myVariable]);
 
 try {
   myroutine(); // may throw three types of exceptions
