@@ -62,6 +62,18 @@ new Foo.Bar(a ? b : c);
 new Foo.Bar.Baz;
 
 function testRegexp() {
+  const test = /alskjdf/i;
+
+  const math = 5 /
+  2;
+  
+  5 /**/ / 100;
+
+  let thisSyntaxIsBroken;
+
+  const asdflkjasdf = 432432 / 23432;
+
+  const fixed;
   // Assertions
   let regex = /First(?= test)/g;
   console.log(/\d+(?!\.)/g.exec('3.141')); // [ '141', index: 2, input: '3.141' ]
