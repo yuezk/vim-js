@@ -769,7 +769,13 @@ function testFlowUtilties() {
 
 function testFlowModule() {
   export default class Foo {};
-  export type MyObject = { /* ... */ };
+  export type MyObject = {
+    /* ... */
+  };
+  export type Type = (
+    // hi '
+    arg: Arg,
+  ) => Ret;
   export interface MyInterface { /* ... */ };
 
   const myNumber = 42;
