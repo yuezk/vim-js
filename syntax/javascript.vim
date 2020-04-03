@@ -189,7 +189,7 @@ syntax keyword jsExtends extends contained skipwhite skipempty nextgroup=jsClass
 syntax keyword jsConstructor constructor contained
 syntax keyword jsSuper super contained
 syntax keyword jsStatic static contained skipwhite skipempty nextgroup=jsClassProp,jsMethod,jsGeneratorAsterisk
-syntax match   jsClassName +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody,jsFlowGenericDeclare,jsFlowImplments
+syntax match   jsClassName +\<\K\k*\%(\.\K\k*\)*\>+ contained skipwhite skipempty nextgroup=jsExtends,jsClassBody,jsFlowGenericDeclare,jsFlowImplments
 syntax region  jsClassBody matchgroup=jsClassBraces start=+{+ end=+}+ contained contains=jsComment,jsAsync,jsStatic,jsMethodType,jsClassPrivate,jsClassProp,jsMethod,jsGeneratorAsterisk,jsComputed,jsDecoratorName,jsDecoratorParams,jsSemicolon fold
 syntax match   jsClassProp +\<\K\k*\>+ contained skipwhite skipempty nextgroup=jsAssignmentEqual,jsFlowColon
 syntax match   jsClassPrivate +#+ contained nextgroup=jsClassProp,jsMethod
