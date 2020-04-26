@@ -18,7 +18,7 @@ syntax match   jsFlowModifier +[+-]+ contained skipwhite skipempty nextgroup=jsF
 syntax keyword jsFlowTypeof typeof contained skipwhite skipempty nextgroup=@jsExpression
 
 " Tokens that can appear after a flow type
-syntax cluster jsFlowTokensAfterType contains=jsAssignmentEqual,jsFlowUnion,jsFlowIntersection,jsFlowArrow
+syntax cluster jsFlowTokensAfterType contains=jsAssignmentEqual,jsFlowUnion,jsFlowIntersection
 
 syntax match   jsFlowType +\<\K\k*\>+ contained contains=jsFlowPrimitives,jsFlowSpecialType,jsFlowUtility skipwhite skipempty nextgroup=@jsFlowTokensAfterType,jsFunctionBody,jsArrow,jsFlowGenericContained,jsFlowArrayShorthand,jsFlowChecks,jsFlowColon
 syntax keyword jsFlowPrimitives boolean Boolean number Number string String null void contained

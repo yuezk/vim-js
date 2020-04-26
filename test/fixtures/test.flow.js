@@ -23,6 +23,11 @@ const regex = /^(?:(?:https?|mailto|ftp):|[^:/?#]*(?:[/?#]|$))/
 
 debugger;
 
+const x = (): number => {
+  const test = 1;
+  return test;
+}
+
 function nullishTest() {
   const obj = { a: 'a' };
   console.log(obj.b ?? 'empty');
