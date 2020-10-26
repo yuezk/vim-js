@@ -264,7 +264,7 @@ syntax region  jsIfCondition matchgroup=jsIfParens start=+(+ end=+)+ contained c
 syntax keyword jsSwitch switch skipwhite skipempty nextgroup=jsSwitchCondition
 syntax region  jsSwitchBlock matchgroup=jsSwitchBraces start=+{+ end=+}+ contained contains=jsCaseStatement,@jsTop
 syntax region  jsSwitchCondition matchgroup=jsSwitchParens start=+(+ end=+)+ contained contains=@jsExpression,jsVariableType,jsComma skipwhite skipempty nextgroup=jsSwitchBlock
-syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\%(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contained contains=@jsExpression keepend
+syntax region  jsCaseStatement matchgroup=jsSwitchCase start=+\<\%(case\|default\)\>+ matchgroup=jsSwitchColon end=+:+ contained contains=@jsExpression
 
 " Exceptions
 syntax keyword jsTry try skipwhite skipempty nextgroup=jsExceptionBlock
