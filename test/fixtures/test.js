@@ -480,7 +480,7 @@ switch (expression) {
   case "hello":
     console.log('hello');
     break;
-  case "world":
+  case "hello::world":
   case foo:
   case bar:
     break;
