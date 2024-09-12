@@ -161,7 +161,7 @@ syntax match   jsNumberDot +\.+ contained
 syntax match   jsNumberSeparator +_+ contained
 
 " Array
-syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpression,jsComma,jsSpread skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
+syntax region  jsArray matchgroup=jsBrackets start=+\[+ end=+]+ contains=@jsExpression,jsComma,jsSpread extend fold skipwhite skipempty nextgroup=jsAccessor,jsDot,@jsOperators,jsFlowColon
 
 " Object
 syntax region  jsObject matchgroup=jsObjectBraces start=+{+ end=+}+ contained contains=jsComment,jsIdentifier,jsObjectKey,jsObjectKeyString,jsMethod,jsComputed,jsGeneratorAsterisk,jsAsync,jsMethodType,jsComma,jsSpread skipwhite skipempty nextgroup=jsFlowColon
