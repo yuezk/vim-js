@@ -62,7 +62,7 @@ syntax match   jsOptionalOperator +?\.+ contained skipwhite skipempty nextgroup=
 syntax match   jsOperator +??+ contained skipwhite skipwhite nextgroup=@jsExpression
 
 syntax cluster jsTopOperators contains=jsTopOperator,jsUnaryOperator
-syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator,jsTopOperator,jsBindOperator
+syntax cluster jsOperators contains=jsRelationalOperator,jsTernary,jsOperator,jsTopOperator,jsBindOperator,jsTemplateString
 
 " Modules
 " REFERENCE:
