@@ -16,6 +16,12 @@ import @logged2 from './logged2';
 
 var promise = import("module-name");
 
+// gh-23
+const obj = {
+  key: /* html */ `<some-html></some-html>`,
+  other: "value"
+};
+
 class Foo {
   foo = async x => {  
     try {
